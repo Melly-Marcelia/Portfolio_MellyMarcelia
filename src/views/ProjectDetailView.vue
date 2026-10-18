@@ -424,6 +424,23 @@ onBeforeUnmount(() => observers.forEach((o) => o.disconnect()))
 
 /* .cs__head is text-align:center, so the inline-flex tag centres itself */
 
+/* phones: more air under the navbar, and the summary + tag pulled up so
+   they read as one block with the title */
+@media (max-width: 640px) {
+  .cs__back {
+    padding-top: 2.25rem;
+  }
+  .cs__head {
+    padding-top: 2.25rem;
+  }
+  .cs__head .cs__title {
+    margin-bottom: var(--space-s);
+  }
+  .cs__head .cs__summary {
+    margin-bottom: var(--space-s);
+  }
+}
+
 /* ---- cover (full-bleed collage) ---- */
 .cs__cover {
   margin: 0 auto clamp(2.5rem, 6vw, 4.5rem);
