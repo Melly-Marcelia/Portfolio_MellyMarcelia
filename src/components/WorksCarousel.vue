@@ -258,15 +258,15 @@ onBeforeUnmount(() => {
   transform: none;
 }
 
-/* big, tall screens: bigger tiles (about 3.4 across instead of 4) so the
+/* big, tall screens: bigger tiles (about 3.9 across instead of 4) so the
    row fills the space under the hero instead of leaving a gap */
 @media (min-width: 1700px) and (min-height: 950px) {
   .tile {
-    width: min(calc(100vw / 3.4), 36rem);
+    width: min(calc(100vw / 3.9), 31rem);
   }
   .tile__link,
   .tile > .tile__ph {
-    max-height: 42vh;
+    max-height: 36vh;
   }
 }
 
