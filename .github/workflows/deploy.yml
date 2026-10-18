@@ -26,8 +26,8 @@ jobs:
       - run: npm ci
       - run: npm run build
         env:
-          # set under Settings → Secrets and variables → Actions → Variables
-          VITE_GA_MEASUREMENT_ID: ${{ vars.VITE_GA_MEASUREMENT_ID }}
+          # set under Settings → Secrets and variables → Actions → Secrets
+          VITE_GA_MEASUREMENT_ID: ${{ secrets.VITE_GA_MEASUREMENT_ID }}
       # GitHub Pages has no SPA fallback: serve the app for unknown paths so
       # refreshing /projects/... doesn't 404
       - run: cp dist/index.html dist/404.html
