@@ -1,0 +1,127 @@
+/* ===========================================================================
+   Type styles
+   ---------------------------------------------------------------------------
+   Every text style in the site lives here as a `.t-*` class. Use them through
+   the <AppText> component (preferred) or apply the class directly.
+
+   Families:
+     • Homemade Apple  → --font-signature / --font-hand  (the cursive)
+     • Bricolage Grotesque → --font-body                 (everything else)
+   =========================================================================== */
+
+.t-signature,
+.t-script {
+  font-family: var(--font-signature);
+  font-size-adjust: var(--hand-size-adjust);
+  -webkit-text-stroke: var(--hand-stroke) currentColor;
+  font-weight: 400;
+  /* Homemade Apple has tall ascenders + deep descenders — it needs air */
+  line-height: 1.4;
+  letter-spacing: 0;
+  word-spacing: 0.04em;
+}
+
+.t-signature {
+  font-size: var(--step-6);
+}
+.t-script {
+  font-size: var(--step-3);
+}
+
+/* --- display & headings (Bricolage Grotesque) --- */
+.t-display {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--step-6);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+.t-h1 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--step-5);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+.t-h2 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--step-3);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+}
+
+.t-h3 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--step-2);
+  line-height: var(--leading-snug);
+}
+
+.t-h4 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--step-1);
+  line-height: var(--leading-snug);
+}
+
+/* --- body --- */
+.t-lead {
+  font-size: var(--step-1);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-ink-soft);
+}
+
+.t-body {
+  font-size: var(--step-0);
+  font-weight: 400;
+  line-height: var(--leading-normal);
+}
+
+.t-body-sm {
+  font-size: var(--step--1);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* --- utility text --- */
+.t-eyebrow {
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  line-height: 1.3;
+}
+
+.t-label {
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.t-caption {
+  font-size: var(--step--1);
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--color-ink-faint);
+}
+
+/* --- tone modifiers (compose with any of the above) --- */
+.t--soft {
+  color: var(--color-ink-soft);
+}
+.t--faint {
+  color: var(--color-ink-faint);
+}
+.t--accent {
+  color: var(--color-accent);
+}
+.t--balance {
+  text-wrap: balance;
+}
+.t--measure {
+  max-width: 60ch;
+}

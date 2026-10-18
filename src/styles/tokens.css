@@ -1,0 +1,286 @@
+/* ===========================================================================
+   Design tokens
+   ---------------------------------------------------------------------------
+   The single source of truth for every colour, size, radius, shadow and
+   timing used in the app. Components must reference these variables rather
+   than hard-coding values.
+
+   Palette theme: "white dragon fruit" (Hylocereus undatus), cut in half —
+     skin   hot-magenta rind            → brand accent
+     bract  lime-to-green scale tips    → secondary accent
+     flesh  milky white pulp            → page + surfaces (light end of ramp)
+     seed   tiny black seeds            → ink            (dark end of ramp)
+     blush  pink ring where rind meets flesh → glows / soft highlights
+
+   Two layers:
+     1. primitives  --df-*      the fruit's raw colour ramps. Never use in
+                                components; they exist to be pointed at.
+     2. semantic    --color-*   what components read. Themes (dark mode)
+                                only re-point this layer.
+   =========================================================================== */
+:root {
+  /* ---- colour — primitives: skin (magenta rind) ------------------------ */
+  --df-skin-50: #fdf0f5;
+  --df-skin-100: #fbdbe8;
+  --df-skin-200: #f7b5d0;
+  --df-skin-300: #f282b0;
+  --df-skin-400: #ec4b8d;
+  --df-skin-500: #e01e6e; /* brand magenta */
+  --df-skin-600: #c0125b;
+  --df-skin-700: #980f49;
+  --df-skin-800: #6e0d36;
+  --df-skin-900: #460a23;
+
+  /* ---- colour — primitives: bract (green scale tips) ------------------- */
+  --df-bract-50: #f3f9ea;
+  --df-bract-100: #e1f1cb;
+  --df-bract-200: #c6e59e;
+  --df-bract-300: #a4d474;
+  --df-bract-400: #80c250;
+  --df-bract-500: #5fb43a; /* leaf green */
+  --df-bract-600: #4a922c;
+  --df-bract-700: #3a7224;
+  --df-bract-800: #2b541c;
+  --df-bract-900: #1c3713;
+  --df-bract-mist: #d3ddcd; /* greyed bract — quiet green-grey grounds */
+  --df-bract-dusk: #26332d; /* bract-mist's dark-mode twin */
+
+  /* ---- colour — primitives: flesh → seed (neutral ramp) ----------------
+     One ramp, pulp-white at the top, seed-black at the bottom, with the
+     faintest magenta warmth so the greys never read as cold/blue. */
+  --df-flesh-0: #ffffff;
+  --df-flesh-50: #fcfbfa; /* the flesh itself — page background */
+  --df-flesh-100: #f6f3f2;
+  --df-flesh-200: #ece7e6;
+  --df-flesh-300: #ddd6d5;
+  --df-flesh-400: #bcb2b4;
+  --df-flesh-500: #8e8388;
+  --df-flesh-600: #62575c;
+  --df-flesh-700: #3b3236;
+  --df-flesh-800: #231d20;
+  --df-flesh-900: #171315;
+  --df-flesh-950: #0f0c0d;
+  --df-seed: #1a1517; /* the seeds — primary ink */
+  --c-seed-rgb: 26, 21, 23; /* --df-seed as channels, for rgba() alpha layers */
+
+  /* ---- colour — primitives: blush (rind-meets-flesh ring) -------------- */
+  --df-blush: var(--df-skin-300);
+  --df-blush-soft: var(--df-skin-100);
+
+  /* ---- colour — semantic (use these) ---------------------------------- */
+  --color-bg: var(--df-flesh-50);
+  --color-bg-alt: var(--df-flesh-100); /* tinted band to set a section apart */
+  --color-surface: var(--df-flesh-0);
+
+  --color-ink: var(--df-seed);
+  --color-ink-soft: var(--df-flesh-600);
+  --color-ink-faint: var(--df-flesh-500);
+
+  --color-accent: var(--df-skin-500);
+  --color-accent-hover: var(--df-skin-600);
+  --color-accent-ink: var(--df-flesh-0);
+  --color-accent-soft: var(--df-skin-50); /* tinted chips / panels */
+  --color-accent-strong: var(--df-skin-700); /* accent text on accent-soft */
+  --color-accent-line: transparent; /* edge on accent-soft chips (dark mode only) */
+  --color-leaf: var(--df-bract-500);
+  --color-leaf-ink: var(--df-flesh-0);
+  --color-leaf-soft: var(--df-bract-100);
+
+  --color-border: rgba(var(--c-seed-rgb), 0.12);
+  --color-border-strong: rgba(var(--c-seed-rgb), 0.22);
+  --color-hairline: rgba(var(--c-seed-rgb), 0.1);
+
+  --color-mat: var(--df-flesh-200); /* neutral ground behind image thumbnails */
+  --color-mat-alt: var(--df-flesh-300);
+  --color-placeholder: var(--df-flesh-200);
+  --color-panel: var(--df-bract-mist); /* case-study screen mounts */
+
+  /* scrims over media (image overlays, video letterboxing) — always dark,
+     whatever the theme, so white captions stay readable on photos */
+  --color-scrim: var(--df-seed);
+  --color-on-scrim: var(--df-flesh-0);
+
+  /* ---- object: experience wallet (About page) --------------------------
+     Magenta rind leather, blush stitching, flesh + bract tickets.
+     A physical object, so these stay the same in light and dark mode. */
+  --leather-900: var(--df-skin-900);
+  --leather-800: var(--df-skin-800);
+  --leather-700: var(--df-skin-700);
+  --leather-600: var(--df-skin-600);
+  --leather-500: var(--df-skin-500);
+  --leather-400: var(--df-skin-400);
+  --leather-stitch: var(--df-skin-200);
+  --ticket-stock: var(--df-skin-100);
+  --ticket-stock-leaf: var(--df-bract-200);
+  --ticket-ink: var(--df-seed);
+  --card-stock: var(--df-flesh-50);
+  --stamp-paper: var(--df-flesh-700);
+
+  /* ---- object: sticker table (Playground page) ------------------------
+     Cream, soft-edged kidney table on cylinder legs. A physical object, so
+     these stay the same in light and dark mode. */
+  --table-top: #f1e9dc;
+  --table-top-light: #fcf8f1;
+  --table-edge: #e3d7c4;
+  --table-edge-dark: #cdbda4;
+  --table-leg: #efe6d8;
+  --table-leg-dark: #d6c8b2;
+  --table-ink: #6b5a48; /* pencilled labels on the top */
+
+  /* ---- object: scrapbook (Playground page) ----------------------------
+     A wine-red leather travel notebook — lace-trimmed pages, cream satin
+     ribbons, a brass clip. A physical object, same in light and dark mode. */
+  --scrap-leather-400: #8e2f3b;
+  --scrap-leather-600: #6a1c27;
+  --scrap-leather-800: #45101a;
+  --scrap-leather-900: #2c0a10;
+  --scrap-lace: #f4ede0;
+  --scrap-lace-shadow: #d9ccb6;
+  --scrap-ribbon: #efe3cc;
+  --scrap-ribbon-dark: #cdbb98;
+  --scrap-brass-light: #f1d894;
+  --scrap-brass: #c49a45;
+  --scrap-brass-dark: #7a5a1f;
+  --scrap-photo-paper: #f7f4ee;
+  --scrap-photo-backdrop: #c9c4bd; /* photo-booth curtain */
+  --scrap-ink: #fbf6ee; /* the white script title */
+
+  /* ---- glow — hero / statement gradient ------------------------------- */
+  --glow: var(--df-blush);
+  --glow-soft: var(--df-blush-soft);
+
+  /* ---- typography — families ---------------------------------------- */
+  --font-body: 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-hand: 'Homemade Apple', 'Bricolage Grotesque', cursive;
+  --font-signature: 'Homemade Apple', 'Bricolage Grotesque', cursive;
+  /* handwriting tuning — stroke adds weight; size-adjust matches lowercase height across fonts */
+  --hand-stroke: 0;
+  --hand-size-adjust: none; /* Seaweed Script looked right at 0.53 */
+  --font-script: 'Pinyon Script', 'Playfair Display', cursive; /* scrapbook cover title */
+
+  /* ---- typography — fluid size scale (min → max via viewport) -------- */
+  --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.1rem);
+  --step-1: clamp(1.2rem, 1.12rem + 0.4vw, 1.4rem);
+  --step-2: clamp(1.44rem, 1.3rem + 0.7vw, 1.9rem);
+  --step-3: clamp(1.73rem, 1.5rem + 1.15vw, 2.6rem);
+  --step-4: clamp(2.07rem, 1.7rem + 1.85vw, 3.5rem);
+  --step-5: clamp(2.49rem, 1.9rem + 2.9vw, 4.7rem);
+  --step-6: clamp(2.99rem, 2rem + 4.9vw, 6.3rem);
+
+  /* ---- typography — leading & tracking ------------------------------ */
+  --leading-tight: 1.05;
+  --leading-snug: 1.2;
+  --leading-normal: 1.6;
+  --tracking-tight: -0.02em;
+  --tracking-wide: 0.16em;
+
+  /* ---- space scale ------------------------------------------------- */
+  --space-3xs: 0.25rem;
+  --space-2xs: 0.5rem;
+  --space-xs: 0.75rem;
+  --space-s: 1rem;
+  --space-m: 1.5rem;
+  --space-l: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: 4rem;
+  /* vertical rhythm for page sections */
+  --space-section: clamp(40px, 6vw, 88px);
+
+  /* ---- radius scale ---------------------------------------------- */
+  --radius-xs: 3px;
+  --radius-s: 8px;
+  --radius-m: 14px;
+  --radius-l: 20px;
+  --radius-pill: 999px;
+  --radius: var(--radius-m); /* default */
+
+  /* ---- borders (shorthand) ------------------------------------- */
+  --border-hairline: 1px solid var(--color-hairline);
+  --border-card: 1px solid var(--color-border);
+
+  /* ---- shadows ------------------------------------------------ */
+  --shadow-s: 0 4px 14px rgba(var(--c-seed-rgb), 0.06);
+  --shadow-m: 0 10px 24px rgba(var(--c-seed-rgb), 0.1);
+  --shadow-l: 0 18px 40px rgba(var(--c-seed-rgb), 0.12);
+  --shadow-portrait: 0 24px 40px rgba(var(--c-seed-rgb), 0.14);
+
+  /* ---- motion ---------------------------------------------- */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  /* soft, decelerating — "gradual, not instant" */
+  --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --transition-fast: 0.15s var(--ease);
+  --transition: 0.2s var(--ease);
+  /* scroll-reveal */
+  --reveal-dur: 0.8s;
+  --reveal-shift: 20px;
+  --reveal-stagger: 90ms;
+
+  /* ---- layout -------------------------------------------- */
+  --page-max: 1400px;
+  --page-gutter: clamp(16px, 3vw, 40px);
+  --nav-h: 96px;
+
+  /* ---- z-index scale ----------------------------------- */
+  --z-raised: 1;
+  --z-nav: 100;
+  --z-overlay: 200;
+
+  color-scheme: light;
+}
+
+/* ===========================================================================
+   Dark theme
+   ---------------------------------------------------------------------------
+   Only the semantic colour tokens are re-pointed here — every component reads
+   through them, so the whole site follows. The skin/bract accents step one shade
+   brighter to hold up on a dark ground. The inline script in index.html always
+   stamps data-theme before first paint (from the saved choice, else the OS
+   setting), so this one block is the whole dark theme — no media-query copy.
+   =========================================================================== */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --c-seed-rgb: 0, 0, 0; /* alpha layers / shadows read as true black */
+
+  /* the fruit turned inside out: seed-black ground, pulp-white ink */
+  --color-bg: var(--df-flesh-900);
+  --color-bg-alt: color-mix(in srgb, var(--df-flesh-800) 55%, var(--df-flesh-900));
+  --color-surface: var(--df-flesh-800);
+
+  --color-ink: var(--df-flesh-100);
+  --color-ink-soft: var(--df-flesh-300);
+  --color-ink-faint: var(--df-flesh-500);
+
+  --color-accent: var(--df-skin-400); /* one step brighter for contrast on dark */
+  --color-accent-hover: var(--df-skin-300);
+  /* seed ink on the brighter fills: white on skin-400 is only 3.5:1 (2.4:1 on
+     hover), seed is 5.1:1+ */
+  --color-accent-ink: var(--df-seed);
+  /* mixed into surface (not bg) so chips lift off cards instead of sinking
+     below them; skin-200 text on this is ~8:1 */
+  --color-accent-soft: color-mix(in srgb, var(--df-skin-500) 24%, var(--df-flesh-800));
+  --color-accent-strong: var(--df-skin-200);
+  --color-accent-line: color-mix(in srgb, var(--df-skin-300) 35%, transparent);
+  --color-leaf: var(--df-bract-400);
+  --color-leaf-ink: var(--df-seed);
+  --color-leaf-soft: color-mix(in srgb, var(--df-bract-500) 22%, var(--df-flesh-800));
+
+  --color-border: rgba(246, 243, 242, 0.14);
+  --color-border-strong: rgba(246, 243, 242, 0.26);
+  --color-hairline: rgba(246, 243, 242, 0.1);
+
+  --color-mat: var(--df-flesh-800);
+  --color-mat-alt: var(--df-flesh-700);
+  --color-placeholder: var(--df-flesh-800);
+  --color-panel: var(--df-bract-dusk);
+
+  --glow: var(--df-skin-800);
+  --glow-soft: color-mix(in srgb, var(--df-skin-900) 35%, var(--df-flesh-900));
+
+  --shadow-s: 0 4px 14px rgba(0, 0, 0, 0.4);
+  --shadow-m: 0 10px 24px rgba(0, 0, 0, 0.5);
+  --shadow-l: 0 18px 40px rgba(0, 0, 0, 0.55);
+  --shadow-portrait: 0 24px 40px rgba(0, 0, 0, 0.6);
+}

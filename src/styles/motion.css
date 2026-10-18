@@ -1,0 +1,331 @@
+/* ===========================================================================
+   Motion — scroll reveals, ambient animation, route transitions
+   =========================================================================== */
+
+/* ---- scroll reveal (see src/directives/reveal.js) -------------------- */
+/* !important: .reveal is a temporary state class (stripped once settled), and
+   it has to beat a component's own scoped `transition` while it's active */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-shift, 20px), 0);
+  transition:
+    opacity var(--reveal-dur) var(--ease-soft) var(--reveal-delay, 0ms),
+    transform var(--reveal-dur) var(--ease-soft) var(--reveal-delay, 0ms) !important;
+}
+
+/* { blur: true } — big type comes into focus as it settles */
+.reveal--blur {
+  filter: blur(10px);
+  transition:
+    opacity var(--reveal-dur) var(--ease-soft) var(--reveal-delay, 0ms),
+    transform var(--reveal-dur) var(--ease-soft) var(--reveal-delay, 0ms),
+    filter var(--reveal-dur) var(--ease-soft) var(--reveal-delay, 0ms) !important;
+}
+.reveal--blur.is-revealed {
+  filter: none;
+}
+
+.reveal.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* { words: true } — the block holds still; each .reveal-word (--w = index)
+   rises out of a soft blur, one after another */
+.reveal.reveal--words {
+  opacity: 1;
+  transform: none;
+}
+.reveal--words .reveal-word {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(8px);
+  transform: translate3d(0, 0.45em, 0) rotate(2deg);
+  transform-origin: left bottom;
+  --word-delay: calc(var(--reveal-delay, 0ms) + var(--w, 0) * 55ms);
+  transition:
+    opacity 0.7s var(--ease-soft) var(--word-delay),
+    filter 0.7s var(--ease-soft) var(--word-delay),
+    transform 0.9s var(--ease-soft) var(--word-delay);
+}
+.reveal--words.is-revealed .reveal-word {
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
+
+/* ---- route transition (App.vue) ------------------------------------- */
+.page-enter-active {
+  transition:
+    opacity 0.5s var(--ease-soft),
+    transform 0.5s var(--ease-soft);
+}
+.page-leave-active {
+  transition:
+    opacity 0.28s var(--ease),
+    transform 0.28s var(--ease);
+}
+.page-enter-from {
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+}
+.page-leave-to {
+  opacity: 0;
+  transform: translate3d(0, -8px, 0);
+}
+
+/* ---- theme switch (useTheme) ---------------------------------------- */
+/* no default cross-fade: the new palette is revealed by a clip-path circle
+   growing out of the toggle, animated from JS */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* ---- first-paint entrance ----------------------------------------- */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* first-paint entrance for a marked element (e.g. the hero) */
+.enter-rise {
+  animation: rise-in 0.9s var(--ease-soft) both;
+  animation-delay: var(--enter-delay, 0ms);
+}
+
+/* horizontal variants — slide in from the left / right edge (--enter-x sets the distance) */
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translate3d(calc(var(--enter-x, 72px) * -1), 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translate3d(var(--enter-x, 72px), 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.enter-left,
+.enter-right {
+  animation-duration: 1.1s;
+  animation-timing-function: var(--ease-soft);
+  animation-fill-mode: both;
+  animation-delay: var(--enter-delay, 0ms);
+}
+
+.enter-left {
+  animation-name: slide-in-left;
+}
+
+/* handwritten wipe — the script title "writes" itself left → right while sliding in
+   (negative insets leave room for the script font's flourishes) */
+@keyframes write-in {
+  from {
+    opacity: 0;
+    clip-path: inset(-30% 100% -30% -10%);
+    transform: translate3d(-24px, 0, 0);
+  }
+  20% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(-30% -10% -30% -10%);
+    transform: none;
+  }
+}
+
+.enter-write {
+  animation: write-in 1.5s var(--ease-in-out) both;
+  animation-delay: var(--enter-delay, 0ms);
+}
+
+.enter-right {
+  animation-name: slide-in-right;
+}
+
+/* rise that only touches `translate` — safe on elements that keep their own
+   `transform` (tilted tabs, rotated stickers…) */
+@keyframes up-in {
+  from {
+    opacity: 0;
+    translate: 0 var(--enter-y, 28px);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+.enter-up {
+  animation: up-in 0.9s var(--ease-soft) both;
+  animation-delay: var(--enter-delay, 0ms);
+}
+
+/* big type comes into focus while it rises */
+@keyframes focus-in {
+  from {
+    opacity: 0;
+    filter: blur(12px);
+    translate: 0 18px;
+  }
+  to {
+    opacity: 1;
+    filter: none;
+    translate: 0 0;
+  }
+}
+
+.enter-focus {
+  animation: focus-in 1.1s var(--ease-soft) both;
+  animation-delay: var(--enter-delay, 0ms);
+}
+
+/* bouncy pop + a slow idle bob afterwards (404) */
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    scale: 0.6;
+    rotate: -8deg;
+  }
+  60% {
+    opacity: 1;
+    scale: 1.08;
+    rotate: 3deg;
+  }
+  100% {
+    opacity: 1;
+    scale: 1;
+    rotate: 0deg;
+  }
+}
+
+@keyframes bob {
+  50% {
+    translate: 0 -10px;
+    rotate: -2deg;
+  }
+}
+
+.enter-pop {
+  animation:
+    pop-in 0.9s var(--ease-soft) both,
+    bob 4s var(--ease-in-out) 1s infinite;
+  animation-delay: var(--enter-delay, 0ms), calc(var(--enter-delay, 0ms) + 0.9s);
+}
+
+/* page headers drift up + fade as you scroll away, like the home hero */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .scroll-drift {
+      animation: scroll-drift linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 60vh;
+    }
+  }
+}
+
+@keyframes scroll-drift {
+  to {
+    opacity: 0.2;
+    transform: translate3d(0, -40px, 0);
+  }
+}
+
+/* line doodles draw themselves once v-reveal shows them (paths need
+   pathLength="1"; the draw ends with the rise, before v-reveal cleans up) */
+.draw-in.reveal path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset var(--reveal-dur) var(--ease-in-out)
+    var(--reveal-delay, 0ms);
+}
+.draw-in.reveal.is-revealed path {
+  stroke-dashoffset: 0;
+}
+
+/* ---- swap transition — fade + lift between two states (filters, forms) - */
+.swap-enter-active {
+  transition:
+    opacity 0.45s var(--ease-soft),
+    transform 0.45s var(--ease-soft);
+}
+.swap-leave-active {
+  transition:
+    opacity 0.2s var(--ease),
+    transform 0.2s var(--ease);
+}
+.swap-enter-from {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0) scale(0.98);
+}
+.swap-leave-to {
+  opacity: 0;
+  transform: translate3d(0, -6px, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enter-up,
+  .enter-focus,
+  .enter-pop {
+    animation: none;
+  }
+  .draw-in.reveal path {
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+  .swap-enter-active,
+  .swap-leave-active {
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal.is-revealed {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .reveal--blur {
+    filter: none;
+  }
+  .reveal--words .reveal-word {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    transition: none;
+  }
+  ::view-transition-group(root) {
+    animation: none;
+  }
+  .enter-rise,
+  .enter-left,
+  .enter-right,
+  .enter-write {
+    animation: none;
+  }
+  .page-enter-active,
+  .page-leave-active {
+    transition: none;
+  }
+}
