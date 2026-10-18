@@ -22,6 +22,9 @@ const prefersReducedMotion =
   window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
 
 let observer = null
+// one-shot elements still waiting to be revealed
+const pending = new Set()
+
 function getObserver() {
   if (observer || typeof IntersectionObserver === 'undefined') return observer
   observer = new IntersectionObserver(
@@ -30,7 +33,10 @@ function getObserver() {
         const el = entry.target
         if (entry.isIntersecting) {
           el.classList.add('is-revealed')
-          if (el.__revealOnce !== false) observer.unobserve(el)
+          if (el.__revealOnce !== false) {
+            observer.unobserve(el)
+            pending.delete(el)
+          }
         } else if (el.__revealOnce === false) {
           el.classList.remove('is-revealed')
         }
@@ -38,7 +44,30 @@ function getObserver() {
     },
     { threshold: 0.01, rootMargin: '0px 0px -12% 0px' },
   )
+  window.addEventListener('scroll', revealAtPageEnd, { passive: true })
   return observer
+}
+
+// The -12% bottom margin can never be crossed by elements in the last ~12% of
+// the page (e.g. the footer links on tall screens), so once the visitor hits
+// the bottom, show whatever is on screen and still hidden.
+let ticking = false
+function revealAtPageEnd() {
+  if (ticking || !pending.size) return
+  ticking = true
+  requestAnimationFrame(() => {
+    ticking = false
+    const doc = document.documentElement
+    if (window.scrollY + window.innerHeight < doc.scrollHeight - 2) return
+    for (const el of pending) {
+      const r = el.getBoundingClientRect()
+      if (r.top < window.innerHeight && r.bottom > 0) {
+        el.classList.add('is-revealed')
+        observer.unobserve(el)
+        pending.delete(el)
+      }
+    }
+  })
 }
 
 function cleanup(el) {
@@ -89,8 +118,10 @@ export const reveal = {
     }
 
     const io = getObserver()
-    if (io) io.observe(el)
-    else cleanup(el)
+    if (io) {
+      io.observe(el)
+      if (el.__revealOnce) pending.add(el)
+    } else cleanup(el)
   },
   updated(el) {
     // element reused by Vue (e.g. navigating between two case studies):
@@ -105,6 +136,7 @@ export const reveal = {
   },
   unmounted(el) {
     observer?.unobserve(el)
+    pending.delete(el)
   },
 }
 
