@@ -197,8 +197,8 @@ const status = computed(() => {
         :style="{ '--turn': `${TURN_MS}ms` }"
       >
         <!-- leather case: back boards the paper sits on -->
-        <div class="board board--left" :class="{ 'is-shown': leftBoard }" aria-hidden="true"><span class="leather-grain" /></div>
-        <div class="board board--right" :class="{ 'is-shown': rightBoard }" aria-hidden="true"><span class="leather-grain" /></div>
+        <div class="board board--left" :class="{ 'is-shown': leftBoard }" aria-hidden="true" />
+        <div class="board board--right" :class="{ 'is-shown': rightBoard }" aria-hidden="true" />
 
         <div
           v-for="(leaf, i) in leaves"
@@ -233,7 +233,7 @@ const status = computed(() => {
                  the right, an elastic band wraps it, ribbons hang off the spine -->
             <div v-else-if="isCover(i, side)" class="cover" :class="`cover--${side}`">
               <span class="cover__lace" aria-hidden="true" />
-              <span class="cover__skin" aria-hidden="true"><span class="leather-grain" /></span>
+              <span class="cover__skin" aria-hidden="true" />
               <!-- brass corner guards on the leather's fore-edge -->
               <span class="corner corner--top" aria-hidden="true" />
               <span class="corner corner--bottom" aria-hidden="true" />
@@ -473,13 +473,15 @@ const status = computed(() => {
 }
 
 /* ---- leather ---------------------------------------------------------- */
-/* pebble grain is lit noise (it catches the light like real hide), laid
-   in soft-light over the colour; a large, slow noise adds the uneven,
-   handled patches every real cover has */
+/* pebble grain is lit noise (it catches the light like real hide), split
+   into wine-dark shadows and pink highlights baked into the SVG, so it
+   needs no blend mode: iOS Safari won't blend inside the 3D page flip and
+   painted the grey height map over the dye. A large, slow noise adds the
+   uneven, handled patches every real cover has. */
 .book {
-  --leather-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeDiffuseLighting lighting-color='%23fff' surfaceScale='1.6' diffuseConstant='.9'%3E%3CfeDistantLight azimuth='235' elevation='40'/%3E%3C/feDiffuseLighting%3E%3CfeColorMatrix values='.55 0 0 0 .06 .55 0 0 0 .06 .55 0 0 0 .06 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  --leather-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeDiffuseLighting lighting-color='%23fff' surfaceScale='1.6' diffuseConstant='.9' result='l'%3E%3CfeDistantLight azimuth='235' elevation='40'/%3E%3C/feDiffuseLighting%3E%3CfeColorMatrix in='l' result='s' values='0 0 0 0 .12 0 0 0 0 0 0 0 0 0 .02 -.8 0 0 0 .42'/%3E%3CfeColorMatrix in='l' result='h' values='0 0 0 0 1 0 0 0 0 .3 0 0 0 0 .38 .45 0 0 0 -.1'/%3E%3CfeMerge%3E%3CfeMergeNode in='s'/%3E%3CfeMergeNode in='h'/%3E%3C/feMerge%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
   --leather-mottle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.006' numOctaves='3' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -.9 .48'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
-  --leather: var(--leather-mottle), linear-gradient(160deg, var(--scrap-leather-400), var(--scrap-leather-600) 45%, var(--scrap-leather-800));
+  --leather: var(--leather-grain), var(--leather-mottle), linear-gradient(160deg, var(--scrap-leather-400), var(--scrap-leather-600) 45%, var(--scrap-leather-800));
   /* resting on a table: tight contact shadow + a wide, soft ambient one */
   --book-shadow:
     0 1px 1px rgba(30, 10, 10, 0.3),
@@ -506,9 +508,8 @@ const status = computed(() => {
   top: calc(var(--case-y) * -1);
   bottom: calc(var(--case-y) * -1);
   width: calc(50% * (1 + var(--case-x) / 100%));
-  isolation: isolate;
   background: var(--leather);
-  background-size: 43.75rem 43.75rem, auto;
+  background-size: 15rem 15rem, 43.75rem 43.75rem, auto;
   box-shadow: var(--book-shadow), var(--leather-wear);
   opacity: 0;
 }
@@ -567,8 +568,7 @@ const status = computed(() => {
   background:
     radial-gradient(ellipse at 28% 16%, rgba(255, 235, 225, 0.12), transparent 55%),
     var(--leather);
-  background-size: auto, 43.75rem 43.75rem, auto;
-  isolation: isolate;
+  background-size: auto, 15rem 15rem, 43.75rem 43.75rem, auto;
   box-shadow: var(--book-shadow), var(--leather-wear);
 }
 .cover--front .cover__skin {
@@ -579,25 +579,6 @@ const status = computed(() => {
   left: calc(var(--case-x) * -1);
   border-radius: var(--radius-m) 3px 3px var(--radius-m);
 }
-/* the grain sits on its own layer: iOS Safari drops background-blend-mode
-   and paints the grey height map straight over the dye (same as the wallet) */
-.leather-grain {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: var(--leather-grain);
-  background-size: 15rem 15rem;
-  mix-blend-mode: soft-light;
-  pointer-events: none;
-}
-/* stitching, spine fold and brass corners stay above the grain */
-.cover__skin::before,
-.cover__skin::after,
-.board::before,
-.board::after {
-  z-index: 1;
-}
-
 /* the spine fold */
 .cover__skin::after {
   content: '';
