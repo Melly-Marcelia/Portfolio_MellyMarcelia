@@ -61,7 +61,7 @@ const overlayStyle = {
 }
 
 .iwv__screen :deep(.cv__btn) {
-  width: clamp(32px, 4vw, 44px);
-  height: clamp(32px, 4vw, 44px);
+  width: clamp(2rem, 4vw, 2.75rem);
+  height: clamp(2rem, 4vw, 2.75rem);
 }
 </style>

@@ -356,8 +356,8 @@ const seamBox = (k) => `-0.5 0 1 ${pocketSeams[k].len}`
   grid-column: 1;
   grid-row: 1;
   /* start level with the wallet itself: skip the same headroom the stage
-     reserves (33% of the stage width = min(540px, its 1.15fr column)) */
-  padding-top: calc(0.33 * min(540px, (100cqw - var(--gap)) * 1.15 / 2.15));
+     reserves (33% of the stage width = min(33.75rem, its 1.15fr column)) */
+  padding-top: calc(0.33 * min(33.75rem, (100cqw - var(--gap)) * 1.15 / 2.15));
 }
 
 /* ---- the wallet ---------------------------------------------------- */
@@ -367,7 +367,7 @@ const seamBox = (k) => `-0.5 0 1 ${pocketSeams[k].len}`
   grid-row: 1;
   justify-self: end;
   width: 100%;
-  max-width: 540px;
+  max-width: 33.75rem;
 }
 .wallet-stage::before {
   content: '';
@@ -427,9 +427,19 @@ const seamBox = (k) => `-0.5 0 1 ${pocketSeams[k].len}`
   isolation: isolate;
   background:
     var(--leather-sheen),
-    var(--leather-grain),
     linear-gradient(170deg, var(--leather-700), var(--leather-800) 70%, var(--leather-900));
-  background-blend-mode: normal, soft-light, normal;
+}
+/* the grain sits on its own layer: iOS Safari drops background-blend-mode
+   here and paints the grey height map straight over the dye */
+.wallet__panel::before,
+.pocket::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--leather-grain);
+  mix-blend-mode: soft-light;
+  pointer-events: none;
 }
 /* painted edge, a bevel catching the light, the valley at the spine with a
    soft ridge either side of it, a little wear round the outside, and the
@@ -480,9 +490,7 @@ const seamBox = (k) => `-0.5 0 1 ${pocketSeams[k].len}`
   bottom: 0;
   background:
     var(--leather-sheen),
-    var(--leather-grain),
     linear-gradient(180deg, var(--leather-500), var(--leather-600) 22%, var(--leather-700) 85%, var(--leather-800));
-  background-blend-mode: normal, soft-light, normal;
   border-top: 0.3cqw solid var(--edge-paint);
 }
 .wallet__panel--left .pocket {
@@ -801,16 +809,16 @@ const seamBox = (k) => `-0.5 0 1 ${pocketSeams[k].len}`
 
 /* ---- full ID card (info column) ------------------------------------ */
 .idc {
-  max-width: 420px;
+  max-width: 26.25rem;
   padding: 1rem 1.15rem 0.85rem;
-  border-radius: 14px;
+  border-radius: 0.875rem;
   color: var(--ticket-ink);
   background:
-    repeating-radial-gradient(circle at 85% 20%, transparent 0 9px, rgba(var(--c-seed-rgb), 0.04) 9px 10px),
+    repeating-radial-gradient(circle at 85% 20%, transparent 0 9px, rgba(var(--c-seed-rgb), 0.04) 9px 0.625rem),
     var(--card-stock);
   box-shadow:
     0 1px 2px rgba(var(--c-seed-rgb), 0.1),
-    0 14px 30px -12px rgba(var(--c-seed-rgb), 0.35);
+    0 0.875rem 1.875rem -0.75rem rgba(var(--c-seed-rgb), 0.35);
   animation: stamp-in 0.5s var(--ease-soft) both;
 }
 .idc__head {
@@ -943,8 +951,8 @@ const seamBox = (k) => `-0.5 0 1 ${pocketSeams[k].len}`
 .stamp {
   position: relative;
   flex: none;
-  width: 64px;
-  height: 64px;
+  width: 4rem;
+  height: 4rem;
   padding: 5px;
   background: radial-gradient(circle, transparent 2.4px, var(--stamp-paper) 2.9px) -4px -4px / 8px 8px;
   transform: rotate(var(--tilt));

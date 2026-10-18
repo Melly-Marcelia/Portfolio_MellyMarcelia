@@ -92,7 +92,7 @@ const overlays = [
 .lxdoc {
   position: relative;
   width: 100%;
-  max-width: 1440px;
+  max-width: 90rem;
   margin: clamp(2rem, 5vw, 3.5rem) auto 0; /* air below the intro paragraph */
 }
 
@@ -115,7 +115,7 @@ const overlays = [
 }
 
 .lxdoc__ov :deep(.cv__btn) {
-  width: clamp(26px, 3.5vw, 44px);
-  height: clamp(26px, 3.5vw, 44px);
+  width: clamp(1.625rem, 3.5vw, 2.75rem);
+  height: clamp(1.625rem, 3.5vw, 2.75rem);
 }
 </style>

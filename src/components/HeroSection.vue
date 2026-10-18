@@ -90,7 +90,7 @@ onBeforeUnmount(() => (logoAnchor.value = null))
   grid-template-columns: 1.4fr 0.8fr;
   align-items: center;
   gap: clamp(var(--space-m), 5vw, var(--space-2xl));
-  padding-block: clamp(16px, 3vh, 44px);
+  padding-block: clamp(1rem, 3vh, 2.75rem);
 }
 
 /* nudge the title + intro in from the left edge */
@@ -112,7 +112,7 @@ onBeforeUnmount(() => (logoAnchor.value = null))
 @keyframes hero-drift {
   to {
     opacity: 0.15;
-    transform: translate3d(0, -48px, 0);
+    transform: translate3d(0, -3rem, 0);
   }
 }
 
@@ -132,7 +132,7 @@ onBeforeUnmount(() => (logoAnchor.value = null))
   justify-self: end;
   /* pull the dragon fruit in from the right edge */
   margin-right: clamp(2rem, 9vw, 9rem);
-  height: clamp(240px, 46vh, 400px);
+  height: clamp(15rem, 46vh, 25rem);
   aspect-ratio: var(--logo-ratio);
 }
 
@@ -154,7 +154,7 @@ onBeforeUnmount(() => (logoAnchor.value = null))
     justify-self: center;
     margin-right: 0;
     order: -1;
-    height: clamp(200px, 32vh, 280px);
+    height: clamp(12.5rem, 32vh, 17.5rem);
   }
 }
 </style>

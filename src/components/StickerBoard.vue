@@ -185,7 +185,7 @@ function tidy() {
 .stickers__table {
   position: relative;
   /* also capped by screen height, so the whole table fits under the navbar */
-  height: clamp(440px, min(58vw, 100svh - var(--nav-h) - 4rem), 640px);
+  height: clamp(27.5rem, min(58vw, 100svh - var(--nav-h) - 4rem), 40rem);
 }
 
 .stickers__furniture {
@@ -233,7 +233,7 @@ function tidy() {
   cursor: grabbing;
   scale: 1.1;
   rotate: calc(var(--rot) * 0.4);
-  filter: drop-shadow(0 16px 18px rgba(60, 35, 15, 0.38));
+  filter: drop-shadow(0 1rem 1.125rem rgba(60, 35, 15, 0.38));
   /* follow the pointer 1:1 while held */
   transition:
     rotate 0.3s var(--ease-soft),
@@ -255,7 +255,7 @@ function tidy() {
 /* sized off the viewport so a full table of stickers fits on phones too */
 .sticker--image img {
   display: block;
-  width: calc(clamp(56px, 9.5vw, 124px) * var(--s, 1));
+  width: calc(clamp(3.5rem, 9.5vw, 7.75rem) * var(--s, 1));
   height: auto;
   pointer-events: none;
 }

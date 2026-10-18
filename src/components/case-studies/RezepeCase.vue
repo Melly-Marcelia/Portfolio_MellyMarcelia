@@ -358,9 +358,9 @@ const palette = [
   --line: #f0dcc2;
   --head: 'Sansita', var(--font-body);
   --type: 'Asap', var(--font-body);
-  --max: 1120px;
+  --max: 70rem;
   --sec: clamp(4rem, 9vw, 7rem);
-  --radius: 24px;
+  --radius: 1.5rem;
 
   margin-top: clamp(1rem, 3vw, 2rem);
   background: var(--cream);
@@ -472,17 +472,17 @@ const palette = [
 
 /* ---- tablet frame around the screens ---- */
 .rz-tablet {
-  padding: clamp(6px, 1.2vw, 14px);
+  padding: clamp(6px, 1.2vw, 0.875rem);
   background: #2a1610;
-  border-radius: clamp(16px, 2.6vw, 30px);
-  box-shadow: 0 2px 4px rgba(105, 2, 2, 0.1), 0 18px 40px rgba(141, 66, 0, 0.18);
+  border-radius: clamp(1rem, 2.6vw, 1.875rem);
+  box-shadow: 0 2px 4px rgba(105, 2, 2, 0.1), 0 1.125rem 2.5rem rgba(141, 66, 0, 0.18);
 }
 
 .rz-tablet img {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: clamp(10px, 1.5vw, 18px);
+  border-radius: clamp(0.625rem, 1.5vw, 1.125rem);
 }
 
 /* ---- hero ---- */
@@ -503,13 +503,13 @@ const palette = [
 
 .rz-hero__device {
   position: relative;
-  max-width: 980px;
+  max-width: 61.25rem;
   margin-inline: auto;
 }
 
 /* ---- showcase: wider than the text column, like a cover band ---- */
 .rz-showcase {
-  max-width: calc(1440px + 2 * var(--page-gutter));
+  max-width: calc(90rem + 2 * var(--page-gutter));
   margin-inline: auto;
   padding-inline: var(--page-gutter);
 }
@@ -519,7 +519,7 @@ const palette = [
   width: 100%;
   height: auto;
   aspect-ratio: 5 / 2;
-  border-radius: clamp(16px, 3vw, 40px);
+  border-radius: clamp(1rem, 3vw, 2.5rem);
   background: #120707;
 }
 
@@ -552,7 +552,7 @@ const palette = [
   padding: 0.35em 0.9em;
   font-size: var(--step--1);
   border: 1px solid var(--line);
-  border-radius: 999px;
+  border-radius: 62.4375rem;
   background: var(--paper);
 }
 
@@ -676,7 +676,7 @@ const palette = [
   font-size: var(--step--1);
   color: var(--faint);
   background: var(--cream);
-  border-radius: 999px;
+  border-radius: 62.4375rem;
 }
 
 .rz-market__us {
@@ -697,7 +697,7 @@ const palette = [
   display: block;
   width: 100%;
   border-radius: var(--radius-m);
-  box-shadow: 0 18px 40px rgba(105, 2, 2, 0.14);
+  box-shadow: 0 1.125rem 2.5rem rgba(105, 2, 2, 0.14);
 }
 
 .rz-shot--flat img {
@@ -766,7 +766,7 @@ const palette = [
   display: grid;
   align-content: end;
   gap: 0.2rem;
-  min-height: 150px;
+  min-height: 9.375rem;
   padding: var(--space-s);
   font-size: var(--step--1);
   border: 1px solid var(--line);

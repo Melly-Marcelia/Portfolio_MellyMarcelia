@@ -11,6 +11,13 @@
 }
 
 html {
+  /* Big screens: scale the whole site up instead of leaving a laptop-sized
+     layout floating in empty space. Sizes across the app are in rem, so
+     this one value grows them all. 16px up to ~1600px wide, then follows
+     the viewport (bounded by height too, so ultrawides don't balloon),
+     capped at 32px (a 3200px-wide screen). The 100% floor keeps the
+     visitor's own font setting. */
+  font-size: clamp(100%, min(1vw, 1.6vh), 200%);
   scroll-behavior: smooth;
   /* anchor jumps and focus scrolling stop below the sticky navbar */
   scroll-padding-top: var(--nav-h);

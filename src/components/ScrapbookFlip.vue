@@ -392,7 +392,7 @@ const status = computed(() => {
 
 .scrap__stage:focus-visible .book {
   outline: 2px solid var(--color-accent);
-  outline-offset: 12px;
+  outline-offset: 0.75rem;
   border-radius: var(--radius-s);
 }
 
@@ -402,9 +402,9 @@ const status = computed(() => {
   position: relative;
   /* as wide as fits, but also short enough that the whole book plus the
      arrows fits under the navbar (8rem = stage padding + controls) */
-  width: min(100%, 940px, max(420px, calc((100svh - var(--nav-h) - 8rem) * 1.36)));
+  width: min(100%, 58.75rem, max(26.25rem, calc((100svh - var(--nav-h) - 8rem) * 1.36)));
   aspect-ratio: 1.36;
-  perspective: 2400px;
+  perspective: 150rem;
   transition: translate var(--turn) var(--ease-in-out);
 }
 
@@ -485,14 +485,14 @@ const status = computed(() => {
   --book-shadow:
     0 1px 1px rgba(30, 10, 10, 0.3),
     0 4px 8px -2px rgba(30, 10, 10, 0.25),
-    0 18px 36px -10px rgba(30, 10, 10, 0.35),
-    0 40px 70px -30px rgba(30, 10, 10, 0.3);
+    0 1.125rem 2.25rem -0.625rem rgba(30, 10, 10, 0.35),
+    0 2.5rem 4.375rem -1.875rem rgba(30, 10, 10, 0.3);
   /* worn, darker edges where hands have handled it */
   --leather-wear:
     inset 0 0 0 1px rgba(255, 220, 210, 0.08),
     inset 0 0 0 2px rgba(0, 0, 0, 0.18),
-    inset 0 0 14px rgba(0, 0, 0, 0.35),
-    inset 0 -8px 18px rgba(0, 0, 0, 0.3);
+    inset 0 0 0.875rem rgba(0, 0, 0, 0.35),
+    inset 0 -8px 1.125rem rgba(0, 0, 0, 0.3);
 }
 
 /* the case the paper is bound into — a little bigger than the pages.
@@ -508,7 +508,7 @@ const status = computed(() => {
   bottom: calc(var(--case-y) * -1);
   width: calc(50% * (1 + var(--case-x) / 100%));
   background: var(--leather);
-  background-size: 240px 240px, 700px 700px, auto;
+  background-size: 15rem 15rem, 43.75rem 43.75rem, auto;
   background-blend-mode: var(--leather-blend);
   box-shadow: var(--book-shadow), var(--leather-wear);
   opacity: 0;
@@ -568,7 +568,7 @@ const status = computed(() => {
   background:
     radial-gradient(ellipse at 28% 16%, rgba(255, 235, 225, 0.12), transparent 55%),
     var(--leather);
-  background-size: auto, 240px 240px, 700px 700px, auto;
+  background-size: auto, 15rem 15rem, 43.75rem 43.75rem, auto;
   background-blend-mode: normal, var(--leather-blend);
   box-shadow: var(--book-shadow), var(--leather-wear);
 }
@@ -887,8 +887,8 @@ const status = computed(() => {
     var(--scrap-photo-paper);
   box-shadow:
     0 1px 1px rgba(30, 10, 10, 0.4),
-    0 6px 10px -3px rgba(30, 10, 10, 0.45),
-    4px 14px 18px -10px rgba(30, 10, 10, 0.5);
+    0 6px 0.625rem -3px rgba(30, 10, 10, 0.45),
+    4px 0.875rem 1.125rem -0.625rem rgba(30, 10, 10, 0.5);
   rotate: -2.5deg;
 }
 /* translucent washi tape over the strip's top edge, with torn ends */
@@ -1036,7 +1036,7 @@ const status = computed(() => {
   height: 100%;
   /* faint dotted journal paper */
   background-image: radial-gradient(rgba(26, 21, 23, 0.14) 1px, transparent 1.4px);
-  background-size: 18px 18px;
+  background-size: 1.125rem 1.125rem;
 }
 
 .page__caption {

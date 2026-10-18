@@ -27,7 +27,11 @@
  *   comingSoon  true → card + carousel tile show "Coming soon" on the image and don't
  *               link anywhere; there's no /works/:slug page for it yet
  *   link        optional external link (live site, repo, prototype, Figma file)
- *   linkLabel   text for that link — defaults to "view prototype"
+ *   linkLabel   optional override; otherwise the label comes from the URL:
+ *               Figma → "view prototype", GitHub repo → "view code",
+ *               anything else → "view live site"
+ *   repos       optional array of { href, label } code repos — shown as a "github :"
+ *               row under the link (e.g. separate frontend and backend repos)
  *   gallery     true → the case study is one continuous design doc; its images
  *               stack edge-to-edge with no seams and no cover above them. The
  *               page header, facts row and any paragraph blocks still render
@@ -91,7 +95,6 @@ const entries = [
     timeline: '3 days',
     tools: ['Figma', 'Notion'],
     link: 'https://www.figma.com/design/XXlsv4FtfgyKZ8BArBNryo/California---Network-State-UI?node-id=6934-3136',
-    linkLabel: 'view Figma file',
     // gallery: the slices are one continuous design document, so they stack
     // seamlessly full-width. The standard header + intro paragraph sit above them.
     gallery: true,
@@ -174,7 +177,7 @@ const entries = [
       'A full website redesign for the Indonesian beauty label Luxcrime.',
     cover: '/assets/works/luxcrime-thumb.mp4',
     poster: '/assets/works/luxcrime-thumb.jpg',
-    featured: false,
+    featured: true,
     tools: ['Figma'],
     // /proto/ (not /design/) — opens straight into the presentation view, not the editor
     link: 'https://www.figma.com/proto/InKuWUX8VWIv5OZsfrr4xf/LUXCRIME-REBRANDING?node-id=75-602',
@@ -215,7 +218,12 @@ const entries = [
     timeline: 'October 2025 – June 2026',
     tools: ['Figma', 'Adobe Illustrator', 'VS Code', 'GitHub', 'Postman', 'Vue 3', 'Notion', 'Trello'],
     link: 'https://www.figma.com/design/QwtCX9obDCpppvriT8SxbJ/LIVIO-BY-BURT-S-BEES---MELLY?node-id=4804-5262',
-    linkLabel: 'view Figma file',
+    // team repos owned by anastasiiakovtun; both are private on GitHub, so
+    // visitors without access get a 404 until they're made public
+    repos: [
+      { href: 'https://github.com/anastasiiakovtun/livio-frontend', label: 'frontend' },
+      { href: 'https://github.com/anastasiiakovtun/livio-backend', label: 'backend' },
+    ],
     // bespoke layout: src/components/case-studies/LivioCase.vue holds the whole
     // story (process, features, brand, UX mapping, before/after testing); the
     // intro paragraph below renders above it like on the other projects
@@ -240,10 +248,9 @@ const entries = [
     cover: '/assets/works/wach/cover-track.jpg',
     featured: true,
     tools: ['Figma'],
-    // the GitHub repo (Melly-Marcelia/wach) is private and the prototype isn't
-    // deployed, so the Figma file is the only link for now
     link: 'https://www.figma.com/design/qrrRfJp4Z8kYEFydP6Hj0b/WACH_DP2?node-id=0-1',
-    linkLabel: 'view Figma file',
+    // the repo is private on GitHub, so visitors without access get a 404
+    repos: [{ href: 'https://github.com/Melly-Marcelia/wach', label: 'view code' }],
     // bespoke layout: src/components/case-studies/WachCase.vue holds the whole
     // story; the intro paragraph below renders above it
     view: 'wach',
@@ -267,7 +274,6 @@ const entries = [
     featured: true,
     timeline: 'September 2026',
     link: 'https://github.com/Melly-Marcelia/drinkety',
-    linkLabel: 'view on GitHub',
     // bespoke layout: src/components/case-studies/DrinketyCase.vue holds the
     // story (about, problem, how it works, stamps, type & colour, screens, build)
     view: 'drinkety',
@@ -283,7 +289,7 @@ const entries = [
     cover: '/assets/works/rezepe/cover-ipad.jpg',
     featured: false,
     timeline: '2024',
-    // shown as a design prototype only: no code, repo or live app on this page
+    link: 'https://github.com/Melly-Marcelia/rezepe',
     // bespoke layout: src/components/case-studies/RezepeCase.vue holds the
     // story (research, features, iteration, brand); the intro paragraph below
     // renders above it
@@ -308,7 +314,6 @@ const entries = [
     tools: ['Figma', 'Vue 3', 'Vite', 'Supabase'],
     // the full app runs on GitHub Pages in browser-only demo mode
     link: 'https://melly-marcelia.github.io/advent-calendar/',
-    linkLabel: 'live site',
     content: [
       {
         type: 'paragraph',
@@ -366,7 +371,6 @@ const entries = [
     timeline: 'September 2026',
     tools: ['Electron', 'Vue 3', 'TypeScript', 'SQLite', 'Obsidian'],
     link: 'https://github.com/MellyMarcelia/todobee',
-    linkLabel: 'view on GitHub',
     content: [
       {
         type: 'paragraph',
@@ -475,10 +479,9 @@ const entries = [
     // lockscreen and trip-options screens (the screens are 2x exports from the
     // Figma page "hi-fi prototype")
     cover: '/assets/works/nmbs-cover.jpg',
-    featured: true,
+    featured: false,
     tools: ['Figma'],
     link: 'https://www.figma.com/design/LVBph6pRvpD3reB3VtoM0m/Hi-Fi-NMBS-Prototype---MELLY?node-id=11-1114',
-    linkLabel: 'view Figma file',
     // bespoke layout: src/components/case-studies/NmbsCase.vue holds the
     // story (team research → lo-fi, then solo sub-brand → hi-fi → storytelling);
     // the intro paragraph below renders above it
@@ -503,7 +506,6 @@ const entries = [
     timeline: 'September 2026',
     tools: ['Electron', 'Vue 3', 'TypeScript', 'SQLite', 'Obsidian'],
     link: 'https://github.com/MellyMarcelia/beemodoro',
-    linkLabel: 'view on GitHub',
     content: [
       {
         type: 'paragraph',
@@ -650,7 +652,6 @@ const entries = [
     featured: false,
     // live GitHub Pages build (repo: github.com/MellyMarcelia/versailles-scroll)
     link: 'https://mellymarcelia.github.io/versailles-scroll/',
-    linkLabel: 'live site',
     content: [
       {
         type: 'embed',

@@ -43,9 +43,9 @@ const CLEAR_WORD = 'Clarity'
   isolation: isolate;
   background: var(--color-surface);
   color: var(--color-ink);
-  padding-block: clamp(48px, 9vw, 120px);
+  padding-block: clamp(3rem, 9vw, 7.5rem);
   /* breathing room below the carousel */
-  margin-top: clamp(56px, 7vw, 112px);
+  margin-top: clamp(3.5rem, 7vw, 7rem);
   text-align: center;
 }
 
@@ -61,9 +61,9 @@ const CLEAR_WORD = 'Clarity'
   background: color-mix(in srgb, var(--color-ink) 70%, transparent);
   --seeds: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cg%3E%3Cellipse cx='18' cy='24' rx='3.8' ry='2.2' transform='rotate(35 18 24)'/%3E%3Cellipse cx='62' cy='12' rx='3.2' ry='1.9' transform='rotate(-20 62 12)'/%3E%3Cellipse cx='104' cy='40' rx='3.8' ry='2.2' transform='rotate(55 104 40)'/%3E%3Cellipse cx='150' cy='18' rx='2.9' ry='1.8' transform='rotate(10 150 18)'/%3E%3Cellipse cx='184' cy='58' rx='3.8' ry='2.2' transform='rotate(-40 184 58)'/%3E%3Cellipse cx='36' cy='78' rx='3.2' ry='1.9' transform='rotate(-15 36 78)'/%3E%3Cellipse cx='82' cy='96' rx='3.8' ry='2.2' transform='rotate(40 82 96)'/%3E%3Cellipse cx='128' cy='84' rx='2.9' ry='1.8' transform='rotate(-55 128 84)'/%3E%3Cellipse cx='170' cy='112' rx='3.8' ry='2.2' transform='rotate(25 170 112)'/%3E%3Cellipse cx='14' cy='138' rx='3.2' ry='1.9' transform='rotate(60 14 138)'/%3E%3Cellipse cx='58' cy='154' rx='3.8' ry='2.2' transform='rotate(-30 58 154)'/%3E%3Cellipse cx='106' cy='140' rx='2.9' ry='1.8' transform='rotate(15 106 140)'/%3E%3Cellipse cx='146' cy='170' rx='3.8' ry='2.2' transform='rotate(-10 146 170)'/%3E%3Cellipse cx='190' cy='176' rx='3.2' ry='1.9' transform='rotate(45 190 176)'/%3E%3Cellipse cx='30' cy='192' rx='2.9' ry='1.8' transform='rotate(20 30 192)'/%3E%3Cellipse cx='86' cy='186' rx='3.8' ry='2.2' transform='rotate(-45 86 186)'/%3E%3C/g%3E%3C/svg%3E");
   --clear: radial-gradient(ellipse 42% 50% at 50% 50%, transparent 35%, #000 100%);
-  -webkit-mask: var(--seeds) 0 0 / 200px 200px repeat, var(--clear);
+  -webkit-mask: var(--seeds) 0 0 / 12.5rem 12.5rem repeat, var(--clear);
   -webkit-mask-composite: source-in;
-  mask: var(--seeds) 0 0 / 200px 200px repeat, var(--clear);
+  mask: var(--seeds) 0 0 / 12.5rem 12.5rem repeat, var(--clear);
   mask-composite: intersect;
 }
 

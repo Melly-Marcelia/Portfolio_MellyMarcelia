@@ -15,8 +15,8 @@
 export const stickers = [
   { label: 'UX research', image: '/assets/stickers/pumpkin-bear.png', x: 14, y: 40, rot: -8 },
   { label: 'Visual design', image: '/assets/stickers/sun.png', x: 30, y: 30, rot: 7 },
-  { label: 'Illustration', image: '/assets/stickers/tulip-pot.png', x: 46, y: 38, rot: -5 },
-  { label: 'Prototyping', image: '/assets/stickers/bunny-bear.png', x: 63, y: 42, rot: 6 },
+  { label: 'Illustration', image: '/assets/stickers/tulip-pot.png', x: 43, y: 38, rot: -5 },
+  { label: 'Prototyping', image: '/assets/stickers/bunny-bear.png', x: 64, y: 42, rot: 6 },
   { label: 'Design systems', image: '/assets/stickers/penguin.png', x: 80, y: 30, rot: -6 },
   { label: 'Product strategy', image: '/assets/stickers/sandcastle.png', x: 20, y: 66, rot: 5 },
   { label: 'Motion', image: '/assets/stickers/cake.png', x: 36, y: 70, rot: -7 },

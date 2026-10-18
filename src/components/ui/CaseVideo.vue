@@ -139,8 +139,8 @@ onBeforeUnmount(() => io?.disconnect())
   position: absolute;
   inset: 0;
   margin: auto;
-  width: clamp(56px, 8vw, 76px);
-  height: clamp(56px, 8vw, 76px);
+  width: clamp(3.5rem, 8vw, 4.75rem);
+  height: clamp(3.5rem, 8vw, 4.75rem);
   display: grid;
   place-items: center;
   border: none;

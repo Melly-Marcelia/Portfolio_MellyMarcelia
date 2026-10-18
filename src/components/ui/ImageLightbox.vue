@@ -169,7 +169,7 @@ onBeforeUnmount(() => {
   inset: 0;
   display: grid;
   place-items: center;
-  padding: 72px 88px;
+  padding: 4.5rem 5.5rem;
   overflow: hidden;
   cursor: zoom-out;
 }
@@ -179,7 +179,7 @@ onBeforeUnmount(() => {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  box-shadow: 0 30px 80px -20px rgb(0 0 0 / 0.55);
+  box-shadow: 0 1.875rem 5rem -1.25rem rgb(0 0 0 / 0.55);
   cursor: zoom-in;
   user-select: none;
   animation: ilb-in 0.35s var(--ease-soft, ease) both;
@@ -206,7 +206,7 @@ onBeforeUnmount(() => {
 }
 
 .is-zoomed .ilb__stage img {
-  width: max(250vw, 1600px);
+  width: max(250vw, 100rem);
   max-width: none;
   max-height: none;
   margin: 0 auto;
@@ -218,13 +218,13 @@ onBeforeUnmount(() => {
 .ilb__title {
   position: absolute;
   left: 50%;
-  bottom: 22px;
+  bottom: 1.375rem;
   translate: -50% 0;
   display: flex;
   gap: 0.75em;
   margin: 0;
   padding: 0.45em 1em;
-  border-radius: 999px;
+  border-radius: 62.4375rem;
   background: rgb(0 0 0 / 0.4);
   color: #fff;
   font-size: 0.85rem;
@@ -240,8 +240,8 @@ onBeforeUnmount(() => {
   position: absolute;
   display: grid;
   place-items: center;
-  width: 48px;
-  height: 48px;
+  width: 3rem;
+  height: 3rem;
   border: 0;
   border-radius: 50%;
   background: rgb(255 255 255 / 0.14);
@@ -267,17 +267,17 @@ onBeforeUnmount(() => {
   outline-offset: 3px;
 }
 
-.ilb__close { top: 16px; right: 16px; }
-.ilb__zoom { top: 16px; right: 76px; }
-.ilb__prev { left: 20px; top: 50%; translate: 0 -50%; }
-.ilb__next { right: 20px; top: 50%; translate: 0 -50%; }
+.ilb__close { top: 1rem; right: 1rem; }
+.ilb__zoom { top: 1rem; right: 4.75rem; }
+.ilb__prev { left: 1.25rem; top: 50%; translate: 0 -50%; }
+.ilb__next { right: 1.25rem; top: 50%; translate: 0 -50%; }
 
 @media (max-width: 640px) {
-  .ilb__stage { padding: 72px 16px 96px; }
-  .ilb__prev, .ilb__next { top: auto; bottom: 20px; translate: none; }
-  .ilb__prev { left: 16px; }
-  .ilb__next { right: 16px; }
-  .ilb__title { bottom: 80px; }
+  .ilb__stage { padding: 4.5rem 1rem 6rem; }
+  .ilb__prev, .ilb__next { top: auto; bottom: 1.25rem; translate: none; }
+  .ilb__prev { left: 1rem; }
+  .ilb__next { right: 1rem; }
+  .ilb__title { bottom: 5rem; }
 }
 
 .ilb-enter-active,

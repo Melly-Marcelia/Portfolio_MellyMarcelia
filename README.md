@@ -24,7 +24,7 @@ src/
     projects.js              ← add your works here (schema documented in-file)
 
   styles/
-    tokens.css               ⭐ every colour, size, radius, shadow, timing
+    tokens.css               every colour, size, radius, shadow, timing
     base.css                 reset, element defaults, .container / .section
     typography.css           .t-* text styles (used via <AppText>)
 

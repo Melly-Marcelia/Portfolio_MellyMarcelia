@@ -41,7 +41,7 @@ const { bannerOpen, consent, accept, decline } = useAnalytics()
   left: var(--space-s);
   bottom: var(--space-s);
   z-index: var(--z-overlay);
-  width: min(400px, calc(100vw - 2 * var(--space-s)));
+  width: min(25rem, calc(100vw - 2 * var(--space-s)));
   padding: var(--space-m);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-l);
@@ -78,6 +78,6 @@ const { bannerOpen, consent, accept, decline } = useAnalytics()
 .cookie-enter-from,
 .cookie-leave-to {
   opacity: 0;
-  transform: translateY(12px);
+  transform: translateY(0.75rem);
 }
 </style>

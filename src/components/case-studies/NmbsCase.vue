@@ -651,9 +651,9 @@ function elbow(from, to) {
   --soft: #6b5a4e;
   --faint: rgba(43, 26, 20, 0.55);
   --line: #ead9b8;
-  --max: 1080px;
+  --max: 67.5rem;
   --sec: clamp(4rem, 9vw, 7rem);
-  --radius: 32px;
+  --radius: 2rem;
 
   margin-top: clamp(1rem, 3vw, 2rem);
   background: var(--cream);
@@ -736,7 +736,7 @@ function elbow(from, to) {
   font-size: var(--step--1);
   font-weight: 600;
   background: var(--cream);
-  border-radius: 999px;
+  border-radius: 62.4375rem;
 }
 
 .nb-process__steps li::before {
@@ -772,7 +772,7 @@ function elbow(from, to) {
   font-weight: 600;
   color: var(--paper);
   background: var(--gold);
-  border-radius: 999px;
+  border-radius: 62.4375rem;
 }
 
 .nb-pill b {
@@ -855,7 +855,7 @@ function elbow(from, to) {
   padding: clamp(1.5rem, 4vw, 3rem);
   background: var(--paper);
   border-radius: var(--radius);
-  box-shadow: 0 1px 2px rgba(125, 88, 3, 0.06), 0 20px 50px rgba(125, 88, 3, 0.1);
+  box-shadow: 0 1px 2px rgba(125, 88, 3, 0.06), 0 1.25rem 3.125rem rgba(125, 88, 3, 0.1);
 }
 
 .nb-card--split {
@@ -973,7 +973,7 @@ function elbow(from, to) {
   padding: 0.7em 0.8em;
   font-size: var(--step--1);
   line-height: 1.4;
-  border-radius: 14px;
+  border-radius: 0.875rem;
 }
 
 .nb-journey__pain {
@@ -1043,19 +1043,19 @@ function elbow(from, to) {
 }
 
 .nb-pair__side .nb-phone {
-  max-width: 170px;
-  border-radius: 28px;
+  max-width: 10.625rem;
+  border-radius: 1.75rem;
   padding: 5px;
 }
 
 .nb-pair__side .nb-phone img {
-  border-radius: 23px;
+  border-radius: 1.4375rem;
 }
 
 /* lo-fi screens sit in a grey frame, so the jump to colour reads at a glance */
 .nb-phone--lofi {
   background: #9a9a9a;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.75rem 1.875rem rgba(0, 0, 0, 0.1);
 }
 
 .nb-phone--lofi img {
@@ -1073,7 +1073,7 @@ function elbow(from, to) {
   text-transform: uppercase;
   color: var(--soft);
   background: #ece6da;
-  border-radius: 999px;
+  border-radius: 62.4375rem;
 }
 
 .nb-pair__tag--hifi {
@@ -1138,7 +1138,7 @@ function elbow(from, to) {
   display: grid;
   align-content: end;
   gap: 0.2rem;
-  min-height: 220px;
+  min-height: 13.75rem;
   padding: var(--space-m);
   border: 1px solid rgba(43, 26, 20, 0.08);
   border-radius: var(--radius);
@@ -1181,8 +1181,8 @@ function elbow(from, to) {
   text-align: center;
   background: var(--paper);
   border: 1px solid var(--line);
-  border-radius: 999px;
-  box-shadow: 0 4px 12px rgba(125, 88, 3, 0.06);
+  border-radius: 62.4375rem;
+  box-shadow: 0 4px 0.75rem rgba(125, 88, 3, 0.06);
 }
 
 .nb-node--start {
@@ -1214,7 +1214,7 @@ function elbow(from, to) {
   padding: 0;
   background: #fde9b8;
   border: none;
-  border-radius: 12px;
+  border-radius: 0.75rem;
   transform: rotate(45deg);
 }
 
@@ -1251,30 +1251,30 @@ function elbow(from, to) {
 .nb-flow__fork::before {
   top: 0;
   border-bottom: none;
-  border-radius: 14px 14px 0 0;
+  border-radius: 0.875rem 0.875rem 0 0;
 }
 
 .nb-flow__fork::after {
   bottom: 0;
   border-top: none;
-  border-radius: 0 0 14px 14px;
+  border-radius: 0 0 0.875rem 0.875rem;
 }
 
 /* ---- phone frame around the screens ---- */
 .nb-phone {
   width: 100%;
-  max-width: 230px;
+  max-width: 14.375rem;
   padding: 7px;
   background: #1f1612;
-  border-radius: 38px;
-  box-shadow: 0 2px 4px rgba(43, 26, 20, 0.12), 0 24px 50px rgba(125, 88, 3, 0.22);
+  border-radius: 2.375rem;
+  box-shadow: 0 2px 4px rgba(43, 26, 20, 0.12), 0 1.5rem 3.125rem rgba(125, 88, 3, 0.22);
 }
 
 .nb-phone img {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 31px;
+  border-radius: 1.9375rem;
 }
 
 /* ---- screen trail: zigzag of phones joined by dashed elbows ---- */
@@ -1337,8 +1337,8 @@ function elbow(from, to) {
 }
 
 .nb-trio .nb-phone {
-  max-width: 250px;
-  box-shadow: 0 30px 60px rgba(43, 26, 20, 0.35);
+  max-width: 15.625rem;
+  box-shadow: 0 1.875rem 3.75rem rgba(43, 26, 20, 0.35);
 }
 
 .nb-trio figcaption {
@@ -1357,7 +1357,7 @@ function elbow(from, to) {
 /* ---- motion board / storyboard frames ---- */
 .nb-frames {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(13.75rem, 1fr));
   gap: clamp(0.75rem, 2vw, 1.25rem);
   margin-bottom: clamp(2rem, 5vw, 3rem);
 }
@@ -1366,7 +1366,7 @@ function elbow(from, to) {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 18px;
+  border-radius: 1.125rem;
   background: var(--paper);
 }
 
@@ -1390,7 +1390,7 @@ function elbow(from, to) {
   gap: var(--space-xs);
   padding: 0.6rem 0.6rem 0.9rem;
   background: var(--paper);
-  border-radius: 20px;
+  border-radius: 1.25rem;
 }
 
 .nb-board__frame img {
@@ -1401,7 +1401,7 @@ function elbow(from, to) {
   object-fit: cover;
   background: #fff;
   border: 1px solid var(--line);
-  border-radius: 12px;
+  border-radius: 0.75rem;
 }
 
 .nb-board__frame p {

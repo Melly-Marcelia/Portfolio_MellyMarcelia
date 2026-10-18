@@ -257,6 +257,14 @@ function resize() {
   const h = el.clientHeight
   renderer.setSize(w, h, false)
   camera.aspect = w / h
+  // phones: the chips + caption bar fill the bottom of the stage, so centre
+  // the ring in the space above them instead of in the whole stage
+  const top = el.querySelector('.gal__top')
+  if (window.matchMedia('(max-width: 760px)').matches && top) {
+    camera.setViewOffset(w, h, 0, (h - top.offsetTop) / 2, w, h)
+  } else {
+    camera.clearViewOffset()
+  }
   camera.updateProjectionMatrix()
   // fit the whole ring across the width; on narrow screens let its ends run off
   const halfTan = Math.tan(THREE.MathUtils.degToRad(FOV / 2))
@@ -836,13 +844,12 @@ onBeforeUnmount(() => {
             aria-describedby="gal-hand-note"
             @click="toggleHand"
           >
-            {{
-              hand === 'on'
-                ? 'Turn off the gesture control'
-                : hand === 'loading'
-                  ? 'Starting…'
-                  : 'Click here to activate the gesture control'
-            }}
+            <template v-if="hand === 'on'">Turn off the gesture control</template>
+            <template v-else-if="hand === 'loading'">Starting…</template>
+            <template v-else>
+              <span class="gal__chip-long">Click here to activate the gesture control</span>
+              <span class="gal__chip-short">Try gesture control</span>
+            </template>
           </button>
           <!-- only shown while the chip is hovered or focused, so it never sits over the gallery -->
           <p v-if="hand === 'off'" id="gal-hand-note" class="gal__hand-note" role="tooltip">
@@ -917,7 +924,7 @@ onBeforeUnmount(() => {
 <style scoped>
 .gal__stage {
   position: relative;
-  height: clamp(520px, min(88svh, 100svh - var(--nav-h) - 2rem), 980px); /* fits under the navbar */
+  height: clamp(32.5rem, min(88svh, 100svh - var(--nav-h) - 2rem), 61.25rem); /* fits under the navbar */
   border-radius: var(--radius-l);
   overflow: hidden;
   background:
@@ -948,6 +955,10 @@ onBeforeUnmount(() => {
 /* on phones the playground note's arrow drops onto the top of the stage —
    move the chips down above the bar so the arrow lands on the ring, not a button */
 @media (max-width: 760px) {
+  /* the narrow ring only fills a strip, so a full-height stage left a big empty band above it */
+  .gal__stage {
+    height: 25rem;
+  }
   .gal__top {
     inset: auto 0 7.5rem;
     padding-block: 0;
@@ -959,10 +970,10 @@ onBeforeUnmount(() => {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  height: 36px;
+  height: 2.25rem;
   padding: 0 0.9rem;
   border: 1px solid var(--color-border-strong);
-  border-radius: 999px;
+  border-radius: 62.4375rem;
   background: var(--color-surface);
   color: var(--color-ink);
   font: inherit;
@@ -976,6 +987,21 @@ onBeforeUnmount(() => {
 }
 .gal__chip:hover {
   border-color: var(--color-accent);
+}
+.gal__chip-short {
+  display: none;
+}
+/* phones: the full label wraps out of the pill */
+@media (max-width: 760px) {
+  .gal__chip {
+    white-space: nowrap;
+  }
+  .gal__chip-long {
+    display: none;
+  }
+  .gal__chip-short {
+    display: inline;
+  }
 }
 .gal__chip.is-on {
   background: var(--color-accent);
@@ -1024,7 +1050,7 @@ onBeforeUnmount(() => {
   }
 }
 .gal__chip--icon {
-  width: 36px;
+  width: 2.25rem;
   padding: 0;
   justify-content: center;
 }
@@ -1033,7 +1059,7 @@ onBeforeUnmount(() => {
   position: absolute;
   top: 6.25rem;
   left: clamp(1rem, 3vw, 1.5rem);
-  width: clamp(112px, 16vw, 168px);
+  width: clamp(7rem, 16vw, 10.5rem);
   aspect-ratio: 4 / 3;
   border-radius: var(--radius);
   overflow: hidden;
@@ -1056,8 +1082,8 @@ onBeforeUnmount(() => {
 
 .gal__cursor {
   position: fixed;
-  top: -30px;
-  left: -30px;
+  top: -1.875rem;
+  left: -1.875rem;
   z-index: calc(var(--z-overlay) + 1);
   opacity: 0;
   pointer-events: none;
@@ -1108,8 +1134,8 @@ onBeforeUnmount(() => {
   justify-content: center;
   padding: clamp(1rem, 3vw, 2rem) clamp(4rem, 8vw, 6rem);
   background: color-mix(in srgb, var(--color-bg) 94%, transparent);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(0.875rem);
+  -webkit-backdrop-filter: blur(0.875rem);
 }
 
 .gal-view__fig {
@@ -1130,7 +1156,7 @@ onBeforeUnmount(() => {
   min-height: 0;
   object-fit: contain;
   border-radius: 4px;
-  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 1.5rem 3.75rem -1.25rem rgba(0, 0, 0, 0.45);
 }
 .gal-view__swatch {
   height: calc(100dvh - 10rem);
@@ -1261,8 +1287,8 @@ onBeforeUnmount(() => {
   pointer-events: auto;
   display: grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
+  width: 2.75rem;
+  height: 2.75rem;
   flex-shrink: 0;
   border: 1px solid var(--color-border-strong);
   border-radius: 50%;
@@ -1281,7 +1307,7 @@ onBeforeUnmount(() => {
 
 .gal__fallback {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));
   gap: 1.5rem;
   list-style: none;
   padding: 0;

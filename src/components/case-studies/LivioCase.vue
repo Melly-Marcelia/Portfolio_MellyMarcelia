@@ -424,7 +424,7 @@ const stack = ['Vue 3', 'Vercel', 'Neon (Postgres)', 'Grok AI', 'GitHub', 'Postm
         </div>
         <div v-reveal="1">
           <p class="lv-body">
-            We built the frontend and backend together in a shared GitHub repo and deployed the app on
+            We built the frontend and backend together in two GitHub repos and deployed the app on
             Vercel, with a Neon (Postgres) database behind it. The app works in English, Dutch and French,
             and includes an AI voice assistant, powered by Grok, that you can ask for suggestions such as
             “suggest me a perfect activity for tomorrow”.
@@ -466,7 +466,7 @@ const stack = ['Vue 3', 'Vercel', 'Neon (Postgres)', 'Grok AI', 'GitHub', 'Postm
   --line: rgba(59, 48, 45, 0.12);
   --serif: 'Fraunces', 'Playfair Display', Georgia, serif;
   --sans: 'Poppins', var(--font-body);
-  --max: 1120px;
+  --max: 70rem;
   --sec: clamp(4.5rem, 10vw, 8rem);
 
   margin-top: clamp(1rem, 3vw, 2rem);
@@ -601,7 +601,7 @@ const stack = ['Vue 3', 'Vercel', 'Neon (Postgres)', 'Grok AI', 'GitHub', 'Postm
   min-width: 2.6rem;
   height: 1.7rem;
   padding-inline: 0.6rem;
-  border-radius: 999px;
+  border-radius: 62.4375rem;
   background: var(--red);
   color: #fff;
   letter-spacing: 0.04em;
@@ -733,7 +733,7 @@ const stack = ['Vue 3', 'Vercel', 'Neon (Postgres)', 'Grok AI', 'GitHub', 'Postm
   grid-template-columns: repeat(2, minmax(0, 1fr));
   margin-top: clamp(3.5rem, 8vw, 6rem);
   overflow: hidden;
-  border-radius: 28px;
+  border-radius: 1.75rem;
 }
 
 .lv-ps__card {
@@ -851,7 +851,7 @@ const stack = ['Vue 3', 'Vercel', 'Neon (Postgres)', 'Grok AI', 'GitHub', 'Postm
 
 .lv-tl__phase {
   padding: 0.7rem 1.1rem;
-  border-radius: 999px;
+  border-radius: 62.4375rem;
   background: var(--cream);
   font-size: 0.75rem;
   font-weight: 600;
@@ -872,7 +872,7 @@ const stack = ['Vue 3', 'Vercel', 'Neon (Postgres)', 'Grok AI', 'GitHub', 'Postm
   left: 50%;
   translate: -50% -50%;
   padding: 0.35rem 0.8rem;
-  border-radius: 999px;
+  border-radius: 62.4375rem;
   background: var(--red);
   color: #fff;
   font-size: 0.72rem;
@@ -893,7 +893,7 @@ const stack = ['Vue 3', 'Vercel', 'Neon (Postgres)', 'Grok AI', 'GitHub', 'Postm
   gap: 0.4rem;
   align-content: start;
   padding: clamp(1.25rem, 2.5vw, 1.6rem);
-  border-radius: 22px;
+  border-radius: 1.375rem;
   background: var(--cream);
 }
 
@@ -938,8 +938,8 @@ const stack = ['Vue 3', 'Vercel', 'Neon (Postgres)', 'Grok AI', 'GitHub', 'Postm
   background: #1f1c1c;
   box-shadow:
     inset 0 0 0 1.5px #5a5552,
-    0 40px 70px -28px rgba(59, 30, 20, 0.45),
-    0 14px 28px -14px rgba(59, 30, 20, 0.3);
+    0 2.5rem 4.375rem -1.75rem rgba(59, 30, 20, 0.45),
+    0 0.875rem 1.75rem -0.875rem rgba(59, 30, 20, 0.3);
 }
 
 .lv-phone img {
@@ -975,7 +975,7 @@ const stack = ['Vue 3', 'Vercel', 'Neon (Postgres)', 'Grok AI', 'GitHub', 'Postm
 .lv-feature__stage {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 240px));
+  grid-template-columns: repeat(2, minmax(0, 15rem));
   justify-content: center;
   gap: clamp(0.75rem, 3vw, 1.75rem);
   padding-block: clamp(1.5rem, 4vw, 3rem);
@@ -1065,7 +1065,7 @@ const stack = ['Vue 3', 'Vercel', 'Neon (Postgres)', 'Grok AI', 'GitHub', 'Postm
 .lv-biz dt small {
   margin-left: 0.5rem;
   padding: 0.1rem 0.55rem;
-  border-radius: 999px;
+  border-radius: 62.4375rem;
   background: var(--yellow);
   font-size: 0.72rem;
   font-weight: 500;
@@ -1090,7 +1090,7 @@ const stack = ['Vue 3', 'Vercel', 'Neon (Postgres)', 'Grok AI', 'GitHub', 'Postm
 .lv-ux__frame {
   display: block;
   overflow: hidden;
-  border-radius: 20px;
+  border-radius: 1.25rem;
   background: #fff;
   box-shadow: inset 0 0 0 1px var(--line);
 }
@@ -1175,7 +1175,7 @@ const stack = ['Vue 3', 'Vercel', 'Neon (Postgres)', 'Grok AI', 'GitHub', 'Postm
   line-height: 1.75;
   box-shadow:
     0 1px 0 rgba(0, 0, 0, 0.04),
-    0 18px 26px -18px rgba(59, 48, 45, 0.55);
+    0 1.125rem 1.625rem -1.125rem rgba(59, 48, 45, 0.55);
   rotate: -2.5deg;
 }
 
@@ -1186,7 +1186,7 @@ const stack = ['Vue 3', 'Vercel', 'Neon (Postgres)', 'Grok AI', 'GitHub', 'Postm
 
 .lv-ba__pair {
   display: grid;
-  grid-template-columns: minmax(0, 235px) auto minmax(0, 235px);
+  grid-template-columns: minmax(0, 14.6875rem) auto minmax(0, 14.6875rem);
   justify-content: center;
   align-items: center;
   gap: clamp(0.6rem, 2.5vw, 1.75rem);
@@ -1213,7 +1213,7 @@ const stack = ['Vue 3', 'Vercel', 'Neon (Postgres)', 'Grok AI', 'GitHub', 'Postm
 }
 
 .lv-phone--old {
-  box-shadow: inset 0 0 0 1.5px #5a5552, 0 14px 28px -18px rgba(59, 30, 20, 0.35);
+  box-shadow: inset 0 0 0 1.5px #5a5552, 0 0.875rem 1.75rem -1.125rem rgba(59, 30, 20, 0.35);
 }
 
 .lv-phone--old img {
@@ -1232,7 +1232,7 @@ const stack = ['Vue 3', 'Vercel', 'Neon (Postgres)', 'Grok AI', 'GitHub', 'Postm
 
 .lv-stack li {
   padding: 0.38rem 0.9rem;
-  border-radius: 999px;
+  border-radius: 62.4375rem;
   background: var(--cream);
   font-size: 0.82rem;
   font-weight: 500;
@@ -1245,9 +1245,9 @@ const stack = ['Vue 3', 'Vercel', 'Neon (Postgres)', 'Grok AI', 'GitHub', 'Postm
 
 .lv-close__mark {
   position: absolute;
-  width: clamp(340px, 42vw, 680px);
-  right: clamp(-320px, -18vw, -120px);
-  bottom: clamp(-320px, -18vw, -120px);
+  width: clamp(21.25rem, 42vw, 42.5rem);
+  right: clamp(-20rem, -18vw, -7.5rem);
+  bottom: clamp(-20rem, -18vw, -7.5rem);
   color: rgba(219, 0, 50, 0.1);
 }
 

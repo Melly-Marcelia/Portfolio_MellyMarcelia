@@ -71,7 +71,7 @@ import PolaroidStack from '@/components/PolaroidStack.vue'
 /* side by side, that headroom sits beside empty space — tuck it up under the intro */
 @media (min-width: 821px) {
   .about-wallet {
-    margin-top: -10px;
+    margin-top: -0.625rem;
   }
 }
 
@@ -113,7 +113,7 @@ import PolaroidStack from '@/components/PolaroidStack.vue'
   align-self: end;
   position: relative;
   top: 8rem; /* sit a little below the last paragraph */
-  width: clamp(170px, 17vw, 250px);
+  width: clamp(10.625rem, 17vw, 15.625rem);
   pointer-events: none;
   user-select: none;
 }
@@ -157,11 +157,11 @@ import PolaroidStack from '@/components/PolaroidStack.vue'
   display: flex;
   justify-content: center;
   /* the pile sits in the middle of its box — lift it level with the name */
-  margin-top: -80px;
+  margin-top: -5rem;
 }
 
 .about__photos :deep(.polaroids) {
-  max-width: 330px;
+  max-width: 20.625rem;
 }
 
 @media (max-width: 820px) {
@@ -179,7 +179,7 @@ import PolaroidStack from '@/components/PolaroidStack.vue'
     grid-column: 1;
     grid-row: auto;
     justify-self: end;
-    width: clamp(90px, 28vw, 120px);
+    width: clamp(5.625rem, 28vw, 7.5rem);
   }
 }
 </style>

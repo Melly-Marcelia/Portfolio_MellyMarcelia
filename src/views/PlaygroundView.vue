@@ -131,6 +131,11 @@ const seeds = [
           >
             Experiments, visual studies and things made just for fun.
           </AppText>
+          <!-- phones / touch only: the gallery's gesture control and drag bits are fiddly there -->
+          <p class="pg__device-note enter-left" style="--enter-delay: 320ms">
+            Heads up: some of these play best on a computer. On a phone things like the hand
+            gesture control can be tricky, so switch to a PC for the full experience.
+          </p>
         </header>
 
         <!-- paper index tabs, like the dividers in a ring binder -->
@@ -254,6 +259,25 @@ const seeds = [
   gap: 0.75rem;
 }
 
+.pg__device-note {
+  display: none;
+  gap: 0.5rem;
+  align-items: flex-start;
+  margin: 0;
+  padding: 0.6rem 0.85rem;
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  color: var(--color-ink-soft);
+  font-size: var(--step--1);
+  line-height: 1.45;
+}
+@media (hover: none), (max-width: 760px) {
+  .pg__device-note {
+    display: flex;
+  }
+}
+
 .pg__title {
   position: relative;
   top: -2.25rem;
@@ -263,9 +287,9 @@ const seeds = [
 /* ---- index tabs ------------------------------------------------------ */
 .pg__tabs {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(11.875rem, 1fr));
   gap: 1.1rem;
-  max-width: 780px;
+  max-width: 48.75rem;
 }
 .pg__tab {
   --tilt: -2deg;
@@ -294,10 +318,10 @@ const seeds = [
    so its colours stay put in dark mode (like the device mockups) */
 .pg__fruit {
   position: absolute;
-  top: -22px;
+  top: -1.375rem;
   left: 50%;
-  width: 44px;
-  height: 44px;
+  width: 2.75rem;
+  height: 2.75rem;
   translate: -50% 0;
   rotate: calc(var(--tilt) * -6);
   filter: drop-shadow(0 2px 2px rgba(var(--c-seed-rgb), 0.18));
@@ -353,12 +377,12 @@ const seeds = [
 
 .pg__squiggle {
   display: block;
-  width: 180px;
-  height: 18px;
+  width: 11.25rem;
+  height: 1.125rem;
   /* sits dead centre between two sections: the space above it is the previous
      section's bottom padding + this one's top padding (2 × the .section
      padding), so the margin below matches that */
-  margin: 0 auto calc(2 * clamp(40px, 6vw, 88px));
+  margin: 0 auto calc(2 * clamp(2.5rem, 6vw, 5.5rem));
   color: var(--color-border-strong);
 }
 
@@ -397,7 +421,7 @@ const seeds = [
     repeating-linear-gradient(
       -45deg,
       transparent 0 8px,
-      rgba(255, 255, 255, 0.35) 8px 14px
+      rgba(255, 255, 255, 0.35) 8px 0.875rem
     ),
     var(--color-accent-soft);
   clip-path: polygon(1% 8%, 4% 0, 97% 4%, 100% 14%, 98% 92%, 100% 100%, 3% 96%, 0 86%);
@@ -430,8 +454,8 @@ const seeds = [
   white-space: nowrap;
 }
 .pg__arrow {
-  width: 56px;
-  height: 64px;
+  width: 3.5rem;
+  height: 4rem;
   flex: none;
   color: var(--color-accent);
   transition: translate 0.4s var(--ease-soft);
@@ -478,34 +502,35 @@ const seeds = [
   translate: 10rem 3rem;
 }
 
+/* phones: one centred stack (numeral, taped title, line, note) */
 @media (max-width: 760px) {
   .pg__head,
   .pg__section--flip .pg__head {
-    grid-template-columns: auto minmax(0, 1fr);
-    row-gap: 1rem;
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    row-gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
   }
   .pg__section--flip .pg__no {
     order: 0;
   }
+  .pg__label,
   .pg__section--flip .pg__label {
     order: 0;
-    justify-items: start;
-    text-align: left;
+    justify-items: center;
+    text-align: center;
   }
   .pg__note,
-  .pg__section--flip .pg__note {
-    grid-column: 1 / -1;
-    justify-self: end;
-    flex-direction: row;
-    rotate: 3deg;
-  }
+  .pg__section--flip .pg__note,
   .pg__note--center {
+    grid-column: 1;
     justify-self: center;
-    translate: 2rem 1rem;
-  }
-  .pg__note--center span {
-    white-space: normal;
-    max-width: 16ch;
+    flex-direction: row;
+    margin: 0 0 -0.5rem;
+    /* the arrow hangs off the right: nudge so the text itself reads centred */
+    translate: 1.75rem 0;
+    rotate: 2deg;
   }
   .pg__section--flip .pg__arrow {
     scale: 1 1;

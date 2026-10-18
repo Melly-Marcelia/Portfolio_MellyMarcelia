@@ -419,7 +419,7 @@ function togglePlay() {
   --faint: rgba(76, 5, 5, 0.5);
   --line: rgba(76, 5, 5, 0.14);
   --type: 'Courier New', Courier, monospace;
-  --max: 1120px;
+  --max: 70rem;
   --sec: clamp(4.5rem, 10vw, 8rem);
 
   margin-top: clamp(1rem, 3vw, 2rem);
@@ -565,8 +565,8 @@ function togglePlay() {
   background: #1c0b0b;
   box-shadow:
     inset 0 0 0 1.5px #5b3a3a,
-    0 40px 70px -30px rgba(40, 0, 0, 0.55),
-    0 14px 28px -14px rgba(40, 0, 0, 0.35);
+    0 2.5rem 4.375rem -1.875rem rgba(40, 0, 0, 0.55),
+    0 0.875rem 1.75rem -0.875rem rgba(40, 0, 0, 0.35);
 }
 
 /* bezel = 2.4% of the phone's own width on every side. Padding % would follow
@@ -590,7 +590,7 @@ function togglePlay() {
   position: absolute;
   z-index: 2;
   height: auto;
-  filter: drop-shadow(0 10px 14px rgba(60, 0, 0, 0.22));
+  filter: drop-shadow(0 0.625rem 0.875rem rgba(60, 0, 0, 0.22));
   pointer-events: none;
 }
 
@@ -607,7 +607,7 @@ function togglePlay() {
 .dk-about__corner {
   top: 50%;
   right: clamp(1rem, 6vw, 6rem);
-  width: clamp(90px, 12vw, 160px);
+  width: clamp(5.625rem, 12vw, 10rem);
   margin-top: -4rem;
   rotate: 12deg;
 }
@@ -622,7 +622,7 @@ function togglePlay() {
 .dk-app-icon {
   display: grid;
   place-items: center;
-  width: clamp(56px, 6.5vw, 80px);
+  width: clamp(3.5rem, 6.5vw, 5rem);
   aspect-ratio: 1;
   border-radius: 28%;
   background: var(--maroon);
@@ -655,14 +655,14 @@ function togglePlay() {
 .dk-about__stage {
   display: grid;
   place-items: center;
-  min-height: clamp(420px, 48vw, 600px);
+  min-height: clamp(26.25rem, 48vw, 37.5rem);
   overflow: hidden;
 }
 
 .dk-ring {
   position: absolute;
   inset: 50% auto auto 50%;
-  width: min(92%, 520px);
+  width: min(92%, 32.5rem);
   aspect-ratio: 1;
   translate: -50% -50%;
   border: 1px solid var(--line);
@@ -670,7 +670,7 @@ function togglePlay() {
 }
 
 .dk-about__phone {
-  width: clamp(170px, 18vw, 240px);
+  width: clamp(10.625rem, 18vw, 15rem);
 }
 
 /* ---- the problem ---- */
@@ -699,7 +699,7 @@ function togglePlay() {
 .dk-polaroid {
   padding: 0.55rem 0.55rem 0;
   background: #fff;
-  box-shadow: 0 16px 30px -18px rgba(60, 0, 0, 0.45);
+  box-shadow: 0 1rem 1.875rem -1.125rem rgba(60, 0, 0, 0.45);
 }
 
 .dk-polaroid:nth-child(even) {
@@ -725,7 +725,7 @@ function togglePlay() {
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
-  border-radius: 24px;
+  border-radius: 1.5rem;
   background: var(--maroon);
   cursor: pointer;
 }
@@ -755,7 +755,7 @@ function togglePlay() {
   align-items: center;
   gap: 0.4rem;
   border: 1px solid var(--line);
-  border-radius: 999px;
+  border-radius: 62.4375rem;
   background: transparent;
   color: var(--ink);
   font: inherit;
@@ -820,8 +820,8 @@ function togglePlay() {
 .dk-paper {
   padding-block: var(--sec);
   background:
-    linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 32px 32px,
-    linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 32px 32px,
+    linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 2rem 2rem,
+    linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 2rem 2rem,
     #fffaf1;
 }
 
@@ -836,7 +836,7 @@ function togglePlay() {
 
 .dk-rain {
   position: relative;
-  width: min(100%, 720px);
+  width: min(100%, 45rem);
   aspect-ratio: 1 / 1.05;
   margin: clamp(1.5rem, 4vw, 3rem) auto 0;
 }
@@ -854,7 +854,7 @@ function togglePlay() {
   position: absolute;
   z-index: 2;
   height: auto;
-  filter: drop-shadow(0 12px 14px rgba(60, 0, 0, 0.25));
+  filter: drop-shadow(0 0.75rem 0.875rem rgba(60, 0, 0, 0.25));
   transition:
     translate 0.9s cubic-bezier(0.3, 1.45, 0.5, 1),
     opacity 0.4s ease;
@@ -862,7 +862,7 @@ function togglePlay() {
 }
 
 .dk-rain.reveal:not(.is-revealed) .dk-drop {
-  translate: 0 -160px;
+  translate: 0 -10rem;
   opacity: 0;
 }
 
@@ -903,7 +903,7 @@ function togglePlay() {
   aspect-ratio: 4 / 5;
   object-fit: contain;
   margin-bottom: 0.6rem;
-  filter: drop-shadow(0 12px 16px rgba(0, 0, 0, 0.35));
+  filter: drop-shadow(0 0.75rem 1rem rgba(0, 0, 0, 0.35));
   transition: rotate 0.4s cubic-bezier(0.3, 1.6, 0.5, 1), scale 0.4s;
 }
 
@@ -941,8 +941,8 @@ function togglePlay() {
 }
 
 .dk-seals img {
-  width: clamp(70px, 9vw, 110px);
-  filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.35));
+  width: clamp(4.375rem, 9vw, 6.875rem);
+  filter: drop-shadow(0 0.625rem 0.875rem rgba(0, 0, 0, 0.35));
 }
 
 .dk-seals span {
@@ -1012,7 +1012,7 @@ function togglePlay() {
 
 .dk-type__tags li {
   padding: 0.3rem 0.8rem;
-  border-radius: 999px;
+  border-radius: 62.4375rem;
   background: var(--maroon);
   color: var(--pink);
   font-size: 0.75rem;
@@ -1096,7 +1096,7 @@ function togglePlay() {
 }
 
 .dk-sheet__palette svg {
-  width: min(100%, 150px);
+  width: min(100%, 9.375rem);
   margin-bottom: 1rem;
 }
 
@@ -1123,7 +1123,7 @@ function togglePlay() {
 }
 
 .dk-close__logo {
-  width: min(70%, 420px);
+  width: min(70%, 26.25rem);
   margin-inline: auto;
 }
 
@@ -1136,14 +1136,14 @@ function togglePlay() {
 .dk-close__l {
   left: 6%;
   bottom: -2rem;
-  width: clamp(90px, 13vw, 180px);
+  width: clamp(5.625rem, 13vw, 11.25rem);
   rotate: -14deg;
 }
 
 .dk-close__r {
   right: 7%;
   top: 14%;
-  width: clamp(70px, 10vw, 140px);
+  width: clamp(4.375rem, 10vw, 8.75rem);
   rotate: 12deg;
 }
 

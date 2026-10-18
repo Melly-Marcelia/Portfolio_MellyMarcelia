@@ -36,7 +36,7 @@ import AppButton from '@/components/ui/AppButton.vue'
 
 /* roomier side padding than the rest of the site */
 .featured .container {
-  padding-inline: clamp(24px, 9vw, 160px);
+  padding-inline: clamp(1.5rem, 9vw, 10rem);
 }
 
 .featured__eyebrow {
@@ -53,7 +53,7 @@ import AppButton from '@/components/ui/AppButton.vue'
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(var(--space-m), 4vw, var(--space-xl));
-  max-width: calc(2 * 520px + var(--space-xl));
+  max-width: calc(2 * 32.5rem + var(--space-xl));
   margin-inline: auto;
 }
 

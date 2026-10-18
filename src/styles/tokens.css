@@ -185,7 +185,7 @@
   --space-xl: 3rem;
   --space-2xl: 4rem;
   /* vertical rhythm for page sections */
-  --space-section: clamp(40px, 6vw, 88px);
+  --space-section: clamp(2.5rem, 6vw, 5.5rem);
 
   /* ---- radius scale ---------------------------------------------- */
   --radius-xs: 3px;
@@ -217,10 +217,12 @@
   --reveal-shift: 20px;
   --reveal-stagger: 90ms;
 
-  /* ---- layout -------------------------------------------- */
-  --page-max: 1400px;
-  --page-gutter: clamp(16px, 3vw, 40px);
-  --nav-h: 96px;
+  /* ---- layout --------------------------------------------
+     In rem so the whole layout grows with the root size on big screens
+     (see `html` in base.css). Below ~1600px wide 1rem = 16px. */
+  --page-max: 87.5rem; /* 1400px at 16px */
+  --page-gutter: clamp(1rem, 3vw, 2.5rem);
+  --nav-h: 6rem;
 
   /* ---- z-index scale ----------------------------------- */
   --z-raised: 1;

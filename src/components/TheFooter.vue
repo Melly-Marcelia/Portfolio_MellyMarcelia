@@ -94,8 +94,8 @@ async function copyEmail() {
   position: relative;
   color: var(--color-ink);
   background: var(--color-bg);
-  /* top padding always clears the 72px seed divider */
-  padding-block: clamp(64px, 7.5vw, 85px) var(--space-l);
+  /* top padding always clears the 4.5rem seed divider */
+  padding-block: clamp(4rem, 7.5vw, 5.3125rem) var(--space-l);
 }
 
 .footer__wave {
@@ -103,7 +103,7 @@ async function copyEmail() {
   top: 0;
   left: 0;
   width: 100%;
-  height: 72px;
+  height: 4.5rem;
   color: var(--color-ink);
 }
 
@@ -161,8 +161,8 @@ async function copyEmail() {
 }
 
 .footer__mail-icon {
-  width: 18px;
-  height: 18px;
+  width: 1.125rem;
+  height: 1.125rem;
   flex: none;
   opacity: 0.65;
   transition: opacity var(--transition-fast);
@@ -196,9 +196,10 @@ async function copyEmail() {
 
 .footer__lily {
   position: absolute;
-  right: clamp(1rem, 5vw, 5rem);
+  /* hugs the page column's right edge on wide screens, not the screen edge */
+  right: max(clamp(1rem, 5vw, 5rem), (100% - var(--page-max)) / 2);
   bottom: var(--space-m);
-  width: clamp(150px, 16vw, 240px);
+  width: clamp(9.375rem, 16vw, 15rem);
   pointer-events: none;
   user-select: none;
 }
@@ -241,7 +242,7 @@ async function copyEmail() {
    corner beside the copyright line instead of covering the buttons */
 @media (max-width: 820px) {
   .footer__lily {
-    width: clamp(80px, 24vw, 110px);
+    width: clamp(5rem, 24vw, 6.875rem);
     bottom: var(--space-s);
   }
 }

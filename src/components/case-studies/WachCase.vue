@@ -725,9 +725,9 @@ const wide = [
   --line: rgba(244, 248, 250, 0.12);
   --card: rgba(255, 255, 255, 0.045);
   --type: 'Epilogue', var(--font-body);
-  --max: 1120px;
+  --max: 70rem;
   --sec: clamp(4rem, 9vw, 7rem);
-  --radius: 24px;
+  --radius: 1.5rem;
 
   margin-top: clamp(1rem, 3vw, 2rem);
   background: var(--night);
@@ -903,7 +903,7 @@ const wide = [
 
 .wc-chips li {
   padding: 0.45rem 1rem;
-  border-radius: 999px;
+  border-radius: 62.4375rem;
   background: var(--card);
   box-shadow: inset 0 0 0 1px var(--line);
   font-size: 0.85rem;
@@ -925,7 +925,7 @@ const wide = [
 }
 
 /* ---- phones ---- */
-/* iPhone Duo, folded: the 466×678 outer display (captured at 3x), 54px corners */
+/* iPhone Duo, folded: the 466×678 outer display (captured at 3x), 3.375rem corners */
 .wc-phone {
   position: relative;
   z-index: 1;
@@ -935,7 +935,7 @@ const wide = [
   box-shadow:
     inset 0 0 0 1.5px #2c5266,
     0 0 0 1px rgba(255, 255, 255, 0.06),
-    0 40px 70px -30px rgba(0, 0, 0, 0.7);
+    0 2.5rem 4.375rem -1.875rem rgba(0, 0, 0, 0.7);
 }
 
 /* bezel = 2.4% of the phone's width on every side; top/bottom % resolve against
@@ -969,7 +969,7 @@ const wide = [
 
 .wc-hero__pills span {
   padding: 0.5rem 1rem;
-  border-radius: 10px;
+  border-radius: 0.625rem;
   background: var(--card);
   box-shadow: inset 0 0 0 1px var(--line);
   font-size: 0.85rem;
@@ -995,7 +995,7 @@ const wide = [
 /* --fw: width of the folded Duo. The unfolded one is as tall, so its width is
    --fw × (2034/1398) × (2670/1878) ≈ 2.07 × --fw. --pair is both plus the gap. */
 .wc-hero__stage {
-  --fw: clamp(96px, 18vw, 240px);
+  --fw: clamp(6rem, 18vw, 15rem);
   --gap: clamp(0.75rem, 3vw, 2.25rem);
   --pair: calc(var(--fw) * 3.07 + var(--gap));
   position: relative;
@@ -1007,11 +1007,11 @@ const wide = [
 .wc-hero__glow {
   position: absolute;
   bottom: -10%;
-  width: min(90%, 640px);
+  width: min(90%, 40rem);
   height: 40%;
   border-radius: 50%;
   background: radial-gradient(closest-side, rgba(179, 248, 59, 0.22), transparent);
-  filter: blur(10px);
+  filter: blur(0.625rem);
 }
 
 /* the same Today screen on the iPhone Duo, folded and unfolded */
@@ -1036,11 +1036,11 @@ const wide = [
   position: absolute;
   z-index: 2;
   padding: 0.6rem 0.95rem;
-  border-radius: 14px;
+  border-radius: 0.875rem;
   font-size: 0.88rem;
   font-weight: 600;
   line-height: 1.25;
-  box-shadow: 0 14px 24px -14px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0.875rem 1.5rem -0.875rem rgba(0, 0, 0, 0.6);
 }
 
 .wc-bubble--a {
@@ -1231,7 +1231,7 @@ const wide = [
 }
 
 .wc-logo__tile {
-  width: min(100%, 620px);
+  width: min(100%, 38.75rem);
 }
 
 /* the wordmark on a light card, tilted like the reference's logo plate */
@@ -1242,10 +1242,10 @@ const wide = [
   padding: 12%;
   border-radius: var(--radius);
   background:
-    repeating-linear-gradient(0deg, rgba(10, 94, 138, 0.07) 0 1px, transparent 1px 24px),
-    repeating-linear-gradient(90deg, rgba(10, 94, 138, 0.07) 0 1px, transparent 1px 24px),
+    repeating-linear-gradient(0deg, rgba(10, 94, 138, 0.07) 0 1px, transparent 1px 1.5rem),
+    repeating-linear-gradient(90deg, rgba(10, 94, 138, 0.07) 0 1px, transparent 1px 1.5rem),
     var(--mist);
-  box-shadow: 0 40px 70px -30px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 2.5rem 4.375rem -1.875rem rgba(0, 0, 0, 0.7);
   rotate: -4deg;
 }
 
@@ -1275,7 +1275,7 @@ const wide = [
 
 .wc-coach img {
   flex: none;
-  width: clamp(64px, 7vw, 84px);
+  width: clamp(4rem, 7vw, 5.25rem);
   aspect-ratio: 1;
   border-radius: 50%;
   object-fit: cover;
@@ -1307,7 +1307,7 @@ const wide = [
 .wc-trio,
 .wc-strip {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 330px));
+  grid-template-columns: repeat(3, minmax(0, 20.625rem));
   justify-content: center;
   gap: clamp(0.75rem, 3vw, 2.5rem);
 }
@@ -1385,7 +1385,7 @@ const wide = [
   display: inline-flex;
   align-items: center;
   padding: 0.8rem 0.9rem;
-  border-radius: 999px;
+  border-radius: 62.4375rem;
   background: var(--card);
   box-shadow: inset 0 0 0 1px var(--line);
   font-size: 0.85rem;
@@ -1450,7 +1450,7 @@ const wide = [
   align-content: start;
   gap: 0.5rem;
   padding: clamp(1.1rem, 2vw, 1.4rem);
-  border-radius: 22px;
+  border-radius: 1.375rem;
   background: var(--card);
   box-shadow: inset 0 0 0 1px var(--line);
 }
@@ -1476,7 +1476,7 @@ const wide = [
 
 .wc-phases ul li {
   padding: 0.3rem 0.7rem;
-  border-radius: 999px;
+  border-radius: 62.4375rem;
   box-shadow: inset 0 0 0 1px var(--line);
   font-size: 0.76rem;
   color: var(--soft);
@@ -1625,7 +1625,7 @@ const wide = [
   align-content: start;
   gap: 0.6rem;
   padding: clamp(1.25rem, 2.5vw, 1.6rem);
-  border-radius: 20px;
+  border-radius: 1.25rem;
   background: var(--navy-900);
   color: var(--mist);
 }
@@ -1718,7 +1718,7 @@ const wide = [
 
 .wc-anatomy__phone {
   justify-self: center;
-  width: clamp(260px, 28vw, 370px);
+  width: clamp(16.25rem, 28vw, 23.125rem);
 }
 
 /* ---- grid system ---- */
@@ -1731,7 +1731,7 @@ const wide = [
 
 .wc-gridsys__phone {
   justify-self: center;
-  width: clamp(220px, 26vw, 300px);
+  width: clamp(13.75rem, 26vw, 18.75rem);
 }
 
 /* a phone outline over a 4px grid (drawn every 4th line, so every 16px) */
@@ -1742,8 +1742,8 @@ const wide = [
   border-bottom: 0;
   border-radius: 2.6rem 2.6rem 0 0;
   background:
-    repeating-linear-gradient(90deg, rgba(179, 248, 59, 0.28) 0 1px, transparent 1px 16px),
-    repeating-linear-gradient(0deg, rgba(179, 248, 59, 0.12) 0 1px, transparent 1px 16px);
+    repeating-linear-gradient(90deg, rgba(179, 248, 59, 0.28) 0 1px, transparent 1px 1rem),
+    repeating-linear-gradient(0deg, rgba(179, 248, 59, 0.12) 0 1px, transparent 1px 1rem);
   -webkit-mask-image: linear-gradient(#000 70%, transparent);
   mask-image: linear-gradient(#000 70%, transparent);
 }
@@ -1909,7 +1909,7 @@ const wide = [
 .wc-ring {
   position: relative;
   justify-self: center;
-  width: min(100%, 380px);
+  width: min(100%, 23.75rem);
   aspect-ratio: 1;
   border-radius: 50%;
   background: conic-gradient(
@@ -1959,7 +1959,7 @@ const wide = [
   flex: none;
   width: 2.75rem;
   aspect-ratio: 1;
-  border-radius: 12px;
+  border-radius: 0.75rem;
   box-shadow: inset 0 0 0 1px var(--line);
 }
 
@@ -1988,9 +1988,9 @@ const wide = [
 
 .wc-nav__shot img {
   display: block;
-  width: min(100%, 380px);
+  width: min(100%, 23.75rem);
   margin-inline: auto;
-  border-radius: 14px;
+  border-radius: 0.875rem;
 }
 
 .wc-nav__shot figcaption {
@@ -2024,7 +2024,7 @@ const wide = [
   background: #021219;
   box-shadow:
     inset 0 0 0 1.5px #2c5266,
-    0 30px 60px -30px rgba(0, 0, 0, 0.7);
+    0 1.875rem 3.75rem -1.875rem rgba(0, 0, 0, 0.7);
 }
 
 .wc-duo::after {
@@ -2087,7 +2087,7 @@ const wide = [
 
 .wc-close__logo {
   position: relative;
-  width: min(70%, 280px);
+  width: min(70%, 17.5rem);
   margin: clamp(3rem, 7vw, 4.5rem) auto 0;
 }
 

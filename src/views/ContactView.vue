@@ -146,7 +146,7 @@ function reset() {
 }
 
 .contact {
-  max-width: 560px;
+  max-width: 35rem;
 }
 
 .contact__head {

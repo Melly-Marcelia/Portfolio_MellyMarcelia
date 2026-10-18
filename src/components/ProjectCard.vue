@@ -86,7 +86,7 @@ defineProps({
   border-color: color-mix(in srgb, var(--color-accent) 35%, transparent);
   box-shadow:
     var(--shadow-l),
-    0 18px 40px -24px color-mix(in srgb, var(--color-accent) 45%, transparent);
+    0 1.125rem 2.5rem -1.5rem color-mix(in srgb, var(--color-accent) 45%, transparent);
 }
 
 .card:not(.card--soon):hover .card__title {
@@ -118,9 +118,9 @@ defineProps({
   background: repeating-linear-gradient(
     45deg,
     var(--color-mat),
-    var(--color-mat) 12px,
-    var(--color-mat-alt) 12px,
-    var(--color-mat-alt) 24px
+    var(--color-mat) 0.75rem,
+    var(--color-mat-alt) 0.75rem,
+    var(--color-mat-alt) 1.5rem
   );
 }
 

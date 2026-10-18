@@ -119,7 +119,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
   position: relative;
   display: block;
   width: 100%;
-  max-width: 340px;
+  max-width: 21.25rem;
   aspect-ratio: 440 / 540;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -136,7 +136,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
   border-radius: 6px;
   box-shadow:
     0 1px 2px rgb(0 0 0 / 0.08),
-    0 12px 28px -10px rgb(0 0 0 / 0.22);
+    0 0.75rem 1.75rem -0.625rem rgb(0 0 0 / 0.22);
   z-index: var(--z);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -193,7 +193,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
   z-index: 1000;
   display: grid;
   place-items: center;
-  padding: 24px;
+  padding: 1.5rem;
   background: rgb(20 14 10 / 0.72);
   backdrop-filter: blur(6px);
   cursor: zoom-out;
@@ -201,13 +201,13 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
 
 .lightbox__card {
   /* % padding would resolve against the viewport here, so size it off the card width */
-  --w: min(82vw, calc(78vh * 0.72), 520px);
+  --w: min(82vw, calc(78vh * 0.72), 32.5rem);
   margin: 0;
   width: var(--w);
   padding: calc(var(--w) * 0.05) calc(var(--w) * 0.05) calc(var(--w) * 0.17);
   background: var(--color-surface);
   border-radius: 8px;
-  box-shadow: 0 30px 80px -20px rgb(0 0 0 / 0.55);
+  box-shadow: 0 1.875rem 5rem -1.25rem rgb(0 0 0 / 0.55);
   transform: rotate(var(--r));
   cursor: default;
   animation: card-in 0.45s var(--ease-soft) both;
@@ -216,7 +216,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
 @keyframes card-in {
   from {
     opacity: 0;
-    transform: rotate(calc(var(--r) * 4)) scale(0.82) translateY(24px);
+    transform: rotate(calc(var(--r) * 4)) scale(0.82) translateY(1.5rem);
   }
 }
 
@@ -224,8 +224,8 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
   position: absolute;
   display: grid;
   place-items: center;
-  width: 48px;
-  height: 48px;
+  width: 3rem;
+  height: 3rem;
   border: 0;
   border-radius: 50%;
   background: rgb(255 255 255 / 0.14);
@@ -251,14 +251,14 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
   outline-offset: 3px;
 }
 
-.lightbox__close { top: 20px; right: 20px; }
-.lightbox__prev { left: 20px; top: 50%; translate: 0 -50%; }
-.lightbox__next { right: 20px; top: 50%; translate: 0 -50%; }
+.lightbox__close { top: 1.25rem; right: 1.25rem; }
+.lightbox__prev { left: 1.25rem; top: 50%; translate: 0 -50%; }
+.lightbox__next { right: 1.25rem; top: 50%; translate: 0 -50%; }
 
 @media (max-width: 640px) {
-  .lightbox__prev, .lightbox__next { top: auto; bottom: 24px; translate: none; }
-  .lightbox__prev { left: calc(50% - 60px); }
-  .lightbox__next { right: calc(50% - 60px); }
+  .lightbox__prev, .lightbox__next { top: auto; bottom: 1.5rem; translate: none; }
+  .lightbox__prev { left: calc(50% - 3.75rem); }
+  .lightbox__next { right: calc(50% - 3.75rem); }
 }
 
 .lightbox-enter-active,

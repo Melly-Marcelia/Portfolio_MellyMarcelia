@@ -168,7 +168,7 @@ onBeforeUnmount(() => {
 .seedline {
   display: block;
   width: 100%;
-  height: 72px;
+  height: 4.5rem;
   overflow: visible;
 }
 

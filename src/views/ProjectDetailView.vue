@@ -41,6 +41,24 @@ const meta = computed(() => {
   ].filter(Boolean)
 })
 
+// same wording on every case study, picked from where the link points
+const linkLabel = computed(() => {
+  const { link, linkLabel: custom } = project.value ?? {}
+  if (custom) return custom
+  if (!link) return ''
+  if (/figma\.com/.test(link)) return 'view prototype'
+  if (/github\.com/.test(link)) return 'view code'
+  return 'view live site'
+})
+
+// the row is named after where the link goes, so it doesn't clash with the repos row
+const linkKey = computed(() => {
+  const link = project.value?.link ?? ''
+  if (/figma\.com/.test(link)) return 'figma'
+  if (/github\.com/.test(link)) return 'github'
+  return 'website'
+})
+
 const titleWords = computed(() => project.value?.title.split(/\s+/) ?? [])
 
 const projectIndex = computed(() =>
@@ -161,17 +179,24 @@ onBeforeUnmount(() => observers.forEach((o) => o.disconnect()))
     </figure>
 
     <div v-reveal class="cs__intro cs__col">
-      <ul v-if="meta.length || project.link" class="cs__meta">
+      <ul v-if="meta.length || project.link || project.repos?.length" class="cs__meta">
         <li v-for="([k, v], i) in meta" :key="i">
           <span class="cs__meta-k">{{ k }} :</span> {{ v }}
         </li>
         <li v-if="project.link">
-          <span class="cs__meta-k">link :</span>&nbsp;<a
+          <span class="cs__meta-k">{{ linkKey }} :</span>&nbsp;<a
             :href="project.link"
             class="cs__link"
             target="_blank"
             rel="noopener"
-            >{{ project.linkLabel || 'view prototype' }} ↗</a
+            >{{ linkLabel }} ↗</a
+          >
+        </li>
+        <li v-if="project.repos?.length">
+          <span class="cs__meta-k">github :</span>&nbsp;<template v-for="(r, i) in project.repos" :key="r.href"
+            ><template v-if="i">,&nbsp;</template><a :href="r.href" class="cs__link" target="_blank" rel="noopener"
+              >{{ r.label }} ↗</a
+            ></template
           >
         </li>
       </ul>
@@ -358,12 +383,12 @@ onBeforeUnmount(() => observers.forEach((o) => o.disconnect()))
 
 <style scoped>
 .cs {
-  padding-bottom: clamp(60px, 10vw, 120px);
+  padding-bottom: clamp(3.75rem, 10vw, 7.5rem);
 }
 
 .cs__back {
   display: block;
-  padding-top: clamp(24px, 4vw, 44px);
+  padding-top: clamp(1.5rem, 4vw, 2.75rem);
   font-weight: 600;
   color: var(--color-ink-soft);
 }
@@ -408,7 +433,7 @@ onBeforeUnmount(() => observers.forEach((o) => o.disconnect()))
 .cs__cover :is(img, video) {
   display: block;
   width: 100%;
-  max-width: 1900px;
+  max-width: 118.75rem;
   margin-inline: auto;
   /* never taller than the space under the navbar: shrink to fit, don't crop */
   height: auto;
@@ -418,7 +443,7 @@ onBeforeUnmount(() => observers.forEach((o) => o.disconnect()))
 
 /* tall cover (e.g. a desktop-app screenshot): phone-ish width instead of full bleed */
 .cs__cover--portrait :is(img, video) {
-  max-width: 380px;
+  max-width: 23.75rem;
 }
 
 /* two cover designs next to each other; stacked on narrow screens */
@@ -426,7 +451,7 @@ onBeforeUnmount(() => observers.forEach((o) => o.disconnect()))
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(0.75rem, 2vw, 1.5rem);
-  max-width: 1900px;
+  max-width: 118.75rem;
 }
 .cs__cover--pair :is(img, video) {
   max-height: none;
@@ -468,7 +493,7 @@ onBeforeUnmount(() => observers.forEach((o) => o.disconnect()))
 /* text blocks share the same outer box as the bare image panels, so their
    left edge lines up with the images below them */
 .cs__col {
-  max-width: calc(1100px + 2 * var(--page-gutter));
+  max-width: calc(68.75rem + 2 * var(--page-gutter));
   margin-inline: auto;
   padding-inline: var(--page-gutter);
 }
@@ -491,16 +516,16 @@ onBeforeUnmount(() => observers.forEach((o) => o.disconnect()))
 
 /* ---- image panels (the sage mounts) ---- */
 .cs__panel {
-  max-width: 1180px;
+  max-width: 73.75rem;
   margin: clamp(1.5rem, 4vw, 3rem) auto;
-  padding-block: clamp(1.5rem, 5.6vw, 84px);
-  padding-inline: clamp(1.5rem, 7.3vw, 110px);
+  padding-block: clamp(1.5rem, 5.6vw, 5.25rem);
+  padding-inline: clamp(1.5rem, 7.3vw, 6.875rem);
   background: var(--color-panel);
 }
 
 /* bare = image carries its own mount/background, no sage panel around it */
 .cs__panel--bare {
-  max-width: calc(1100px + 2 * var(--page-gutter));
+  max-width: calc(68.75rem + 2 * var(--page-gutter));
   margin: clamp(1rem, 3vw, 2.25rem) auto;
   padding: 0 var(--page-gutter);
   background: none;
@@ -516,7 +541,7 @@ onBeforeUnmount(() => observers.forEach((o) => o.disconnect()))
 }
 
 .cs--gallery .cs__panel--bare {
-  max-width: 1440px;
+  max-width: 90rem;
   margin: 0 auto;
   padding: 0;
 }
@@ -563,7 +588,7 @@ onBeforeUnmount(() => observers.forEach((o) => o.disconnect()))
   font-size: 0.8rem;
   color: var(--color-ink);
   background: var(--color-panel);
-  border-radius: 999px;
+  border-radius: 62.4375rem;
   opacity: 0.85;
   transition: opacity 0.2s ease;
 }
@@ -583,7 +608,7 @@ onBeforeUnmount(() => observers.forEach((o) => o.disconnect()))
 }
 
 .cs__panel--portrait img {
-  max-width: 380px;
+  max-width: 23.75rem;
   margin-inline: auto;
 }
 
@@ -607,7 +632,7 @@ onBeforeUnmount(() => observers.forEach((o) => o.disconnect()))
 
 /* ---- video blocks (campaign films sitting inline in the case study) ---- */
 .cs__vid {
-  max-width: calc(1100px + 2 * var(--page-gutter));
+  max-width: calc(68.75rem + 2 * var(--page-gutter));
   margin: clamp(1.75rem, 4.5vw, 3.25rem) auto;
   padding: 0 var(--page-gutter);
 }
@@ -616,7 +641,7 @@ onBeforeUnmount(() => observers.forEach((o) => o.disconnect()))
    same reach but keep a little air around them so a clip reads as "playable",
    not as another static frame */
 .cs--gallery .cs__vid {
-  max-width: calc(1240px + 2 * var(--page-gutter));
+  max-width: calc(77.5rem + 2 * var(--page-gutter));
   margin-block: clamp(2rem, 5vw, 3.5rem);
 }
 
@@ -723,14 +748,14 @@ onBeforeUnmount(() => observers.forEach((o) => o.disconnect()))
 
 .cs__vid--portrait .cs__vid-frame {
   aspect-ratio: 9 / 16;
-  max-width: 380px;
+  max-width: 23.75rem;
   margin-inline: auto;
 }
 
 /* split = video on the left, its description on the right; stacks on phones */
 .cs__vid--split {
   display: grid;
-  grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 21.25rem) minmax(0, 1fr);
   grid-template-areas:
     'media text'
     'cap   text';
@@ -764,7 +789,7 @@ onBeforeUnmount(() => observers.forEach((o) => o.disconnect()))
   }
 
   .cs__vid--split .cs__vid-frame {
-    max-width: 340px;
+    max-width: 21.25rem;
   }
 
   .cs__vid-aside {
@@ -782,8 +807,8 @@ onBeforeUnmount(() => observers.forEach((o) => o.disconnect()))
 }
 
 .cs__phone :deep(.iwv) {
-  width: min(300px, 74vw);
-  filter: drop-shadow(0 30px 55px rgba(20, 14, 16, 0.28));
+  width: min(18.75rem, 74vw);
+  filter: drop-shadow(0 1.875rem 3.4375rem rgba(20, 14, 16, 0.28));
 }
 
 .cs__phone figcaption {
@@ -824,7 +849,7 @@ onBeforeUnmount(() => observers.forEach((o) => o.disconnect()))
 .cs__dock {
   position: fixed;
   left: 50%;
-  bottom: max(16px, env(safe-area-inset-bottom));
+  bottom: max(1rem, env(safe-area-inset-bottom));
   z-index: var(--z-nav);
   display: flex;
   align-items: center;
@@ -835,8 +860,8 @@ onBeforeUnmount(() => observers.forEach((o) => o.disconnect()))
   font-weight: 700;
   line-height: 1.2;
   background: color-mix(in srgb, var(--color-surface) 82%, transparent);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(0.75rem);
+  -webkit-backdrop-filter: blur(0.75rem);
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-pill);
   box-shadow: var(--shadow-m);
@@ -848,7 +873,7 @@ onBeforeUnmount(() => observers.forEach((o) => o.disconnect()))
 
 .cs__dock.is-hidden {
   opacity: 0;
-  transform: translate(-50%, 14px);
+  transform: translate(-50%, 0.875rem);
   pointer-events: none;
 }
 
