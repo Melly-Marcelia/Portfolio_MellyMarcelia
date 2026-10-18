@@ -136,6 +136,19 @@ onBeforeUnmount(() => (logoAnchor.value = null))
   aspect-ratio: var(--logo-ratio);
 }
 
+/* big, tall screens: the hero fills the whole first screen there, so let
+   the greeting and intro grow into it instead of floating in space */
+@media (min-width: 1700px) and (min-height: 950px) {
+  .hero__title {
+    font-size: 4.4rem;
+    margin-bottom: var(--space-m);
+  }
+  .hero__intro {
+    font-size: var(--step-2);
+    max-width: 40ch;
+  }
+}
+
 @media (max-width: 820px) {
   .hero__inner {
     grid-template-columns: 1fr;
