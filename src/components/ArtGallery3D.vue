@@ -43,6 +43,18 @@ const viewerClose = ref(null)
 const hand = ref('off') // off | loading | on | error
 const handError = ref('')
 const handSupported = typeof navigator !== 'undefined' && !!navigator.mediaDevices?.getUserMedia
+// touch screens can't hover the chip, so an info button opens its note on tap
+const handNoteOpen = ref(false)
+const handInfo = ref(null)
+function closeHandNote(e) {
+  if (e.type === 'keydown' ? e.key === 'Escape' : !handInfo.value?.contains(e.target))
+    handNoteOpen.value = false
+}
+watch(handNoteOpen, (open) => {
+  const fn = open ? 'addEventListener' : 'removeEventListener'
+  document[fn]('pointerdown', closeHandNote)
+  document[fn]('keydown', closeHandNote)
+})
 const current = computed(() => props.items[active.value])
 const counter = computed(
   () =>
@@ -480,6 +492,7 @@ function onKey(e) {
 
 async function toggleHand() {
   feedback.unlock()
+  handNoteOpen.value = false
   if (stopHand) {
     stopHand()
     stopHand = null
@@ -851,8 +864,31 @@ onBeforeUnmount(() => {
               <span class="gal__chip-short">Try gesture control</span>
             </template>
           </button>
-          <!-- only shown while the chip is hovered or focused, so it never sits over the gallery -->
-          <p v-if="hand === 'off'" id="gal-hand-note" class="gal__hand-note" role="tooltip">
+          <button
+            v-if="hand === 'off'"
+            ref="handInfo"
+            class="gal__chip gal__chip--icon gal__info"
+            type="button"
+            aria-label="How does gesture control work?"
+            :aria-expanded="handNoteOpen"
+            aria-controls="gal-hand-note"
+            @click="handNoteOpen = !handNoteOpen"
+          >
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2" />
+              <path d="M12 11v6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              <circle cx="12" cy="7.5" r="1.25" fill="currentColor" />
+            </svg>
+          </button>
+          <!-- only shown while the chip is hovered or focused (or the info button
+               is tapped open), so it never sits over the gallery -->
+          <p
+            v-if="hand === 'off'"
+            id="gal-hand-note"
+            class="gal__hand-note"
+            :class="{ 'is-open': handNoteOpen }"
+            role="tooltip"
+          >
             ✋ Control the gallery with your hand: turn this on, allow your webcam, then hold a
             hand up in front of the camera. Move your finger to steer, flick sideways to spin,
             and hold still on a piece for 3 seconds to open it. The video stays on your device.
@@ -1010,6 +1046,21 @@ onBeforeUnmount(() => {
 }
 .gal__hand {
   position: relative;
+  display: flex;
+  gap: 0.4rem;
+}
+/* the info button is for touch screens only: a mouse can just hover the chip */
+.gal__info {
+  display: none;
+}
+@media (hover: none) {
+  .gal__info {
+    display: inline-flex;
+  }
+}
+.gal__info[aria-expanded='true'] {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
 }
 .gal__hand-note {
   position: absolute;
@@ -1035,8 +1086,9 @@ onBeforeUnmount(() => {
   line-height: 1.4;
   pointer-events: none;
 }
-.gal__chip:hover + .gal__hand-note,
-.gal__chip:focus-visible + .gal__hand-note {
+.gal__chip:hover ~ .gal__hand-note,
+.gal__chip:focus-visible ~ .gal__hand-note,
+.gal__hand-note.is-open {
   opacity: 1;
   visibility: visible;
   transform: none;
