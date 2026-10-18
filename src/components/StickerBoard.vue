@@ -188,6 +188,15 @@ function tidy() {
   height: clamp(27.5rem, min(58vw, 100svh - var(--nav-h) - 4rem), 40rem);
 }
 
+/* phones: the 27.5rem floor made the table taller than it is wide, and the
+   unscaled SVG stretched it into a tall, pinched shape. Tie the height to
+   the width instead, closer to the table's real proportions. */
+@media (max-width: 640px) {
+  .stickers__table {
+    height: 85vw;
+  }
+}
+
 .stickers__furniture {
   position: absolute;
   inset: 0;
@@ -258,6 +267,13 @@ function tidy() {
   width: calc(clamp(3.5rem, 9.5vw, 7.75rem) * var(--s, 1));
   height: auto;
   pointer-events: none;
+}
+
+/* phones: a touch smaller so they still fit on the shorter table */
+@media (max-width: 640px) {
+  .sticker--image img {
+    width: calc(3rem * var(--s, 1));
+  }
 }
 
 /* hand-lettered skill name under each sticker, pencilled onto the table */
