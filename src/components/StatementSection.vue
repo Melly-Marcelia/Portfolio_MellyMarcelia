@@ -144,4 +144,17 @@ const CLEAR_WORD = 'Clarity'
   margin-inline: auto;
   color: var(--color-ink-soft);
 }
+
+/* phones: scale the title and paragraph down so the block keeps the light,
+   airy proportions of desktop instead of a tall wall of large text */
+@media (max-width: 640px) {
+  .statement__title {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .statement__body {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+}
 </style>

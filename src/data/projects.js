@@ -18,8 +18,9 @@
  *               (a video autoplays muted, loops, and pauses when off-screen)
  *   poster      still image shown before/if a video cover plays
  *   coverPortrait  true → tall cover; capped at 380px wide on the case-study page
- *   featured    true → also shown in the "Featured projects" grid on the home page
- *               (false → the project still appears in the carousel and at /works)
+ *   featured    a number → also shown in the "Featured projects" grid on the home
+ *               page, at that position (1 = first); false → the project still
+ *               appears in the carousel and at /works
  *   role        your role on the project          — shown in the facts row
  *   timeline    e.g. "6 weeks"                    — shown in the facts row
  *   audience    who it's for                      — shown in the facts row
@@ -177,7 +178,7 @@ const entries = [
       'A full website redesign for the Indonesian beauty label Luxcrime.',
     cover: '/assets/works/luxcrime-thumb.mp4',
     poster: '/assets/works/luxcrime-thumb.jpg',
-    featured: true,
+    featured: 3,
     tools: ['Figma'],
     // /proto/ (not /design/) — opens straight into the presentation view, not the editor
     link: 'https://www.figma.com/proto/InKuWUX8VWIv5OZsfrr4xf/LUXCRIME-REBRANDING?node-id=75-602',
@@ -213,7 +214,7 @@ const entries = [
     // isometric flat-lay: brand-guideline slides (Figma page "BRANDING") around
     // three phone screens; composed at 2400x1600 outside Figma
     cover: '/assets/works/livio-cover.jpg',
-    featured: true,
+    featured: 1,
     role: 'Product Owner and Lead Designer',
     timeline: 'October 2025 – June 2026',
     tools: ['Figma', 'Adobe Illustrator', 'VS Code', 'GitHub', 'Postman', 'Vue 3', 'Notion', 'Trello'],
@@ -246,7 +247,7 @@ const entries = [
     // runner on a track: the unfolded Today screen on a foldable + the live-run
     // watch face, composited onto a generated photo at 2400×1600
     cover: '/assets/works/wach/cover-track.jpg',
-    featured: true,
+    featured: 2,
     tools: ['Figma'],
     link: 'https://www.figma.com/design/qrrRfJp4Z8kYEFydP6Hj0b/WACH_DP2?node-id=0-1',
     // the repo is private on GitHub, so visitors without access get a 404
@@ -271,7 +272,7 @@ const entries = [
     // overhead shot: pumpkin spice latte in one hand, the other snapping it
     // with the real calendar screen composited onto the phone
     cover: '/assets/works/drinkety-cover.jpg',
-    featured: true,
+    featured: 4,
     timeline: 'September 2026',
     link: 'https://github.com/Melly-Marcelia/drinkety',
     // bespoke layout: src/components/case-studies/DrinketyCase.vue holds the
@@ -693,4 +694,6 @@ export function getProject(slug) {
   return caseStudies.find((p) => p.slug === slug)
 }
 
-export const featuredProjects = projects.filter((p) => p.featured)
+export const featuredProjects = projects
+  .filter((p) => p.featured)
+  .sort((a, b) => a.featured - b.featured)
