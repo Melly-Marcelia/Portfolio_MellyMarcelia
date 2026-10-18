@@ -14,8 +14,9 @@
  */
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
-const H = 72 // rendered height; the 40-unit design curve is stretched to fill it
-const Y = H / 40
+// the 40-unit design curve is stretched to fill the rendered height (4.5rem),
+// measured live: rem scales up on large screens, and a fixed viewBox height
+// would letterbox the SVG and open a gap above the fill
 const SPACING = 12 // px between seeds along the line
 
 // the original divider curve, as cubic segments in 1200×40 design space
@@ -58,6 +59,7 @@ function rng(seed) {
 
 const root = ref(null)
 const width = ref(1200)
+const height = ref(72)
 
 const seeds = computed(() => {
   const W = width.value
@@ -82,6 +84,7 @@ function place(seed, shift) {
   const x = (((seed.x + shift) % W) + W) % W
   const { y, dy } = sampleAt(x / scale)
   // slope in real pixels, so seeds lie along the visible curve
+  const Y = height.value / 40
   const along = Math.atan2(dy * Y, scale) * (180 / Math.PI)
   return `translate(${x.toFixed(1)} ${(y * Y + seed.jitter).toFixed(1)}) rotate(${(along + seed.spin).toFixed(1)}) scale(${seed.s.toFixed(2)})`
 }
@@ -89,6 +92,7 @@ function place(seed, shift) {
 // the band above the curve, in real px: top edge → along the wave → back
 const fillPath = computed(() => {
   const k = width.value / 1200
+  const Y = height.value / 40
   const pts = samples
     .filter((_, i) => i % 4 === 0)
     .concat([samples[samples.length - 1]])
@@ -117,7 +121,10 @@ function onScroll() {
 
 let ro, io
 onMounted(() => {
-  const measure = () => (width.value = root.value?.clientWidth || 1200)
+  const measure = () => {
+    width.value = root.value?.clientWidth || 1200
+    height.value = root.value?.clientHeight || 72
+  }
   measure()
   ro = new ResizeObserver(measure)
   ro.observe(root.value)
@@ -144,7 +151,7 @@ onBeforeUnmount(() => {
   <svg
     ref="root"
     class="seedline"
-    :viewBox="`0 0 ${width} ${H}`"
+    :viewBox="`0 0 ${width} ${height}`"
     aria-hidden="true"
   >
     <path class="seedline__fill" :d="fillPath" />
