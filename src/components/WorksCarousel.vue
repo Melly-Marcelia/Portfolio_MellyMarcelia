@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import { caseStudies } from '@/data/projects'
 import AppText from '@/components/ui/AppText.vue'
@@ -8,20 +8,149 @@ import CoverMedia from '@/components/ui/CoverMedia.vue'
 /**
  * Looping strip of work thumbnails under the hero — a glimpse of every
  * project with a case study (coming-soon ones are left out). Tiles keep
- * their size (about four on screen) and the strip drifts sideways forever: the list is rendered twice and the track slides by one
- * copy's width, so the seam is invisible. Hover / focus pauses it; reduced
- * motion turns it into a plain swipeable row. Each tile links to that
- * project's case-study page (/works/:slug).
+ * their size (about four on screen) and the strip drifts sideways forever:
+ * the list is rendered twice and the scroll position wraps by one copy's
+ * width, so the seam is invisible. It's a real scroll container, so people
+ * can swipe / trackpad-scroll / mouse-drag it; hover, focus or any manual
+ * scroll pauses the drift for a moment. Reduced motion turns it into a plain
+ * swipeable row. Each tile links to that project's case-study page (/works/:slug).
  */
 const SECONDS_PER_TILE = 5
+const RESUME_AFTER_MS = 1800
+const DRAG_THRESHOLD = 6
 
 const items = computed(() => caseStudies)
-const duration = computed(() => `${items.value.length * SECONDS_PER_TILE}s`)
+
+const viewport = ref(null)
+const track = ref(null)
+
+let raf = 0
+let ro = null
+let pos = 0 // float scroll position (scrollLeft gets rounded by some browsers)
+let copyW = 0 // width of one copy incl. the gap after it
+let lastTime = 0
+let lastInput = 0
+let hovered = false
+let touching = false
+let drag = null
+let suppressClick = false
+
+function measure() {
+  const kids = track.value?.children
+  const n = items.value.length
+  if (!kids || kids.length < n * 2) return
+  copyW = kids[n].offsetLeft - kids[0].offsetLeft
+}
+
+// keep pos inside [0, copyW); returns the shift so a drag can follow it
+function wrap() {
+  if (!copyW) return 0
+  let shift = 0
+  if (pos >= copyW) shift = -copyW
+  else if (pos < 0) shift = copyW
+  if (shift) {
+    pos += shift
+    viewport.value.scrollLeft = pos
+  }
+  return shift
+}
+
+function tick(now) {
+  const el = viewport.value
+  const dt = lastTime ? Math.min(now - lastTime, 100) : 0
+  lastTime = now
+  const idle = !hovered && !touching && !drag && now - lastInput > RESUME_AFTER_MS
+    && !el.contains(document.activeElement)
+
+  if (idle && copyW) {
+    pos += (copyW / (items.value.length * SECONDS_PER_TILE)) * (dt / 1000)
+    el.scrollLeft = pos
+  } else if (!drag) {
+    // user is in control: follow wherever they scrolled to
+    pos = el.scrollLeft
+  }
+  wrap()
+  raf = requestAnimationFrame(tick)
+}
+
+const markInput = () => (lastInput = performance.now())
+const setHovered = (v) => (hovered = v)
+
+function onTouchStart() {
+  touching = true
+  markInput()
+}
+function onTouchEnd() {
+  touching = false
+  markInput() // momentum keeps going; the delay covers it
+}
+
+// mouse drag: native scroll already covers touch and trackpads
+function onPointerDown(e) {
+  if (e.pointerType !== 'mouse' || e.button !== 0) return
+  drag = { x: e.clientX, start: viewport.value.scrollLeft, id: e.pointerId, moved: false }
+  pos = drag.start
+}
+function onPointerMove(e) {
+  if (!drag || e.pointerId !== drag.id) return
+  const dx = e.clientX - drag.x
+  if (!drag.moved) {
+    if (Math.abs(dx) < DRAG_THRESHOLD) return
+    drag.moved = true
+    // capture only once it's a real drag, so plain clicks still reach the link
+    viewport.value.setPointerCapture(e.pointerId)
+  }
+  pos = drag.start - dx
+  viewport.value.scrollLeft = pos
+  drag.start += wrap()
+  markInput()
+}
+function onPointerUp(e) {
+  if (!drag || e.pointerId !== drag.id) return
+  suppressClick = drag.moved
+  drag = null
+  markInput()
+}
+function onClickCapture(e) {
+  if (!suppressClick) return
+  suppressClick = false
+  e.preventDefault()
+  e.stopPropagation()
+}
+
+onMounted(() => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+  measure()
+  ro = new ResizeObserver(measure)
+  ro.observe(track.value)
+  raf = requestAnimationFrame(tick)
+})
+
+onBeforeUnmount(() => {
+  cancelAnimationFrame(raf)
+  ro?.disconnect()
+})
 </script>
 
 <template>
-  <div class="carousel enter-rise" :style="{ '--enter-delay': '320ms' }">
-    <ul class="carousel__track" :style="{ '--loop-dur': duration }">
+  <div
+    ref="viewport"
+    class="carousel enter-rise"
+    :style="{ '--enter-delay': '320ms' }"
+    @mouseenter="setHovered(true)"
+    @mouseleave="setHovered(false)"
+    @wheel.passive="markInput"
+    @touchstart.passive="onTouchStart"
+    @touchend.passive="onTouchEnd"
+    @touchcancel.passive="onTouchEnd"
+    @pointerdown="onPointerDown"
+    @pointermove="onPointerMove"
+    @pointerup="onPointerUp"
+    @pointercancel="onPointerUp"
+    @click.capture="onClickCapture"
+    @dragstart.prevent
+  >
+    <ul ref="track" class="carousel__track">
       <!-- copy 0 is the real list; copy 1 is a visual duplicate for the loop -->
       <template v-for="copy in 2" :key="copy">
       <li
@@ -65,9 +194,20 @@ const duration = computed(() => `${items.value.length * SECONDS_PER_TILE}s`)
 .carousel {
   --tile-gap: clamp(0.5rem, 1.4vw, 1rem);
   padding-block: clamp(1rem, 3vh, 2.5rem) clamp(1.5rem, 4vh, 3rem);
-  overflow: hidden;
+  /* real scroll container: swipe / trackpad / drag; drift is done in JS */
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  cursor: grab;
   /* soft fade at both edges so tiles drift in and out, not get cut */
   mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+}
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+.carousel:active {
+  cursor: grabbing;
 }
 
 .carousel__track {
@@ -75,26 +215,12 @@ const duration = computed(() => `${items.value.length * SECONDS_PER_TILE}s`)
   display: flex;
   gap: var(--tile-gap);
   width: max-content;
-  animation: carousel-loop var(--loop-dur, 40s) linear infinite;
-}
-
-/* stop to let people look / click */
-.carousel__track:hover,
-.carousel__track:focus-within {
-  animation-play-state: paused;
-}
-
-/* slide exactly one copy (half the track, incl. the gap after the last tile) */
-@keyframes carousel-loop {
-  to {
-    transform: translateX(calc(-50% - var(--tile-gap) / 2));
-  }
 }
 
 /* same tile size as the old 4-up row */
 .tile {
   flex: 0 0 auto;
-  width: clamp(220px, calc((min(100vw, var(--page-max)) - 3 * var(--tile-gap)) / 4), 420px);
+  width: clamp(13.75rem, calc((min(100vw, var(--page-max)) - 3 * var(--tile-gap)) / 4), 26.25rem);
 }
 
 /* plain rectangular thumbnail — the whole tile is the link */
@@ -204,13 +330,11 @@ const duration = computed(() => `${items.value.length * SECONDS_PER_TILE}s`)
 /* reduced motion: no drift — a plain swipeable row of the real list */
 @media (prefers-reduced-motion: reduce) {
   .carousel {
-    overflow-x: auto;
     mask-image: none;
-    scrollbar-width: none;
+    cursor: auto;
   }
   .carousel__track {
-    animation: none;
-    padding-inline: clamp(6px, 1vw, 12px);
+    padding-inline: clamp(6px, 1vw, 0.75rem);
   }
   .tile--dupe {
     display: none;
