@@ -3,11 +3,10 @@ import { onMounted, onBeforeUnmount, ref } from 'vue'
 import { site } from '@/data/site'
 import AppButton from '@/components/ui/AppButton.vue'
 import { useTheme } from '@/composables/useTheme'
-import { logoSlot, LOGO_RATIO } from '@/composables/useBrandLogo'
+import { logoSlot, menuOpen as open, LOGO_RATIO } from '@/composables/useBrandLogo'
 
 const { theme, toggleTheme } = useTheme()
 
-const open = ref(false)
 const scrolled = ref(false)
 // Empty slot the logo (BrandLogo.vue) docks into — see public/assets/README.md
 const brand = ref(null)
@@ -32,12 +31,13 @@ onMounted(() => {
 })
 onBeforeUnmount(() => {
   logoSlot.value = null
+  open.value = false
   window.removeEventListener('scroll', onScroll)
 })
 </script>
 
 <template>
-  <header class="nav" :class="{ 'is-scrolled': scrolled }">
+  <header class="nav" :class="{ 'is-scrolled': scrolled, 'is-menu-open': open }">
     <div class="container nav__inner">
       <div
         ref="brand"
@@ -132,20 +132,22 @@ onBeforeUnmount(() => {
     margin-bottom var(--transition);
 }
 
-/* the bar condenses by 14px — give that back as margin so the header's
+/* the bar condenses by 0.875rem — give that back as margin so the header's
    footprint in the page never changes. Otherwise the content jumps up,
    scroll anchoring pulls scrollY back under the threshold and the bar
    flickers between states. */
 .nav.is-scrolled {
-  margin-bottom: 14px;
+  margin-bottom: 0.875rem;
   background: color-mix(in srgb, var(--color-bg) 92%, transparent);
   border-bottom-color: var(--color-border, rgba(0, 0, 0, 0.08));
-  box-shadow: 0 6px 20px -12px rgba(var(--c-seed-rgb), 0.18);
+  box-shadow: 0 6px 1.25rem -0.75rem rgba(var(--c-seed-rgb), 0.18);
 }
 
 
 .nav__inner {
-  max-width: none;
+  /* full-bleed on laptops; on wide screens it stops a gutter outside the
+     page column instead of drifting to the far screen edges */
+  max-width: calc(var(--page-max) + 2 * var(--page-gutter));
   padding-inline: var(--page-gutter);
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -156,13 +158,13 @@ onBeforeUnmount(() => {
 }
 
 .nav.is-scrolled .nav__inner {
-  min-height: calc(var(--nav-h) - 14px);
+  min-height: calc(var(--nav-h) - 0.875rem);
 }
 
 /* reserves the spot the scroll-linked logo (BrandLogo) lands in */
 .nav__brand {
   justify-self: start;
-  height: 64px;
+  height: 4rem;
   aspect-ratio: var(--logo-ratio);
 }
 
@@ -240,8 +242,8 @@ onBeforeUnmount(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 54px;
-  height: 30px;
+  width: 3.375rem;
+  height: 1.875rem;
   padding: 0 7px;
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-pill);
@@ -256,8 +258,8 @@ onBeforeUnmount(() => {
 }
 
 .nav__theme-ico {
-  width: 14px;
-  height: 14px;
+  width: 0.875rem;
+  height: 0.875rem;
   color: var(--color-ink-faint);
   transition: color var(--transition), opacity var(--transition);
 }
@@ -272,8 +274,8 @@ onBeforeUnmount(() => {
   position: absolute;
   top: 50%;
   left: 3px;
-  width: 24px;
-  height: 24px;
+  width: 1.5rem;
+  height: 1.5rem;
   transform: translateY(-50%);
   border-radius: 50%;
   background: var(--color-ink);
@@ -282,7 +284,7 @@ onBeforeUnmount(() => {
 }
 
 .nav__theme[aria-checked='true'] .nav__theme-knob {
-  transform: translateY(-50%) translateX(24px);
+  transform: translateY(-50%) translateX(1.5rem);
 }
 
 .nav__theme:focus-visible {
@@ -294,7 +296,7 @@ onBeforeUnmount(() => {
   display: none;
   flex-direction: column;
   gap: 5px;
-  padding: 10px;
+  padding: 0.625rem;
   background: none;
   border: none;
   justify-self: end;
@@ -302,7 +304,7 @@ onBeforeUnmount(() => {
 }
 
 .nav__toggle span {
-  width: 24px;
+  width: 1.5rem;
   height: 2px;
   background: var(--color-ink);
   border-radius: var(--radius-xs);
@@ -322,15 +324,23 @@ onBeforeUnmount(() => {
     flex-direction: column;
     align-items: flex-start;
     position: absolute;
-    inset: var(--nav-h) 0 auto 0;
+    /* hang off the bar's real bottom edge: it shrinks once scrolled */
+    inset: 100% 0 auto 0;
     gap: 1.25rem;
-    padding: 1.5rem var(--page-gutter) 2rem;
+    padding: 0.25rem var(--page-gutter) 2rem;
     background: var(--color-bg);
     border-bottom: var(--border-hairline);
     transform: translateY(-8px);
     opacity: 0;
     pointer-events: none;
     transition: opacity var(--transition), transform var(--transition);
+  }
+
+  /* open: bar and dropdown read as one solid panel, no seam between them */
+  .nav.is-menu-open {
+    background: var(--color-bg);
+    border-bottom-color: transparent;
+    box-shadow: none;
   }
 
   .nav__menu.is-open {

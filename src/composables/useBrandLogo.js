@@ -9,6 +9,8 @@ import { shallowRef } from 'vue'
 
 export const logoAnchor = shallowRef(null)
 export const logoSlot = shallowRef(null)
+// mobile menu open (set by TheNavbar): the undocked logo drops under it instead of covering it
+export const menuOpen = shallowRef(false)
 
 // intrinsic proportions of the active logo file, so both slots keep the drawing undistorted
 // logo-blank.png / logo-face.png are both 1400×1600 (was 429/523 for the original logo.png)

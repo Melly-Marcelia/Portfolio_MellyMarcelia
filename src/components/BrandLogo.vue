@@ -2,7 +2,7 @@
 import { ref, watch, nextTick, onMounted, onBeforeUnmount } from 'vue'
 import { useRoute } from 'vue-router'
 import { site } from '@/data/site'
-import { logoAnchor, logoSlot, LOGO_RATIO } from '@/composables/useBrandLogo'
+import { logoAnchor, logoSlot, menuOpen, LOGO_RATIO } from '@/composables/useBrandLogo'
 /**
  * The site logo. On the homepage it starts big in the hero and, as you scroll,
  * shrinks and glides into the navbar's top-left slot. On every other page it
@@ -11,7 +11,7 @@ import { logoAnchor, logoSlot, LOGO_RATIO } from '@/composables/useBrandLogo'
  * It is drawn once at BASE_H and only ever scaled down (crisp), positioned
  * with transforms straight from the scroll position — no per-frame reactivity.
  */
-const BASE_H = 400 // must be >= the tallest the hero anchor gets
+const BASE_H = 800 // must be >= the tallest the hero anchor gets (25rem at the 32px max root size)
 const DOCK_RANGE = 0.9 // scroll distance to fully dock, as a fraction of the hero logo's height
 
 const route = useRoute()
@@ -129,7 +129,7 @@ onBeforeUnmount(() => {
     ref="link"
     :to="{ name: 'home' }"
     class="brand-logo"
-    :class="{ 'is-ready': ready, 'is-settling': settling, 'is-docked': docked, 'is-resting': resting }"
+    :class="{ 'is-ready': ready, 'is-settling': settling, 'is-docked': docked, 'is-resting': resting, 'is-under-menu': menuOpen && !docked }"
     :style="{ '--logo-h': `${BASE_H}px`, '--logo-ratio': LOGO_RATIO }"
     :tabindex="docked ? 0 : -1"
     aria-label="Home"
@@ -160,6 +160,13 @@ onBeforeUnmount(() => {
   /* only clickable once it has landed in the navbar — mid-flight it must not block the page */
   pointer-events: none;
   will-change: transform;
+}
+
+/* mobile menu open while the logo is still big in the hero: tuck it under the navbar
+   so the dropdown covers it (docked, it sits in the bar above the menu and can stay on top) */
+.brand-logo.is-under-menu {
+  z-index: calc(var(--z-nav) - 1);
+  pointer-events: none;
 }
 
 .brand-logo.is-ready {
