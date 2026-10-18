@@ -131,8 +131,11 @@ import PolaroidStack from '@/components/PolaroidStack.vue'
     lily-drift 2.8s ease-in-out infinite paused;
 }
 
-.about__lily img:hover {
-  animation-play-state: running, running;
+/* real pointers only: on touch the drift would freeze mid-swing off to one side */
+@media (hover: hover) and (pointer: fine) {
+  .about__lily img:hover {
+    animation-play-state: running, running;
+  }
 }
 
 @keyframes lily-sway {
@@ -175,10 +178,21 @@ import PolaroidStack from '@/components/PolaroidStack.vue'
   .about__text {
     grid-template-columns: 1fr;
   }
+  /* stacked under the polaroids: drop the desktop lift (it pulled the name
+     into the pile) and centre it */
+  .about__title {
+    top: 0;
+    margin-top: 1.25rem;
+    text-align: center;
+  }
   .about__lily {
     grid-column: 1;
     grid-row: auto;
     justify-self: end;
+    /* drop the desktop nudge: here it left an empty band under the bio
+       and pushed the flower onto the wallet */
+    top: 0;
+    margin-top: -0.5rem;
     width: clamp(5.625rem, 28vw, 7.5rem);
   }
 }

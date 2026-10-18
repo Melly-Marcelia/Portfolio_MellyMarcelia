@@ -196,8 +196,12 @@ onBeforeUnmount(() => {
   animation: logo-sway 2.8s ease-in-out infinite paused;
 }
 
-.brand-logo:hover .brand-logo__sway {
-  animation-play-state: running;
+/* real pointers only: on touch a tap or scroll counts as hover and the sway
+   would freeze mid-swing, leaving the fruit off-centre */
+@media (hover: hover) and (pointer: fine) {
+  .brand-logo:hover .brand-logo__sway {
+    animation-play-state: running;
+  }
 }
 
 @keyframes logo-sway {
