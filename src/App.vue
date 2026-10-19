@@ -23,6 +23,12 @@ import CookieBanner from '@/components/CookieBanner.vue'
       <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  2.6 0 0 0 -0.6" result="tooth" />
       <feComposite in="line" in2="tooth" operator="in" />
     </filter>
+    <!-- grain only, no wobble: for pencil underlines (navbar links) -->
+    <filter id="pencil-tooth" x="-5%" y="-50%" width="110%" height="200%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9 0.3" numOctaves="2" seed="5" result="grain" />
+      <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  2.4 0 0 0 -0.4" result="tooth" />
+      <feComposite in="SourceGraphic" in2="tooth" operator="in" />
+    </filter>
     <!-- a shaded fill: the same wobble as #pencil-a so its edge follows the line -->
     <filter id="pencil-fill" x="-5%" y="-20%" width="110%" height="140%">
       <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3" result="wobble" />

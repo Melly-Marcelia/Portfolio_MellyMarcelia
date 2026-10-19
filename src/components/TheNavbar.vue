@@ -65,6 +65,16 @@ onBeforeUnmount(() => {
             @click="open = false"
           >
             {{ item.label }}
+            <!-- pencil underline, drawn in on hover (#pencil-tooth lives in App.vue) -->
+            <svg
+              class="nav__scribble"
+              viewBox="0 0 200 10"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M3 6.5 C 34 3, 66 8.5, 102 5.5 S 168 3.5, 197 6" filter="url(#pencil-tooth)" />
+            </svg>
           </RouterLink>
         </div>
 
@@ -188,18 +198,26 @@ onBeforeUnmount(() => {
   transition: color var(--transition-fast);
 }
 
-.nav__link::after {
-  content: '';
+/* same pencil underline as the project card titles */
+.nav__scribble {
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -4px;
-  height: 1.5px;
-  background: currentColor;
-  border-radius: 2px;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.35s var(--ease-soft);
+  left: -0.15em;
+  bottom: -0.45em;
+  width: calc(100% + 0.3em);
+  height: 0.5em;
+  overflow: visible;
+  pointer-events: none;
+  /* drawn in left to right */
+  clip-path: inset(-50% 100% -50% 0);
+  transition: clip-path 0.45s var(--ease-soft);
+}
+
+.nav__scribble path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
 }
 
 .nav__link:hover,
@@ -207,17 +225,19 @@ onBeforeUnmount(() => {
   color: var(--color-ink);
 }
 
-.nav__link:hover::after,
-.nav__link.router-link-active::after {
-  transform: scaleX(1);
+.nav__link:hover .nav__scribble,
+.nav__link.router-link-active .nav__scribble {
+  clip-path: inset(-50% 0 -50% 0);
 }
 
-.nav__link.router-link-active::after {
-  background: var(--color-accent);
+.nav__link.router-link-active .nav__scribble path {
+  stroke: var(--color-accent);
 }
 
-.nav__link.router-link-active:not(:hover)::after {
-  transform-origin: right;
+@media (prefers-reduced-motion: reduce) {
+  .nav__scribble {
+    transition: none;
+  }
 }
 
 .nav__end {
