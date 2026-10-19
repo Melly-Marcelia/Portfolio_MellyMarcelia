@@ -850,7 +850,7 @@ onBeforeUnmount(() => {
       <div class="gal__top">
         <div v-if="handSupported" class="gal__hand">
           <button
-            class="gal__chip"
+            class="gal__chip pencil"
             :class="{ 'is-on': hand === 'on' }"
             type="button"
             :aria-pressed="hand === 'on'"
@@ -867,7 +867,7 @@ onBeforeUnmount(() => {
           <button
             v-if="hand === 'off'"
             ref="handInfo"
-            class="gal__chip gal__chip--icon gal__info"
+            class="gal__chip gal__chip--icon gal__info pencil"
             type="button"
             aria-label="How does gesture control work?"
             :aria-expanded="handNoteOpen"
@@ -897,7 +897,7 @@ onBeforeUnmount(() => {
         <span v-else />
 
         <button
-          class="gal__chip gal__chip--icon"
+          class="gal__chip gal__chip--icon pencil"
           type="button"
           :aria-label="feedback.muted.value ? 'Turn sound on' : 'Turn sound off'"
           :aria-pressed="!feedback.muted.value"
@@ -1002,6 +1002,7 @@ onBeforeUnmount(() => {
 }
 
 .gal__chip {
+  --pencil-line: var(--color-ink-faint);
   pointer-events: auto;
   display: inline-flex;
   align-items: center;
@@ -1010,7 +1011,7 @@ onBeforeUnmount(() => {
   padding: 0 0.9rem;
   border: 1px solid var(--color-border-strong);
   border-radius: 62.4375rem;
-  background: var(--color-surface);
+  background: var(--pencil-tooth), var(--color-surface);
   color: var(--color-ink);
   font: inherit;
   font-size: var(--step--1);
@@ -1022,7 +1023,10 @@ onBeforeUnmount(() => {
     border-color 0.2s;
 }
 .gal__chip:hover {
-  border-color: var(--color-accent);
+  --pencil-line: var(--color-accent);
+  --pencil-echo: var(--color-leaf);
+  --pencil-echo-alpha: 0.7;
+  --pencil-shift: 2px -1.5px;
 }
 .gal__chip-short {
   display: none;
@@ -1040,7 +1044,10 @@ onBeforeUnmount(() => {
   }
 }
 .gal__chip.is-on {
-  background: var(--color-accent);
+  --pencil-line: var(--color-accent-hover);
+  --pencil-echo: var(--color-leaf);
+  --pencil-echo-alpha: 0.6;
+  background: var(--pencil-grain), var(--color-accent);
   border-color: var(--color-accent);
   color: var(--color-accent-ink);
 }
@@ -1059,7 +1066,7 @@ onBeforeUnmount(() => {
   }
 }
 .gal__info[aria-expanded='true'] {
-  border-color: var(--color-accent);
+  --pencil-line: var(--color-accent);
   color: var(--color-accent);
 }
 .gal__hand-note {

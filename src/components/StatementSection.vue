@@ -1,4 +1,5 @@
 <script setup>
+import { useId } from 'vue'
 import { site } from '@/data/site'
 import AppText from '@/components/ui/AppText.vue'
 
@@ -7,6 +8,8 @@ const words = site.statement.title.split(/\s+/)
 const FUZZY_WORD = 'Ambiguity'
 // the word that gets the green hand-drawn underline once things are clear
 const CLEAR_WORD = 'Clarity'
+// own id for the pencil-grain filter on the underline
+const toothId = `${useId()}-tooth`
 </script>
 
 <template>
@@ -20,11 +23,24 @@ const CLEAR_WORD = 'Clarity'
               >{{ w
               }}<svg
                 class="statement__swoosh"
-                viewBox="0 0 200 20"
+                viewBox="0 0 200 10"
                 preserveAspectRatio="none"
                 aria-hidden="true"
+                focusable="false"
               >
-                <path d="M4 13 C 48 7, 112 4, 196 9" pathLength="1" /></svg></span
+                <!-- same pencil underline as the project card titles -->
+                <defs>
+                  <filter :id="toothId" x="-5%" y="-50%" width="110%" height="200%">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.9 0.3" numOctaves="2" seed="5" result="grain" />
+                    <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  2.4 0 0 0 -0.4" result="tooth" />
+                    <feComposite in="SourceGraphic" in2="tooth" operator="in" />
+                  </filter>
+                </defs>
+                <path
+                  d="M3 6.5 C 34 3, 66 8.5, 102 5.5 S 168 3.5, 197 6"
+                  pathLength="1"
+                  :filter="`url(#${toothId})`"
+                /></svg></span
             ><template v-else>{{ w }}</template></span
           >{{ ' ' }}
         </template>
@@ -49,7 +65,8 @@ const CLEAR_WORD = 'Clarity'
   text-align: center;
 }
 
-/* seeds scattered through the flesh: a tiled scatter of seed ellipses masks
+/* seeds scattered through the flesh: a tiled scatter of the same pencil
+   teardrop seeds as the footer divider (seeds-pencil.svg) masks
    an ink fill (so they flip to pulp-white seeds in dark mode, the fruit
    inside out), cleared in an oval around the text */
 .statement::before {
@@ -58,8 +75,8 @@ const CLEAR_WORD = 'Clarity'
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: color-mix(in srgb, var(--color-ink) 70%, transparent);
-  --seeds: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cg%3E%3Cellipse cx='18' cy='24' rx='3.8' ry='2.2' transform='rotate(35 18 24)'/%3E%3Cellipse cx='62' cy='12' rx='3.2' ry='1.9' transform='rotate(-20 62 12)'/%3E%3Cellipse cx='104' cy='40' rx='3.8' ry='2.2' transform='rotate(55 104 40)'/%3E%3Cellipse cx='150' cy='18' rx='2.9' ry='1.8' transform='rotate(10 150 18)'/%3E%3Cellipse cx='184' cy='58' rx='3.8' ry='2.2' transform='rotate(-40 184 58)'/%3E%3Cellipse cx='36' cy='78' rx='3.2' ry='1.9' transform='rotate(-15 36 78)'/%3E%3Cellipse cx='82' cy='96' rx='3.8' ry='2.2' transform='rotate(40 82 96)'/%3E%3Cellipse cx='128' cy='84' rx='2.9' ry='1.8' transform='rotate(-55 128 84)'/%3E%3Cellipse cx='170' cy='112' rx='3.8' ry='2.2' transform='rotate(25 170 112)'/%3E%3Cellipse cx='14' cy='138' rx='3.2' ry='1.9' transform='rotate(60 14 138)'/%3E%3Cellipse cx='58' cy='154' rx='3.8' ry='2.2' transform='rotate(-30 58 154)'/%3E%3Cellipse cx='106' cy='140' rx='2.9' ry='1.8' transform='rotate(15 106 140)'/%3E%3Cellipse cx='146' cy='170' rx='3.8' ry='2.2' transform='rotate(-10 146 170)'/%3E%3Cellipse cx='190' cy='176' rx='3.2' ry='1.9' transform='rotate(45 190 176)'/%3E%3Cellipse cx='30' cy='192' rx='2.9' ry='1.8' transform='rotate(20 30 192)'/%3E%3Cellipse cx='86' cy='186' rx='3.8' ry='2.2' transform='rotate(-45 86 186)'/%3E%3C/g%3E%3C/svg%3E");
+  background: var(--color-ink);
+  --seeds: url("/assets/seeds-pencil.svg");
   --clear: radial-gradient(ellipse 42% 50% at 50% 50%, transparent 35%, #000 100%);
   -webkit-mask: var(--seeds) 0 0 / 12.5rem 12.5rem repeat, var(--clear);
   -webkit-mask-composite: source-in;
@@ -95,17 +112,18 @@ const CLEAR_WORD = 'Clarity'
 }
 .statement__swoosh {
   position: absolute;
-  left: -4%;
-  bottom: -0.18em;
-  width: 108%;
-  height: 0.32em;
+  left: -0.1em;
+  bottom: -0.3em;
+  width: calc(100% + 0.2em);
+  height: 0.45em;
   overflow: visible;
   pointer-events: none;
 }
 .statement__swoosh path {
   fill: none;
   stroke: var(--color-leaf);
-  stroke-width: 6;
+  /* the card's 3.2px at its title size, scaled up with the heading */
+  stroke-width: 0.135em;
   stroke-linecap: round;
   vector-effect: non-scaling-stroke;
 }

@@ -8,6 +8,10 @@
  *
  * Renders a <RouterLink> when `to` is set, an <a> when `href` is set,
  * otherwise a native <button>.
+ *
+ * accent + outline are drawn in coloured pencil (styles/pencil.css): a
+ * doubled wobbly line instead of a border. accent's fill is its own layer,
+ * hatched and wobbled by the same filter as the line so the two stay in step.
  */
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
@@ -36,8 +40,9 @@ const kind = computed(() => (props.to ? 'router' : props.href ? 'anchor' : 'butt
     v-if="kind === 'router'"
     :to="to"
     class="btn"
-    :class="[`btn--${variant}`, `btn--${size}`]"
+    :class="[`btn--${variant}`, `btn--${size}`, { pencil: variant !== 'ghost' }]"
   >
+    <span v-if="variant === 'accent'" class="btn__fill" aria-hidden="true" />
     <slot />
   </RouterLink>
 
@@ -45,8 +50,9 @@ const kind = computed(() => (props.to ? 'router' : props.href ? 'anchor' : 'butt
     v-else-if="kind === 'anchor'"
     :href="href"
     class="btn"
-    :class="[`btn--${variant}`, `btn--${size}`]"
+    :class="[`btn--${variant}`, `btn--${size}`, { pencil: variant !== 'ghost' }]"
   >
+    <span v-if="variant === 'accent'" class="btn__fill" aria-hidden="true" />
     <slot />
   </a>
 
@@ -54,8 +60,9 @@ const kind = computed(() => (props.to ? 'router' : props.href ? 'anchor' : 'butt
     v-else
     :type="type"
     class="btn"
-    :class="[`btn--${variant}`, `btn--${size}`]"
+    :class="[`btn--${variant}`, `btn--${size}`, { pencil: variant !== 'ghost' }]"
   >
+    <span v-if="variant === 'accent'" class="btn__fill" aria-hidden="true" />
     <slot />
   </button>
 </template>
@@ -99,19 +106,43 @@ const kind = computed(() => (props.to ? 'router' : props.href ? 'anchor' : 'butt
 
 /* variants */
 .btn--accent {
-  background: var(--color-accent);
+  --pencil-line: var(--color-accent-strong);
+  --pencil-line-alpha: 0.9;
+  --pencil-echo: var(--color-accent-hover);
+  --pencil-echo-alpha: 0.5;
+  isolation: isolate;
   color: var(--color-accent-ink);
 }
 .btn--accent:hover {
-  background: var(--color-accent-hover);
+  --pencil-echo-alpha: 0.8;
+  --pencil-shift: 2.5px -2px;
+}
+
+.btn__fill {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background-color: var(--color-accent);
+  background-image: var(--pencil-shade);
+  filter: url(#pencil-fill);
+  transition: background-color var(--transition-fast);
+}
+.btn--accent:hover .btn__fill {
+  background-color: var(--color-accent-hover);
 }
 
 .btn--outline {
-  border-color: var(--color-ink);
+  --pencil-line: var(--color-ink);
+  --pencil-echo: var(--color-ink-faint);
+  background: var(--pencil-tooth);
   color: var(--color-ink);
 }
 .btn--outline:hover {
-  background: var(--color-ink);
+  --pencil-echo: var(--color-accent);
+  --pencil-echo-alpha: 0.85;
+  --pencil-shift: 2.5px -2px;
+  background: var(--pencil-grain), var(--color-ink);
   color: var(--color-bg);
 }
 

@@ -178,7 +178,7 @@ const entries = [
       'A full website redesign for the Indonesian beauty label Luxcrime.',
     cover: '/assets/works/luxcrime-thumb.mp4',
     poster: '/assets/works/luxcrime-thumb.jpg',
-    featured: 3,
+    featured: 4,
     tools: ['Figma'],
     // /proto/ (not /design/) — opens straight into the presentation view, not the editor
     link: 'https://www.figma.com/proto/InKuWUX8VWIv5OZsfrr4xf/LUXCRIME-REBRANDING?node-id=75-602',
@@ -214,7 +214,7 @@ const entries = [
     // isometric flat-lay: brand-guideline slides (Figma page "BRANDING") around
     // three phone screens; composed at 2400x1600 outside Figma
     cover: '/assets/works/livio-cover.jpg',
-    featured: 1,
+    featured: 2,
     role: 'Product Owner and Lead Designer',
     timeline: 'October 2025 – June 2026',
     tools: ['Figma', 'Adobe Illustrator', 'VS Code', 'GitHub', 'Postman', 'Vue 3', 'Notion', 'Trello'],
@@ -247,7 +247,7 @@ const entries = [
     // runner on a track: the unfolded Today screen on a foldable + the live-run
     // watch face, composited onto a generated photo at 2400×1600
     cover: '/assets/works/wach/cover-track.jpg',
-    featured: 2,
+    featured: 1,
     tools: ['Figma'],
     link: 'https://www.figma.com/design/qrrRfJp4Z8kYEFydP6Hj0b/WACH_DP2?node-id=0-1',
     // the repo is private on GitHub, so visitors without access get a 404
@@ -272,7 +272,7 @@ const entries = [
     // overhead shot: pumpkin spice latte in one hand, the other snapping it
     // with the real calendar screen composited onto the phone
     cover: '/assets/works/drinkety-cover.jpg',
-    featured: 4,
+    featured: 3,
     timeline: 'September 2026',
     link: 'https://github.com/Melly-Marcelia/drinkety',
     // bespoke layout: src/components/case-studies/DrinketyCase.vue holds the

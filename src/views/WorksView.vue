@@ -35,7 +35,7 @@ const shown = computed(() =>
         <button
           v-for="(cat, i) in categories"
           :key="cat"
-          class="works__filter enter-up"
+          class="works__filter pencil enter-up"
           :class="{ 'is-active': active === cat }"
           :style="{ '--enter-delay': `${380 + i * 60}ms`, '--enter-y': '14px' }"
           @click="active = cat"
@@ -82,21 +82,29 @@ const shown = computed(() =>
 }
 
 .works__filter {
+  --pencil-line: var(--color-ink-faint);
+  --pencil-line-alpha: 0.7;
   padding: 0.4rem 1rem;
   border-radius: var(--radius-pill);
   border: 1px solid var(--color-border-strong);
-  background: transparent;
+  background: var(--pencil-tooth);
   font-weight: 600;
   font-size: 0.9rem;
   transition: all var(--transition-fast);
 }
 
 .works__filter:hover {
-  border-color: var(--color-ink);
+  --pencil-line: var(--color-ink);
+  --pencil-echo: var(--color-accent);
+  --pencil-echo-alpha: 0.7;
+  --pencil-shift: 2px -1.5px;
 }
 
 .works__filter.is-active {
-  background: var(--color-accent);
+  --pencil-line: var(--color-accent-hover);
+  --pencil-echo: var(--color-leaf);
+  --pencil-echo-alpha: 0.6;
+  background: var(--pencil-grain), var(--color-accent);
   color: var(--color-accent-ink);
   border-color: var(--color-accent);
 }

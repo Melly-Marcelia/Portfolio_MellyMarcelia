@@ -278,7 +278,7 @@ onBeforeUnmount(() => observers.forEach((o) => o.disconnect()))
               v-for="(c, j) in block.chapters"
               :key="j"
               type="button"
-              class="cs__step"
+              class="cs__step pencil"
               :class="{ 'is-active': activeChapter(block, i) === j }"
               :aria-current="activeChapter(block, i) === j ? 'step' : undefined"
               @click="videoRefs[i]?.seek(c.t)"
@@ -690,8 +690,9 @@ onBeforeUnmount(() => observers.forEach((o) => o.disconnect()))
   font: inherit;
   font-size: var(--step--1);
   font-weight: 600;
+  --pencil-line: var(--color-ink-faint);
   color: var(--color-ink-soft);
-  background: var(--color-surface);
+  background: var(--pencil-tooth), var(--color-surface);
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-pill);
   cursor: pointer;
@@ -713,8 +714,11 @@ onBeforeUnmount(() => observers.forEach((o) => o.disconnect()))
 }
 
 .cs__step:hover {
+  --pencil-line: var(--color-accent);
+  --pencil-echo: var(--color-leaf);
+  --pencil-echo-alpha: 0.7;
+  --pencil-shift: 2px -1.5px;
   color: var(--color-ink);
-  border-color: var(--color-accent);
 }
 
 .cs__step:focus-visible {
@@ -723,9 +727,11 @@ onBeforeUnmount(() => observers.forEach((o) => o.disconnect()))
 }
 
 .cs__step.is-active {
+  --pencil-line: var(--color-accent-hover);
+  --pencil-echo: var(--color-leaf);
+  --pencil-echo-alpha: 0.6;
   color: var(--color-accent-ink);
-  background: var(--color-accent);
-  border-color: var(--color-accent);
+  background: var(--pencil-grain), var(--color-accent);
 }
 
 .cs__step.is-active .cs__step-n {
@@ -740,6 +746,8 @@ onBeforeUnmount(() => observers.forEach((o) => o.disconnect()))
     scrollbar-width: none;
     margin-inline: calc(-1 * var(--page-gutter));
     padding-inline: var(--page-gutter);
+    /* room for the pencil outline's wobble, which the scroller would clip */
+    padding-block: 0.25rem;
   }
 
   .cs__step {

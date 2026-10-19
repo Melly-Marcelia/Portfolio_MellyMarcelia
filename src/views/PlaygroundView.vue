@@ -145,7 +145,7 @@ const seeds = [
             v-for="(s, k) in sections"
             :key="s.id"
             :to="{ hash: `#${s.id}` }"
-            class="pg__tab enter-up"
+            class="pg__tab pencil enter-up"
             :style="{ '--enter-delay': `${420 + k * 110}ms`, '--enter-y': '-36px' }"
           >
             <!-- a slice of dragon fruit holding the tab down -->
@@ -293,6 +293,10 @@ const seeds = [
 }
 .pg__tab {
   --tilt: -2deg;
+  /* coloured-pencil outline (styles/pencil.css), same rest/hover as the project cards */
+  --pencil-line: var(--color-ink-faint);
+  --pencil-line-alpha: 0.75;
+  --pencil-echo-alpha: 0.35;
   position: relative;
   display: grid;
   gap: 0.15rem;
@@ -324,6 +328,7 @@ const seeds = [
   height: 2.75rem;
   translate: -50% 0;
   rotate: calc(var(--tilt) * -6);
+  z-index: 1; /* above the pencil passes on the tab's top edge */
   filter: drop-shadow(0 2px 2px rgba(var(--c-seed-rgb), 0.18));
   transition: rotate 0.5s var(--ease-soft);
 }
@@ -346,6 +351,11 @@ const seeds = [
 .pg__tab:focus-visible {
   transform: rotate(0deg) translateY(-4px);
   box-shadow: var(--shadow-m);
+  --pencil-line: var(--color-accent);
+  --pencil-echo: var(--color-leaf);
+  --pencil-line-alpha: 0.95;
+  --pencil-echo-alpha: 0.8;
+  --pencil-shift: 2.5px -2px;
 }
 .pg__tab-no {
   font-family: var(--font-hand);
@@ -417,7 +427,9 @@ const seeds = [
 .pg__tape {
   display: inline-block;
   padding: 0.25em 0.8em 0.3em;
+  /* coloured-pencil shading: paper grain breaking up the hatched fill */
   background:
+    var(--pencil-grain),
     repeating-linear-gradient(
       -45deg,
       transparent 0 8px,

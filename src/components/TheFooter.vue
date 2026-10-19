@@ -40,7 +40,7 @@ async function copyEmail() {
       <div v-reveal="2" class="footer__links">
         <button
           type="button"
-          class="footer__mail"
+          class="footer__mail pencil"
           :class="{ 'is-copied': copied }"
           :aria-label="
             copied ? 'Email address copied' : `Copy email address ${site.contact.email}`
@@ -136,9 +136,11 @@ async function copyEmail() {
   align-items: center;
   gap: var(--space-xs);
   padding: 0.6rem 0.7rem 0.6rem 1.1rem;
+  --pencil-line: var(--color-ink);
+  --pencil-echo: var(--color-ink-faint);
   border: 1px solid var(--color-ink);
   border-radius: var(--radius-pill);
-  background: transparent;
+  background: var(--pencil-tooth);
   color: var(--color-ink);
   font: inherit;
   font-weight: 600;
@@ -150,12 +152,17 @@ async function copyEmail() {
 
 .footer__mail:hover,
 .footer__mail:focus-visible {
-  background: var(--color-ink);
+  --pencil-echo: var(--color-accent);
+  --pencil-echo-alpha: 0.85;
+  --pencil-shift: 2.5px -2px;
+  background: var(--pencil-grain), var(--color-ink);
   color: var(--color-bg);
 }
 
 .footer__mail.is-copied {
-  background: var(--color-leaf);
+  --pencil-line: var(--df-bract-700);
+  --pencil-echo: var(--color-accent);
+  background: var(--pencil-grain), var(--color-leaf);
   border-color: var(--color-leaf);
   color: var(--color-leaf-ink);
 }

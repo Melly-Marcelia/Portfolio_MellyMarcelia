@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <!-- the same pencil-shaded teardrop seeds as the footer's SeedLine divider:
+       hatching, grainy tooth and wobbly edges, round at one end and tapering
+       to a soft point at the other.
+       Used as an alpha mask by StatementSection, so only opacity matters. -->
+  <defs>
+    <pattern id="h" width="1.4" height="1.4" patternUnits="userSpaceOnUse" patternTransform="rotate(-25)">
+      <rect width="1.4" height="1.4" opacity=".55"/>
+      <rect width=".7" height="1.4"/>
+    </pattern>
+    <path id="s" fill="url(#h)" d="M4.8 0 C 3.4 1.1, 1.7 2.4, -0.9 2.4 C -3 2.4, -4 1.3, -4 0 C -4 -1.3, -3 -2.4, -0.9 -2.4 C 1.7 -2.4, 3.4 -1.1, 4.8 0 Z"/>
+    <filter id="p" filterUnits="userSpaceOnUse" x="0" y="0" width="200" height="200">
+      <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="2" seed="3" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1" xChannelSelector="R" yChannelSelector="G" result="d"/>
+      <feTurbulence type="fractalNoise" baseFrequency="1.8" numOctaves="1" seed="8" result="g"/>
+      <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  2.6 0 0 0 -0.35" result="ga"/>
+      <feComposite in="d" in2="ga" operator="in"/>
+    </filter>
+  </defs>
+  <g filter="url(#p)">
+    <use href="#s" transform="translate(18 24) rotate(125) scale(1.35)"/>
+    <use href="#s" transform="translate(62 12) rotate(70) scale(1.10)"/>
+    <use href="#s" transform="translate(104 40) rotate(145) scale(1.35)"/>
+    <use href="#s" transform="translate(150 18) rotate(100) scale(0.90)"/>
+    <use href="#s" transform="translate(184 58) rotate(50) scale(1.35)"/>
+    <use href="#s" transform="translate(36 78) rotate(75) scale(1.10)"/>
+    <use href="#s" transform="translate(82 96) rotate(130) scale(1.35)"/>
+    <use href="#s" transform="translate(128 84) rotate(35) scale(0.90)"/>
+    <use href="#s" transform="translate(170 112) rotate(115) scale(1.35)"/>
+    <use href="#s" transform="translate(14 138) rotate(150) scale(1.10)"/>
+    <use href="#s" transform="translate(58 154) rotate(60) scale(1.35)"/>
+    <use href="#s" transform="translate(106 140) rotate(105) scale(0.90)"/>
+    <use href="#s" transform="translate(146 170) rotate(80) scale(1.35)"/>
+    <use href="#s" transform="translate(190 176) rotate(135) scale(1.10)"/>
+    <use href="#s" transform="translate(30 192) rotate(110) scale(0.90)"/>
+    <use href="#s" transform="translate(86 186) rotate(45) scale(1.35)"/>
+  </g>
+</svg>

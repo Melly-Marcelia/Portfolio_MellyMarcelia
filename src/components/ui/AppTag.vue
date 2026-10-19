@@ -15,7 +15,7 @@ defineProps({
 </script>
 
 <template>
-  <span class="tag" :class="`tag--${variant}`">
+  <span class="tag pencil" :class="`tag--${variant}`">
     <slot />
   </span>
 </template>
@@ -34,13 +34,18 @@ defineProps({
 }
 
 .tag--solid {
-  background: var(--color-accent-soft);
-  border-color: var(--color-accent-line);
+  /* rind-pink pencil shading, outlined in the rind with a bract echo */
+  --pencil-line: var(--color-accent);
+  --pencil-line-alpha: 0.55;
+  --pencil-echo: var(--color-leaf);
+  --pencil-echo-alpha: 0.45;
+  background: var(--pencil-tooth), var(--color-accent-soft);
   color: var(--color-accent-strong);
 }
 
 .tag--outline {
-  border-color: var(--color-border-strong);
+  --pencil-line: var(--color-ink-faint);
+  background: var(--pencil-tooth);
   color: var(--color-ink);
 }
 </style>

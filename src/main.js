@@ -4,11 +4,12 @@ import router from './router'
 import reveal from './directives/reveal'
 import { initAnalytics } from './composables/useAnalytics'
 
-// Global styles — order matters: tokens → base → type styles → motion
+// Global styles — order matters: tokens → base → type styles → motion → pencil
 import './styles/tokens.css'
 import './styles/base.css'
 import './styles/typography.css'
 import './styles/motion.css'
+import './styles/pencil.css'
 
 initAnalytics(router)
 

@@ -1,0 +1,58 @@
+/* ===========================================================================
+   Coloured-pencil outline
+   ---------------------------------------------------------------------------
+   Add `.pencil` to any pill/chip/button and its crisp border is replaced by two
+   wobbly, grainy pencil passes drawn on its pseudo-elements (the same look as
+   the project cards). The SVG filters (#pencil-a / #pencil-b) live once in
+   App.vue.
+
+   Knobs (set them on the element, or on its :hover / .is-active state):
+     --pencil-line        main pass colour            (default: currentColor)
+     --pencil-echo        second, offset pass colour  (default: --pencil-line)
+     --pencil-line-alpha  main pass opacity           (default: .8)
+     --pencil-echo-alpha  second pass opacity         (default: .4)
+     --pencil-shift       echo offset                 (default: 1px -0.75px)
+
+   The element keeps a transparent 1px border so it stays the size it was, and
+   must not clip overflow (the passes wobble a hair outside the box). For a
+   pencil-shaded fill, layer --pencil-grain over the colour:
+     background: var(--pencil-grain), var(--color-accent);
+   =========================================================================== */
+.pencil {
+  position: relative;
+  border-color: transparent !important;
+}
+
+.pencil::before,
+.pencil::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  transition:
+    border-color var(--transition),
+    opacity var(--transition),
+    translate var(--transition);
+}
+
+.pencil::before {
+  border: 1.6px solid var(--pencil-line, currentColor);
+  opacity: var(--pencil-line-alpha, 0.8);
+  filter: url(#pencil-a);
+}
+
+/* second, lighter pass a hair off the first: the doubled line of a sketch */
+.pencil::after {
+  border: 1.1px solid var(--pencil-echo, var(--pencil-line, currentColor));
+  opacity: var(--pencil-echo-alpha, 0.4);
+  translate: var(--pencil-shift, 1px -0.75px);
+  filter: url(#pencil-b);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pencil::before,
+  .pencil::after {
+    transition: none;
+  }
+}

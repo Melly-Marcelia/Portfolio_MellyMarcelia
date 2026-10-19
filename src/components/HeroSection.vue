@@ -140,11 +140,11 @@ onBeforeUnmount(() => (logoAnchor.value = null))
    the greeting and intro grow into it instead of floating in space */
 @media (min-width: 1700px) and (min-height: 950px) {
   .hero__title {
-    font-size: 3.75rem;
+    font-size: 3.375rem;
     margin-bottom: var(--space-m);
   }
   .hero__intro {
-    font-size: 1.6rem;
+    font-size: 1.45rem;
     max-width: 42ch;
   }
 }

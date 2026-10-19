@@ -6,7 +6,7 @@ export const site = {
   role: 'Digital Experience Design student',
   location: 'Brussels',
   intro:
-    'digital experience design student based in Brussels, specialized in UI/UX, front-end development, and interactive experiences.',
+    'Digital experience design student based in Brussels, specialized in UI/UX, front-end development, and interactive experiences.',
 
   statement: {
     title: 'Turning Ambiguity into Clarity',
@@ -16,7 +16,7 @@ export const site = {
   contact: {
     heading: 'Pleased with what you see?',
     body: "I'm currently open to internship opportunities, collaborations, and exciting projects in digital experiences.",
-    email: 'mellymarcelia32@gmail.com',
+    email: 'contact@mellymarcelia.com',
     linkedin: 'https://www.linkedin.com/in/melly-marcelia-a8b45929a',
     form: {
       heading: "Let's talk!",

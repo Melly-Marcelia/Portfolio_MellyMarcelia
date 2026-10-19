@@ -12,12 +12,12 @@
  * The area above the curve is filled with --seedline-fill (transparent by
  * default), so the wave can double as the seam between two background colours.
  */
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, useId } from 'vue'
 
 // the 40-unit design curve is stretched to fill the rendered height (4.5rem),
 // measured live: rem scales up on large screens, and a fixed viewBox height
 // would letterbox the SVG and open a gap above the fill
-const SPACING = 12 // px between seeds along the line
+const SPACING = 20 // px between seeds along the line (ovals are ~8-12px long)
 
 // the original divider curve, as cubic segments in 1200×40 design space
 const SEGMENTS = [
@@ -57,6 +57,11 @@ function rng(seed) {
   }
 }
 
+// unique ids for the pencil hatch + grain defs
+const uid = useId().replace(/[^\w-]/g, "")
+const hatchId = `seedline-hatch-${uid}`
+const pencilId = `seedline-pencil-${uid}`
+
 const root = ref(null)
 const width = ref(1200)
 const height = ref(72)
@@ -64,15 +69,16 @@ const height = ref(72)
 const seeds = computed(() => {
   const W = width.value
   const rand = rng(7)
-  const count = Math.max(24, Math.round(W / SPACING))
+  const count = Math.max(16, Math.round(W / SPACING))
   return Array.from({ length: count }, (_, i) => {
-    const xd = ((i + 0.5 + (rand() - 0.5) * 0.7) / count) * 1200
+    const xd = ((i + 0.5 + (rand() - 0.5) * 0.4) / count) * 1200
     return {
       x: (xd / 1200) * W, // resting position, real px
       jitter: (rand() - 0.5) * 4.5, // scatter either side of the line
       spin: (rand() - 0.5) * 60, // wobble around the curve's direction
       s: 0.85 + rand() * 0.6,
       d: Math.round((xd / 1200) * 1400 + rand() * 120),
+      flip: rand() < 0.5 ? 180 : 0, // tips point either way along the wave
     }
   })
 })
@@ -86,7 +92,7 @@ function place(seed, shift) {
   // slope in real pixels, so seeds lie along the visible curve
   const Y = height.value / 40
   const along = Math.atan2(dy * Y, scale) * (180 / Math.PI)
-  return `translate(${x.toFixed(1)} ${(y * Y + seed.jitter).toFixed(1)}) rotate(${(along + seed.spin).toFixed(1)}) scale(${seed.s.toFixed(2)})`
+  return `translate(${x.toFixed(1)} ${(y * Y + seed.jitter).toFixed(1)}) rotate(${(along + seed.spin + seed.flip).toFixed(1)}) scale(${seed.s.toFixed(2)})`
 }
 
 // the band above the curve, in real px: top edge → along the wave → back
@@ -154,19 +160,44 @@ onBeforeUnmount(() => {
     :viewBox="`0 0 ${width} ${height}`"
     aria-hidden="true"
   >
+    <defs>
+      <!-- pencil shading, like the portrait's seeds: hatching that follows each
+           seed, grainy paper tooth and slightly wobbly edges -->
+      <pattern
+        :id="hatchId"
+        width="1.4"
+        height="1.4"
+        patternUnits="userSpaceOnUse"
+        patternTransform="rotate(-25)"
+      >
+        <rect width="1.4" height="1.4" fill="currentColor" opacity=".55" />
+        <rect width=".7" height="1.4" fill="currentColor" />
+      </pattern>
+      <filter :id="pencilId" x="-2%" y="-20%" width="104%" height="140%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="2" seed="3" result="n" />
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1" xChannelSelector="R" yChannelSelector="G" result="d" />
+        <feTurbulence type="fractalNoise" baseFrequency="1.8" numOctaves="1" seed="8" result="g" />
+        <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  2.6 0 0 0 -0.35" result="ga" />
+        <feComposite in="d" in2="ga" operator="in" />
+      </filter>
+    </defs>
     <path class="seedline__fill" :d="fillPath" />
-    <g
-      v-for="(seed, i) in seeds"
-      :key="i"
-      ref="seedEls"
-      :transform="place(seed, shift)"
-    >
-      <!-- teardrop seed -->
-      <path
-        class="seedline__seed"
-        :style="{ '--d': `${seed.d}ms` }"
-        d="M-2.8 0 C -2.8 -2.3, 0.8 -2.5, 3 0 C 0.8 2.5, -2.8 2.3, -2.8 0 Z"
-      />
+    <g :filter="`url(#${pencilId})`">
+      <g
+        v-for="(seed, i) in seeds"
+        :key="i"
+        ref="seedEls"
+        :transform="place(seed, shift)"
+      >
+        <!-- teardrop seed like the real fruit: round at one end, tapering to a
+             soft point at the other, long axis along the wave -->
+        <path
+          class="seedline__seed"
+          :style="{ '--d': `${seed.d}ms` }"
+          :fill="`url(#${hatchId})`"
+          d="M4.8 0 C 3.4 1.1, 1.7 2.4, -0.9 2.4 C -3 2.4, -4 1.3, -4 0 C -4 -1.3, -3 -2.4, -0.9 -2.4 C 1.7 -2.4, 3.4 -1.1, 4.8 0 Z"
+        />
+      </g>
     </g>
   </svg>
 </template>
@@ -190,7 +221,6 @@ onBeforeUnmount(() => {
 }
 
 .seedline__seed {
-  fill: currentColor;
   transform-box: fill-box;
   transform-origin: center;
   transition:
