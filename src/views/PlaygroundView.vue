@@ -46,6 +46,9 @@ const sections = [
   },
 ]
 
+// the footer's pencil teardrop seed (seeds-pencil.svg), round end left, ~9 units long
+const SEED = 'M4.8 0 C 3.4 1.1, 1.7 2.4, -0.9 2.4 C -3 2.4, -4 1.3, -4 0 C -4 -1.3, -3 -2.4, -0.9 -2.4 C 1.7 -2.4, 3.4 -1.1, 4.8 0 Z'
+
 // seed speckles for the dragon-fruit slice pinned to each index tab [x, y, angle]
 const seeds = [
   [13.7, 19.9, 51],
@@ -140,6 +143,21 @@ const seeds = [
 
         <!-- paper index tabs, like the dividers in a ring binder -->
         <nav class="pg__tabs" aria-label="Playground sections">
+          <!-- shared by every tab's fruit: the rind's pencil hatching, and a
+               small wobble + paper tooth sized for the fruit's 48-unit box -->
+          <svg class="pg__fruit-defs" aria-hidden="true" focusable="false">
+            <pattern id="pg-fruit-hatch" width="1.5" height="1.5" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)">
+              <rect width="1.5" height="1.5" fill="#e01e6e" opacity="0.45" />
+              <rect width="0.85" height="1.5" fill="#d0145f" />
+            </pattern>
+            <filter id="pg-fruit-pencil" x="-10%" y="-10%" width="120%" height="120%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.09" numOctaves="2" seed="3" result="wobble" />
+              <feDisplacementMap in="SourceGraphic" in2="wobble" scale="1.4" xChannelSelector="R" yChannelSelector="G" result="line" />
+              <feTurbulence type="fractalNoise" baseFrequency="1.1 0.4" numOctaves="2" seed="8" result="grain" />
+              <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  2.4 0 0 0 -0.4" result="tooth" />
+              <feComposite in="line" in2="tooth" operator="in" />
+            </filter>
+          </svg>
           <!-- tabs drop onto the desk one after another -->
           <RouterLink
             v-for="(s, k) in sections"
@@ -148,18 +166,20 @@ const seeds = [
             class="pg__tab pencil enter-up"
             :style="{ '--enter-delay': `${420 + k * 110}ms`, '--enter-y': '-36px' }"
           >
-            <!-- a slice of dragon fruit holding the tab down -->
+            <!-- a slice of dragon fruit holding the tab down, drawn in coloured
+                 pencil: hatched rind, a doubled wobbly outline, teardrop seeds -->
             <svg class="pg__fruit" viewBox="0 0 48 48" aria-hidden="true">
-              <circle cx="24" cy="24" r="22.5" class="pg__fruit-rind" />
-              <circle cx="24" cy="24" r="19" class="pg__fruit-flesh" />
-              <ellipse
+              <circle cx="24" cy="24" r="22" class="pg__fruit-paper" />
+              <circle cx="24" cy="24" r="21.2" class="pg__fruit-rind" filter="url(#pg-fruit-pencil)" />
+              <circle cx="24" cy="24" r="18.6" class="pg__fruit-flesh" />
+              <circle cx="24" cy="24" r="18.6" class="pg__fruit-ring" filter="url(#pg-fruit-pencil)" />
+              <circle cx="24" cy="24" r="22.4" class="pg__fruit-line" filter="url(#pg-fruit-pencil)" />
+              <circle cx="24" cy="24" r="22.1" class="pg__fruit-echo" filter="url(#pg-fruit-pencil)" />
+              <path
                 v-for="([x, y, a], k) in seeds"
                 :key="k"
-                :cx="x"
-                :cy="y"
-                rx="0.9"
-                ry="0.55"
-                :transform="`rotate(${a} ${x} ${y})`"
+                :d="SEED"
+                :transform="`translate(${x} ${y}) rotate(${a}) scale(0.24)`"
                 class="pg__fruit-seed"
               />
             </svg>
@@ -312,10 +332,10 @@ const seeds = [
     transform 0.35s var(--ease-soft),
     box-shadow 0.35s var(--ease-soft);
 }
-.pg__tab:nth-child(2) {
+.pg__tab:nth-of-type(2) {
   --tilt: 1.5deg;
 }
-.pg__tab:nth-child(3) {
+.pg__tab:nth-of-type(3) {
   --tilt: -0.8deg;
 }
 /* a slice of dragon fruit pinned over each tab's top edge — a real fruit,
@@ -332,16 +352,45 @@ const seeds = [
   filter: drop-shadow(0 2px 2px rgba(var(--c-seed-rgb), 0.18));
   transition: rotate 0.5s var(--ease-soft);
 }
+.pg__fruit-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+/* plain paper under the sketch, so the tab's own pencil edge doesn't show
+   through the gaps in the rind's grain */
+.pg__fruit-paper {
+  fill: #fffdfb;
+}
 .pg__fruit-rind {
-  fill: #e01e6e;
+  fill: url(#pg-fruit-hatch);
 }
 .pg__fruit-flesh {
   fill: #fffdfb;
-  stroke: #f7b5d0;
-  stroke-width: 1.2;
+}
+.pg__fruit-ring {
+  fill: none;
+  stroke: #f29ac0;
+  stroke-width: 1.1;
+}
+/* two passes round the edge, the second lighter and a hair off */
+.pg__fruit-line {
+  fill: none;
+  stroke: #b8104f;
+  stroke-width: 1.3;
+  opacity: 0.85;
+}
+.pg__fruit-echo {
+  fill: none;
+  stroke: #e01e6e;
+  stroke-width: 0.8;
+  opacity: 0.5;
+  translate: 0.6px -0.5px;
 }
 .pg__fruit-seed {
   fill: #1a1517;
+  opacity: 0.85;
 }
 .pg__tab:hover .pg__fruit,
 .pg__tab:focus-visible .pg__fruit {

@@ -337,16 +337,16 @@ const strip = ['For You', 'Nourish', 'Activities', 'Profile', 'Seasonal food', '
       </div>
     </section>
 
-    <!-- ── nourish + activities: cream into a brown band, phones crossing the seam ── -->
+    <!-- ── nourish + activities: one brown band ── -->
     <section class="lv-duo">
-      <div class="lv-wrap lv-duo__head">
-        <span v-reveal class="lv-pill">{{ nourish.n }}</span>
-        <h2 v-reveal="1" class="lv-say">
-          {{ nourish.title }} <span class="lv-dim">Anything you save lands in your collections.</span>
-        </h2>
-      </div>
       <div class="lv-duo__band">
         <div class="lv-wrap">
+          <div class="lv-duo__head">
+            <span v-reveal class="lv-pill lv-pill--dark">{{ nourish.n }}</span>
+            <h2 v-reveal="1" class="lv-say">
+              {{ nourish.title }} <span class="lv-dim">Anything you save lands in your collections.</span>
+            </h2>
+          </div>
           <div class="lv-duo__row lv-duo__row--first">
             <p v-reveal class="lv-duo__text">
               Recipes are built around what’s actually available right now. Instead of hunting for specific
@@ -1258,22 +1258,30 @@ const strip = ['For You', 'Nourish', 'Activities', 'Profile', 'Seasonal food', '
   margin-inline: auto;
 }
 
-/* ---- nourish + activities: cream into a brown band ---- */
+/* ---- nourish + activities: one brown band ---- */
 .lv-duo {
   position: relative;
   z-index: 1;
   border-top: 6px solid #fff;
-  padding-top: var(--sec);
+}
+
+.lv-duo__head {
+  margin-bottom: clamp(2.5rem, 6vw, 4rem);
 }
 
 .lv-duo__head .lv-say {
   max-width: 24ch;
   margin-top: clamp(1.5rem, 4vw, 2.5rem);
+  color: var(--cream);
+}
+
+.lv-duo__head .lv-dim {
+  color: rgba(249, 236, 216, 0.55);
 }
 
 .lv-duo__band {
   display: flow-root;
-  margin-top: clamp(9rem, 20vw, 15rem);
+  padding-top: var(--sec);
   padding-bottom: 0;
   background:
     radial-gradient(60% 50% at 80% 40%, rgba(255, 210, 3, 0.14), transparent 70%),
@@ -1286,11 +1294,6 @@ const strip = ['For You', 'Nourish', 'Activities', 'Profile', 'Seasonal food', '
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(1.5rem, 5vw, 4rem);
   align-items: end;
-}
-
-/* the first pair rises out of the band back into the cream */
-.lv-duo__row--first .lv-duo__pair {
-  margin-top: clamp(-15rem, -20vw, -9rem);
 }
 
 .lv-duo__pair {
