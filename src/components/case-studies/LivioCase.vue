@@ -337,27 +337,22 @@ const strip = ['For You', 'Nourish', 'Activities', 'Profile', 'Seasonal food', '
       </div>
     </section>
 
-    <!-- ── nourish + activities: one brown band ── -->
+    <!-- ── nourish + activities: cream into a brown band, phones crossing the seam ── -->
     <section class="lv-duo">
+      <div class="lv-wrap lv-duo__row lv-duo__row--first">
+        <div v-reveal class="lv-duo__intro">
+          <span class="lv-pill">{{ nourish.n }}</span>
+          <h2 class="lv-say lv-say--sm">{{ nourish.title }}</h2>
+        </div>
+        <div class="lv-duo__pair">
+          <figure v-for="(s, j) in nourish.screens" :key="s.src" v-reveal="j" class="lv-phone">
+            <img :src="s.src" :alt="s.alt" loading="lazy" />
+          </figure>
+        </div>
+      </div>
       <div class="lv-duo__band">
         <div class="lv-wrap">
-          <div class="lv-duo__head">
-            <span v-reveal class="lv-pill lv-pill--dark">{{ nourish.n }}</span>
-            <h2 v-reveal="1" class="lv-say">
-              {{ nourish.title }} <span class="lv-dim">Anything you save lands in your collections.</span>
-            </h2>
-          </div>
-          <div class="lv-duo__row lv-duo__row--first">
-            <p v-reveal class="lv-duo__text">
-              Recipes are built around what’s actually available right now. Instead of hunting for specific
-              ingredients, you cook with what’s already in season, which makes seasonal eating easier to keep up.
-            </p>
-            <div class="lv-duo__pair">
-              <figure v-for="(s, j) in nourish.screens" :key="s.src" v-reveal="j" class="lv-phone">
-                <img :src="s.src" :alt="s.alt" loading="lazy" />
-              </figure>
-            </div>
-          </div>
+          <p v-reveal class="lv-duo__text lv-duo__desc">{{ nourish.text }}</p>
           <div class="lv-duo__row lv-duo__row--second">
             <figure v-reveal class="lv-phone lv-duo__solo">
               <img :src="activities.screens[0].src" :alt="activities.screens[0].alt" loading="lazy" />
@@ -1258,30 +1253,17 @@ const strip = ['For You', 'Nourish', 'Activities', 'Profile', 'Seasonal food', '
   margin-inline: auto;
 }
 
-/* ---- nourish + activities: one brown band ---- */
+/* ---- nourish + activities: cream into a brown band ---- */
 .lv-duo {
+  --dip: clamp(9rem, 20vw, 15rem);
   position: relative;
   z-index: 1;
-  border-top: 6px solid #fff;
-}
-
-.lv-duo__head {
-  margin-bottom: clamp(2.5rem, 6vw, 4rem);
-}
-
-.lv-duo__head .lv-say {
-  max-width: 24ch;
-  margin-top: clamp(1.5rem, 4vw, 2.5rem);
-  color: var(--cream);
-}
-
-.lv-duo__head .lv-dim {
-  color: rgba(249, 236, 216, 0.55);
+  padding-top: var(--sec);
 }
 
 .lv-duo__band {
   display: flow-root;
-  padding-top: var(--sec);
+  padding-top: var(--dip);
   padding-bottom: 0;
   background:
     radial-gradient(60% 50% at 80% 40%, rgba(255, 210, 3, 0.14), transparent 70%),
@@ -1294,6 +1276,27 @@ const strip = ['For You', 'Nourish', 'Activities', 'Profile', 'Seasonal food', '
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(1.5rem, 5vw, 4rem);
   align-items: end;
+}
+
+/* nourish's title sits on the cream, its pair and description in the band below */
+.lv-duo__row--first {
+  position: relative;
+  z-index: 1;
+  align-items: start;
+}
+
+.lv-duo__row--first .lv-duo__pair {
+  margin-bottom: calc(var(--dip) * -1);
+}
+
+.lv-duo__intro {
+  align-self: end;
+  max-width: 38ch;
+}
+
+/* the title ends on the seam; the description picks up just below it */
+.lv-duo__intro .lv-say {
+  margin-block: 1rem 0;
 }
 
 .lv-duo__pair {
@@ -1314,6 +1317,11 @@ const strip = ['For You', 'Nourish', 'Activities', 'Profile', 'Seasonal food', '
 .lv-duo__text .lv-say {
   margin-block: 1rem 0.75rem;
   color: var(--cream);
+}
+
+/* pulled up beside the dipping pair, the same 0.75rem under the title as activities */
+.lv-duo__desc {
+  margin-top: calc(var(--dip) * -1 + 0.75rem);
 }
 
 .lv-duo__row--second {
@@ -1370,13 +1378,21 @@ const strip = ['For You', 'Nourish', 'Activities', 'Profile', 'Seasonal food', '
 }
 
 .lv-brand-say {
-  max-width: 34rem;
+  max-width: 60rem;
   margin: clamp(2.5rem, 6vw, 4rem) 0 clamp(3rem, 7vw, 5rem) auto;
   text-align: right;
 }
 
-.lv-brand-say .lv-lead {
+.lv-brand-say .lv-say {
+  max-width: 34rem;
   margin-left: auto;
+}
+
+/* wide enough to run in three even lines on desktop */
+.lv-brand-say .lv-lead {
+  max-width: none;
+  margin-left: auto;
+  text-wrap: balance;
 }
 
 /* soft tiles, two to a row */
@@ -2216,8 +2232,9 @@ const strip = ['For You', 'Nourish', 'Activities', 'Profile', 'Seasonal food', '
     justify-content: center;
   }
 
-  .lv-duo__row--first .lv-duo__text {
-    order: 2;
+  /* stacked: the pair fills the width, so the description drops below it */
+  .lv-duo__desc {
+    margin-top: clamp(2rem, 5vw, 3rem);
   }
 
   .lv-duo__solo {
